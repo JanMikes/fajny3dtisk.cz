@@ -7,9 +7,6 @@
   --main-orange: #ff7a00;
   --main-brown: #a0522d;
   --main-gray: #f5f5f5;
-  --main-gradient: linear-gradient(90deg, #181818 0%, #232323 100%);
-  --section-orange-gradient: linear-gradient(135deg, #ff8a26 0%, #b06e3a 100%);
-  --section-lightorange-gradient: linear-gradient(160deg, #fff 50%, #ffe5c2 80%, #ffb97a 100%);
 }
 
 body {
@@ -22,8 +19,8 @@ body {
 }
 
 header {
-  background: #181818;
-  background: linear-gradient(55deg, #181818 60%, #232323 100%);
+  background: url('./img/gradient-hero.png') center center no-repeat #181818;
+  background-size: cover;
   color: var(--main-white);
   text-align: center;
   padding: 3rem 1rem 2rem 1rem;
@@ -63,7 +60,7 @@ nav ul {
 }
 
 nav a {
-  color: var(--main-orange);
+  color: #cd133b;;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s;
@@ -77,7 +74,7 @@ nav a:hover {
 }
 
 .btn {
-  background: var(--main-orange);
+  background: #cd133b;
   color: var(--main-white) !important;
   font-weight: 700;
   border: none;
@@ -90,7 +87,7 @@ nav a:hover {
 }
 
 .btn:hover {
-  background: var(--main-brown);
+  background: #ff7a00;
   color: var(--main-white) !important;
 }
 
@@ -107,10 +104,15 @@ nav a:hover {
 }
 
 .section-wrapper.orange {
-  background: var(--section-orange-gradient);
+  background: url('./img/gradient-orange.png') center/cover no-repeat, linear-gradient(125deg,#e66b3d 0%,#e66b3d 65%,#bc2a2f 100%), #e66b3d;
 }
-.section-wrapper.lightorange {
-  background: var(--section-lightorange-gradient);
+
+.section-wrapper.orange-2 {
+  background: url('./img/gradient-orange-2.png') center/cover no-repeat, linear-gradient(125deg,#e66b3d 0%,#e66b3d 65%,#bc2a2f 100%), #e66b3d;
+}
+
+.section-wrapper.white {
+  background: #fff;
 }
 
 section {
@@ -123,7 +125,6 @@ section {
 }
 
 section#proc-ja {
-  background: var(--section-gradient);
   color: var(--main-white);
 }
 
@@ -144,20 +145,21 @@ section#ukazky {
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: space-between;
-  margin-top: 2rem;
 }
 
 .features > div {
   flex: 1 1 200px;
-  background: rgba(255,255,255,0.10);
   padding: 1.2rem;
   min-width: 200px;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.03);
+}
+
+.transparent-white-box {
+  background: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
 }
 
 .features h3 {
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .gallery {
@@ -209,22 +211,6 @@ form#contact-form textarea:focus {
   outline: none;
 }
 
-form#contact-form button[type="submit"] {
-  background: var(--main-orange);
-  color: var(--main-white);
-  font-weight: 700;
-  border: none;
-  padding: 0.7rem 2rem;
-  font-size: 1.05rem;
-  box-shadow: 0 2px 12px rgba(255,122,0,0.08);
-  transition: background 0.2s, color 0.2s;
-}
-
-form#contact-form button[type="submit"]:hover {
-  background: var(--main-brown);
-  color: var(--main-white);
-}
-
 footer {
   background: var(--main-black);
   color: var(--main-white);
@@ -249,12 +235,12 @@ footer {
 }
 
 a {
-  color: var(--main-orange);
+  color: #cd133b;
   text-decoration: underline;
   transition: color 0.2s;
 }
 a:hover, a:focus {
-  color: var(--main-brown);
+  color: #cd133b;
 }
 
 .process-list .fa-solid {
@@ -275,4 +261,12 @@ section#materialy dt {
 
 .text-orange {
   color: var(--main-orange) !important;
-} 
+}
+
+.text-red {
+  color: #cd133b;
+}
+
+.text-dark-red {
+  color: #b11d1d;
+}
