@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://fajny3dtisk.cz/sitemap.xml 
