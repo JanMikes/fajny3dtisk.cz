@@ -19,7 +19,7 @@ body {
 }
 
 header {
-  background: url('./img/gradient-hero.png') center center no-repeat #181818;
+  background: url('./img/gradient-hero.jpg') center center no-repeat #181818;
   background-size: cover;
   color: var(--main-white);
   text-align: center;
@@ -190,25 +190,6 @@ form#contact-form {
 
 form#contact-form label {
   font-weight: 600;
-}
-
-form#contact-form input,
-form#contact-form textarea {
-  width: 100%;
-  border: 1px solid #e0e0e0;
-  padding: 0.7rem;
-  margin-bottom: 1.1rem;
-  font-size: 1rem;
-  background: #faf9f7;
-  color: var(--main-black);
-  transition: border 0.2s;
-  line-height: 1.7;
-}
-
-form#contact-form input:focus,
-form#contact-form textarea:focus {
-  border: 1.5px solid var(--main-orange);
-  outline: none;
 }
 
 footer {
