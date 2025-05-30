@@ -251,3 +251,15 @@ section#materialy dt {
 .text-dark-red {
   color: #b11d1d;
 }
+
+.team-photo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.gallery-photo {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
