@@ -104,11 +104,7 @@ nav a:hover {
 }
 
 .section-wrapper.orange {
-  background: url('./img/gradient-orange.png') center/cover no-repeat, linear-gradient(125deg,#e66b3d 0%,#e66b3d 65%,#bc2a2f 100%), #e66b3d;
-}
-
-.section-wrapper.orange-2 {
-  background: url('./img/gradient-orange-2.png') center/cover no-repeat, linear-gradient(125deg,#e66b3d 0%,#e66b3d 65%,#bc2a2f 100%), #e66b3d;
+  background: url('./img/gradient-orange.jpg') center/cover no-repeat, linear-gradient(125deg,#e66b3d 0%,#e66b3d 65%,#bc2a2f 100%), #e66b3d;
 }
 
 .section-wrapper.white {

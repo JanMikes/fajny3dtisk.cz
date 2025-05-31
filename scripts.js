@@ -54,21 +54,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 form.innerHTML = `
-                <div class="alert alert-success" role="alert">
+                <div class="alert mb-0 alert-success" role="alert">
                     Vaše zpráva byla úspěšně odeslána. Děkujeme!
                 </div>
             `;
             } else {
                 const errorData = await response.json();
                 form.innerHTML = `
-                <div class="alert alert-danger" role="alert">
+                <div class="alert mb-0 alert-danger" role="alert">
                     Odeslání zprávy se nezdařilo. ${errorData.error || "Zkuste to prosím znovu později."}
                 </div>
             `;
             }
         } catch (error) {
             form.innerHTML = `
-            <div class="alert alert-danger" role="alert">
+            <div class="alert mb-0 alert-danger" role="alert">
                 Došlo k chybě při odesílání zprávy. Zkuste to prosím znovu.
             </div>
         `;
