@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
-
 /* Fajný 3D tisk – Custom Styles */
 :root {
   --main-black: #181818;
@@ -12,7 +10,7 @@
 body {
   background: var(--main-gray);
   color: var(--main-black);
-  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Montserrat', Arial, sans-serif;
   margin: 0;
   padding: 0;
   line-height: 1.7;
@@ -60,7 +58,7 @@ nav ul {
 }
 
 nav a {
-  color: #cd133b;;
+  color: #cd133b;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s;
