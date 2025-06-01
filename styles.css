@@ -209,12 +209,12 @@ footer {
   }
 }
 
-a {
+body a {
   color: #cd133b;
   text-decoration: underline;
   transition: color 0.2s;
 }
-a:hover, a:focus {
+body a:hover, body a:focus {
   color: #cd133b;
 }
 
