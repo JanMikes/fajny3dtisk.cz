@@ -17,12 +17,17 @@ body {
 }
 
 header {
-  background: url('./img/gradient-hero.jpg') center center no-repeat #181818;
+  background: url('./img/hero.jpg') center center no-repeat #181818;
   background-size: cover;
   color: var(--main-white);
   text-align: center;
-  padding: 3rem 1rem 2rem 1rem;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 0 !important;
+}
+
+.header-inner {
+    background: rgba(205, 19, 59, .12);
+    padding: 2.5rem 1rem 2.5rem 1rem;
 }
 
 .hero-logo {
@@ -64,6 +69,7 @@ nav a {
   transition: color 0.2s;
   display: inline-block;
   padding: 4px 8px;
+    font-size: 20px;
 }
 
 nav a:hover {
