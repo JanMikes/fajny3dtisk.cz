@@ -4,54 +4,96 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a static website for "Fajný 3D tisk" - a 3D printing service based in Frýdek-Místek, Czech Republic. The site is a single-page application built with vanilla HTML, CSS, and JavaScript.
+This is a modern static website for "Fajný 3D tisk" - a 3D printing service based in Frýdek-Místek, Czech Republic. The site is built with Astro and Tailwind CSS for optimal performance and SEO.
 
 ## Project Structure
 
-- `index.html` - Main HTML file containing all page content
-- `styles.css` - Custom CSS styles with CSS variables for theming
-- `scripts.js` - JavaScript for form validation and GLightbox gallery initialization
-- `img/` - Images directory with gallery photos and team photos
-- `glightbox/` - Third-party lightbox library for image gallery
-- Static assets: favicons, manifest files, and SEO-related files
+```
+/
+├── public/              # Static assets (images, favicons, glightbox)
+│   ├── img/            # Gallery and team photos
+│   ├── glightbox/      # Lightbox library
+│   └── [favicons]      # Various favicon formats
+├── src/
+│   ├── components/     # Astro components for each section
+│   │   ├── Hero.astro
+│   │   ├── Team.astro
+│   │   ├── Features.astro
+│   │   ├── Materials.astro
+│   │   ├── Process.astro
+│   │   ├── Gallery.astro
+│   │   ├── FAQ.astro
+│   │   ├── Contact.astro
+│   │   └── Footer.astro
+│   ├── layouts/
+│   │   └── Layout.astro # Base layout with SEO
+│   ├── pages/
+│   │   └── index.astro  # Main page
+│   └── styles/
+│       └── global.css   # Tailwind CSS with custom theme
+├── astro.config.mjs     # Astro configuration
+├── package.json         # Dependencies
+└── tsconfig.json        # TypeScript configuration
+```
+
+## Technology Stack
+
+- **Astro v5.14** - Static site generator (100% SEO-friendly)
+- **Tailwind CSS v4** - Utility-first CSS framework
+- **TypeScript** - Type-safe JavaScript
+- **Lucide Icons** - Modern icon library
+- **GLightbox** - Image gallery lightbox
+- **StaticForms API** - Contact form submission
 
 ## Architecture
 
-This is a static single-page website with:
-- Responsive design using Bootstrap 5.3.3 (loaded from CDN)
-- Font Awesome icons (loaded from CDN)
-- Google Fonts (Montserrat)
+This is a modern static single-page application with:
+- Component-based architecture using Astro
+- Tailwind CSS with custom theme (brand colors)
+- Responsive design optimized for mobile and desktop
+- Interactive elements (FAQ accordion, contact form)
 - GLightbox for image gallery functionality
-- Contact form that submits to StaticForms API
 - Google Analytics integration
+- JSON-LD structured data for SEO
 
 ## Key Features
 
-- Contact form with client-side validation
-- Image gallery with lightbox functionality
-- Responsive design optimized for mobile and desktop
-- SEO optimized with proper meta tags and structured data
-- Performance optimized with preloading of critical resources
+- Modern, clean UI with animations
+- Hero section with gradient overlay
+- Team cards with hover effects
+- Features grid with backdrop blur
+- Materials comparison cards
+- Process timeline
+- Masonry gallery grid
+- Interactive FAQ accordion
+- Contact form with TypeScript validation
+- Multi-column footer
 
-## Development Notes
+## Development Commands
 
-- No build process or package management - this is a static site
-- External dependencies are loaded from CDNs
-- Form submissions go to StaticForms API (external service)
-- Site uses Czech language content
-- Favicon and app icons are generated for multiple platforms
-
-## File Dependencies
-
-- Bootstrap CSS/JS is loaded from CDN
-- Font Awesome icons from CDN  
-- Google Fonts from CDN
-- GLightbox library is included locally in `glightbox/` directory
-- No npm, build tools, or package.json present
+```bash
+npm install           # Install dependencies
+npm run dev          # Start dev server (localhost:4321)
+npm run build        # Build for production (outputs to dist/)
+npm run preview      # Preview production build
+```
 
 ## Styling
 
-- CSS variables defined in `:root` for consistent theming
-- Color scheme: dark (#181818), orange (#ff7a00), red (#cd133b)
-- Custom responsive design built on top of Bootstrap grid
-- Critical CSS is inlined in HTML head for performance
+- Tailwind CSS with custom theme defined in `src/styles/global.css`
+- Custom color palette:
+  - Brand Black: #181818
+  - Brand Orange: #ff7a00
+  - Brand Red: #cd133b
+  - Brand Dark Red: #b11d1d
+  - Brand Gray: #f5f5f5
+- Font: Montserrat (loaded from Google Fonts)
+- Custom animations: fade-in, fade-in-up, slide-in
+
+## Important Notes
+
+- Site uses Czech language content
+- Contact form submits to StaticForms API (external service)
+- All images and assets are in `public/` directory
+- Build output is 100% static HTML/CSS/JS (no server required)
+- SEO optimized with proper meta tags and structured data

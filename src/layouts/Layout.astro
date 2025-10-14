@@ -1,0 +1,145 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="3d tisk, 3D tisk Frýdek-Místek, 3D tisk na zakázku, rychlý 3D tisk, PLA tisk, PETG tisk, 3D prototypy, 3D modelování, 3D služby Frýdek-Místek, plastový 3D tisk, malosériová výroba" />
+    <meta name="author" content="Jan Mikeš - j.mikes@me.com" />
+    <meta name="robots" content="index, follow" />
+    <meta name="apple-mobile-web-app-title" content="Fajný 3D tisk" />
+    <meta name="language" content="cs" />
+    <meta name="subject" content="3D tisk na zakázku Frýdek-Místek" />
+    <meta name="copyright" content="Michal Trněný, Jan Mikeš" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg" />
+
+    <!-- Geo Location -->
+    <meta name="geo.region" content="CZ-MSK" />
+    <meta name="geo.placename" content="Frýdek-Místek" />
+    <meta name="ICBM" content="49.6833, 18.3500" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- GLightbox CSS -->
+    <link rel="stylesheet" href="/glightbox/css/glightbox.min.css" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VD0E3LQY17"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VD0E3LQY17');
+    </script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Fajný 3D tisk",
+      "description": "Profesionální 3D tisk na zakázku ve Frýdku-Místku a okolí",
+      "image": "https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg",
+      "url": "https://fajny3dtisk.cz/",
+      "telephone": "",
+      "email": "michal@fajny3dtisk.cz",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Jana Čapka 3081",
+        "addressLocality": "Frýdek-Místek",
+        "postalCode": "738 01",
+        "addressCountry": "CZ"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 49.6833,
+        "longitude": 18.3500
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 49.6833,
+          "longitude": 18.3500
+        },
+        "geoRadius": "50000"
+      },
+      "serviceType": "3D tisk na zakázku",
+      "priceRange": "$$",
+      "openingHours": "Mo-Su 08:00-22:00",
+      "founder": {
+        "@type": "Person",
+        "name": "Michal Trněný"
+      },
+      "sameAs": [
+        "https://www.instagram.com/fajny_3dtisk/"
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <slot />
+
+    <!-- GLightbox Script -->
+    <script is:inline src="/glightbox/js/glightbox.min.js"></script>
+    <script is:inline>
+      const lightbox = GLightbox();
+    </script>
+  </body>
+</html>

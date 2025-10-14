@@ -1,0 +1,92 @@
+---
+import { Mail, Instagram, Check } from 'lucide-astro';
+---
+
+<footer class="bg-brand-black text-white py-16 px-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Footer Grid -->
+    <div class="grid md:grid-cols-3 gap-12 mb-12">
+      <!-- Column 1: About -->
+      <div>
+        <h4 class="text-xl font-bold mb-4">3D tisk Frýdek-Místek</h4>
+        <p class="text-gray-300 mb-4 leading-relaxed">
+          Fajný 3D tisk je rodinná služba specializující se na rychlý a kvalitní 3D tisk ve Frýdku-Místku a okolí. Tiskneme z materiálů PLA a PETG s expresním dodáním do 48 hodin.
+        </p>
+        <p class="text-gray-400 text-sm">
+          <strong class="text-white">Michal Trněný</strong><br>
+          Jana Čapka 3081<br>
+          738 01 Frýdek-Místek
+        </p>
+      </div>
+
+      <!-- Column 2: Services -->
+      <div>
+        <h4 class="text-xl font-bold mb-4">Naše služby 3D tisku</h4>
+        <ul class="space-y-2">
+          <li class="flex items-start gap-2">
+            <Check class="w-5 h-5 text-brand-orange flex-shrink-0 mt-0.5" />
+            <span class="text-gray-300">3D tisk na zakázku PLA a PETG</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <Check class="w-5 h-5 text-brand-orange flex-shrink-0 mt-0.5" />
+            <span class="text-gray-300">Rychlé dodání do 48h</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <Check class="w-5 h-5 text-brand-orange flex-shrink-0 mt-0.5" />
+            <span class="text-gray-300">3D modelování na míru</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <Check class="w-5 h-5 text-brand-orange flex-shrink-0 mt-0.5" />
+            <span class="text-gray-300">Expedice po celé ČR</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <Check class="w-5 h-5 text-brand-orange flex-shrink-0 mt-0.5" />
+            <span class="text-gray-300">Osobní odběr Frýdek-Místek</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <Check class="w-5 h-5 text-brand-orange flex-shrink-0 mt-0.5" />
+            <span class="text-gray-300">Poradenství zdarma</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Why Us & Contact -->
+      <div>
+        <h4 class="text-xl font-bold mb-4">Proč 3D tisk u nás?</h4>
+        <p class="text-gray-300 mb-6 leading-relaxed">
+          Ve Frýdku-Místku nabízíme nejrychlejší 3D tisk v regionu. Naše moderní 3D tiskárna dokáže zpracovat jakýkoliv projekt – od jednoduchých prototypů po složité mechanické díly.
+        </p>
+
+        <!-- Contact Links -->
+        <div class="space-y-3">
+          <a
+            href="mailto:michal@fajny3dtisk.cz"
+            class="flex items-center gap-3 text-gray-300 hover:text-brand-orange transition-colors duration-200"
+          >
+            <Mail class="w-5 h-5" />
+            <span>michal@fajny3dtisk.cz</span>
+          </a>
+          <a
+            href="https://www.instagram.com/fajny_3dtisk/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-3 text-gray-300 hover:text-brand-orange transition-colors duration-200"
+          >
+            <Instagram class="w-5 h-5" />
+            <span>@fajny_3dtisk</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="border-t border-gray-700 pt-8">
+      <div class="text-center">
+        <p class="text-white font-semibold mb-2">Plastové (3D Tisk) sny na počkání</p>
+        <p class="text-gray-400 text-sm">
+          Michal Trněný © 2025 | Fajný 3D tisk | Frýdek-Místek | 3D tisk na zakázku | PLA PETG materiály
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

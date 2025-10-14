@@ -1,0 +1,63 @@
+---
+import { Sparkles, Cog } from 'lucide-astro';
+---
+
+<section id="materialy" class="py-20 px-6 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark-red mb-6">
+        3D tisk materiály: PLA a PETG pro Frýdek-Místek
+      </h2>
+      <p class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+        Aktuálně kraluji nad materiály <strong>PLA</strong> a <strong>PETG</strong>. Tisková plocha má sympatických <strong>180 × 180 × 180 mm</strong>, takže běžné krabičky, držáky či roztomilé kosmické lodě nejsou problém.
+      </p>
+    </div>
+
+    <!-- Materials Cards -->
+    <div class="grid md:grid-cols-2 gap-8 mb-8">
+      <!-- PLA Card -->
+      <div class="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-brand-orange/10 to-brand-red/10 border border-brand-orange/20">
+        <div class="p-8">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-16 h-16 rounded-xl bg-brand-orange flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+              <Sparkles class="w-8 h-8 text-white" />
+            </div>
+            <h3 class="text-3xl font-bold text-brand-black">PLA</h3>
+          </div>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            Ideální na figurky, šperky, prototypy a drobné marketingové předměty. Skvěle vypadá a tisknout s ním je radost.
+          </p>
+
+          <!-- Decorative element -->
+          <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-brand-orange/10 rounded-full blur-2xl group-hover:bg-brand-orange/20 transition-colors duration-300"></div>
+        </div>
+      </div>
+
+      <!-- PETG Card -->
+      <div class="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-brand-red/10 to-brand-dark-red/10 border border-brand-red/20">
+        <div class="p-8">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-16 h-16 rounded-xl bg-brand-red flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+              <Cog class="w-8 h-8 text-white" />
+            </div>
+            <h3 class="text-3xl font-bold text-brand-black">PETG</h3>
+          </div>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            Držáky, mechanické díly, vodotěsné nádoby a cokoli, co potřebuje vydržet vyšší teploty. Trochu houževnatosti nikoho ještě nezabilo.
+          </p>
+
+          <!-- Decorative element -->
+          <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-brand-red/10 rounded-full blur-2xl group-hover:bg-brand-red/20 transition-colors duration-300"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Info -->
+    <div class="text-center">
+      <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        Barvy? Základní mám skladem, speciální odstíny rád doobjednám. Mnohobarevný tisk v jedné vrstvě zatím neumím – tiskárna by se mi z toho rozskočila jak Frank, když vidí granule.
+      </p>
+    </div>
+  </div>
+</section>
