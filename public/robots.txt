@@ -1,4 +1,27 @@
-User-agent: *
-Disallow:
+# robots.txt for https://fajny3dtisk.cz/
 
-Sitemap: https://fajny3dtisk.cz/sitemap.xml 
+User-agent: *
+Allow: /
+Disallow: /glightbox/
+
+# Sitemap
+Sitemap: https://fajny3dtisk.cz/sitemap.xml
+
+# Crawl-delay for respectful bots
+Crawl-delay: 1
+
+# Disallow AI training bots
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /

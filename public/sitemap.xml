@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://fajny3dtisk.cz/</loc>
-    <changefreq>monthly</changefreq>
+    <lastmod>2025-10-14</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg</image:loc>
+      <image:title>Fajný 3D tisk - Profesionální 3D tisk ve Frýdku-Místku logo</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://fajny3dtisk.cz/img/hero.jpg</image:loc>
+      <image:title>Fajný 3D tisk Frýdek-Místek - Hero obrázek</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://fajny3dtisk.cz/img/michal.jpg</image:loc>
+      <image:title>Michal Trněný - profesionální 3D tiskář ve Frýdku-Místku</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://fajny3dtisk.cz/img/gallery/01.jpg</image:loc>
+      <image:title>3D tisk ukázka - Fajný 3D tisk Frýdek-Místek</image:title>
+    </image:image>
   </url>
-</urlset> 
+</urlset>
