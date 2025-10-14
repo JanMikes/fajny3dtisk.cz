@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
-import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin } from 'lucide-astro';
+import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram } from 'lucide-astro';
 ---
 
 <Layout
@@ -12,11 +12,17 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
   <Navigation />
 
   <!-- Hero Section -->
-  <section class="gradient-bg min-h-screen flex items-center justify-center text-white relative overflow-hidden pt-20">
+  <section class="min-h-screen flex items-center justify-center text-white relative overflow-hidden pt-20">
+    <!-- Background image -->
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/img/hero.jpg');"></div>
+
+    <!-- Brand-colored overlay for readability -->
+    <div class="absolute inset-0 bg-gradient-to-br from-red-950/50 via-black/35 to-red-900/45"></div>
+
     <!-- Animated background elements -->
-    <div class="absolute inset-0 opacity-20">
-      <div class="absolute top-20 left-10 w-72 h-72 bg-red-600/30 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute bottom-20 right-10 w-96 h-96 bg-orange-600/30 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute top-20 left-10 w-72 h-72 bg-red-600/50 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-20 right-10 w-96 h-96 bg-orange-600/50 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
     </div>
 
     <div class="container-custom text-center relative z-10">
@@ -255,55 +261,69 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
     </div>
 
     <div class="container-custom relative z-10">
-      <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-center mb-16">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-center mb-4">
         Jak funguje naše služba<br />3D tisku ve Frýdku-Místku?
       </h2>
+      <p class="text-white/90 text-center text-lg mb-16 max-w-2xl mx-auto">
+        Od prvního kontaktu k hotovému výtisku
+      </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div class="glass rounded-2xl p-8 hover-lift">
-          <div class="flex justify-center mb-6">
-            <div class="p-4 bg-white/20 rounded-full">
-              <FileUp class="w-10 h-10" />
+      <!-- Step 1: Two paths -->
+      <div class="mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div class="glass rounded-2xl p-8 hover-lift border-2 border-white/20">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="p-3 bg-white/20 rounded-full">
+                <FileUp class="w-8 h-8" />
+              </div>
+              <h3 class="text-xl font-bold">Vlastní Model</h3>
             </div>
+            <p class="text-white/90 leading-relaxed">
+              Máte vlastní 3D soubor? Pošlete mi STL, 3MF, STEP/STP nebo OBJ.
+            </p>
           </div>
-          <h3 class="text-2xl font-bold mb-4">Model nebo nápad</h3>
-          <p class="text-white/90 leading-relaxed">
-            <strong>Máte vlastní 3D soubor?</strong> Pošlete mi STL, 3MF, STEP/STP nebo OBJ.<br /><br />
-            <strong>Nemáte nic? Nevadí!</strong> V databázích vyhledám hotový model, nebo vám ho podle domluvy vymodeluji na míru.
-          </p>
+
+          <div class="glass rounded-2xl p-8 hover-lift border-2 border-white/20">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="p-3 bg-white/20 rounded-full">
+                <Lightbulb class="w-8 h-8" />
+              </div>
+              <h3 class="text-xl font-bold">Mám nápad</h3>
+            </div>
+            <p class="text-white/90 leading-relaxed">
+              Nemáte nic? Nevadí! V databázích vyhledám hotový model, nebo vám ho podle domluvy vymodeluji na míru.
+            </p>
+          </div>
         </div>
+      </div>
 
-        <div class="glass rounded-2xl p-8 hover-lift">
-          <div class="flex justify-center mb-6">
-            <div class="p-4 bg-white/20 rounded-full">
-              <Calculator class="w-10 h-10" />
-            </div>
+      <!-- Steps 2, 3, 4 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div class="glass rounded-2xl p-8 hover-lift border-2 border-white/20">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 bg-white rounded-full flex items-center justify-center font-black text-red-600 text-sm flex-shrink-0">2</span>
+            <h3 class="text-xl font-bold">Kalkulace</h3>
           </div>
-          <h3 class="text-2xl font-bold mb-4">Kalkulace</h3>
           <p class="text-white/90 leading-relaxed">
             Do 48 h víte cenu, materiál i termín.
           </p>
         </div>
 
-        <div class="glass rounded-2xl p-8 hover-lift">
-          <div class="flex justify-center mb-6">
-            <div class="p-4 bg-white/20 rounded-full">
-              <Printer class="w-10 h-10" />
-            </div>
+        <div class="glass rounded-2xl p-8 hover-lift border-2 border-white/20">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 bg-white rounded-full flex items-center justify-center font-black text-red-600 text-sm flex-shrink-0">3</span>
+            <h3 class="text-xl font-bold">Tiskneme</h3>
           </div>
-          <h3 class="text-2xl font-bold mb-4">Tiskneme</h3>
           <p class="text-white/90 leading-relaxed">
             Já kouzlím s filamentem, Frank hlídá, Sabina připravuje balící rituál.
           </p>
         </div>
 
-        <div class="glass rounded-2xl p-8 hover-lift">
-          <div class="flex justify-center mb-6">
-            <div class="p-4 bg-white/20 rounded-full">
-              <Truck class="w-10 h-10" />
-            </div>
+        <div class="glass rounded-2xl p-8 hover-lift border-2 border-white/20">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 bg-white rounded-full flex items-center justify-center font-black text-red-600 text-sm flex-shrink-0">4</span>
+            <h3 class="text-xl font-bold">Doručení</h3>
           </div>
-          <h3 class="text-2xl font-bold mb-4">Doručení</h3>
           <p class="text-white/90 leading-relaxed">
             Osobně, Zásilkovnou nebo Balíkovnou. Za pár dní držíte plastový sen v ruce.
           </p>
@@ -324,16 +344,16 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
         {[...Array(16)].map((_, i) => (
           <a
             href={`/img/gallery/${String(i + 1).padStart(2, '0')}.jpg`}
-            class="glightbox block group relative overflow-hidden rounded-xl hover-lift aspect-square"
+            class="glightbox group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 aspect-square"
             data-gallery="gallery"
           >
             <img
               src={`/img/thumbs/${String(i + 1).padStart(2, '0')}.jpg`}
               alt={`3D tisk ukázka ${i + 1}`}
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
               loading="lazy"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute inset-0 bg-red-600/0 group-hover:bg-red-600/20 transition-colors duration-300"></div>
           </a>
         ))}
       </div>
@@ -352,65 +372,71 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
         <span class="gradient-text">o 3D tisku ve Frýdku-Místku</span>
       </h2>
 
-      <div class="space-y-4">
-        <details class="glass-white rounded-xl p-6 hover-lift group">
-          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <details class="glass-white rounded-xl hover-lift group">
+          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
             <CircleHelp class="w-6 h-6 text-orange-500 flex-shrink-0" />
-            Co vlastně 3D tisk je?
+            <span class="flex-1">Co vlastně 3D tisk je?</span>
+            <ChevronDown class="w-5 h-5 text-gray-600 flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
           </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed pl-9">
+          <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
             3D tisk je jako kouzelná pekárna pro plastové věci! Místo mouky používám roztavený plast (PLA nebo PETG), který vrstva po vrstvě "peču" do požadovaného tvaru. Ve Frýdku-Místku máme jednu z nejmodernějších 3D tiskáren v okolí – dokáže vytvořit téměř cokoliv, co si dokážete představit!
           </p>
         </details>
 
-        <details class="glass-white rounded-xl p-6 hover-lift group">
-          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3">
+        <details class="glass-white rounded-xl hover-lift group">
+          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
             <Clock class="w-6 h-6 text-orange-500 flex-shrink-0" />
-            Jak rychlý je 3D tisk?
+            <span class="flex-1">Jak rychlý je 3D tisk?</span>
+            <ChevronDown class="w-5 h-5 text-gray-600 flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
           </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed pl-9">
+          <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
             Na rozdíl od velkých firem, kde čekáte týdny, u nás ve Frýdku-Místku tiskneme express! Běžně do 48 hodin, a když opravdu hoří, zvládnu express za 24 hodin. Frank zatím hlídá, aby se tiskárna nezastavila, a Sabina už připravuje balení.
           </p>
         </details>
 
-        <details class="glass-white rounded-xl p-6 hover-lift group">
-          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3">
+        <details class="glass-white rounded-xl hover-lift group">
+          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
             <Box class="w-6 h-6 text-orange-500 flex-shrink-0" />
-            Jaké materiály používáme pro 3D tisk?
+            <span class="flex-1">Jaké materiály používáme pro 3D tisk?</span>
+            <ChevronDown class="w-5 h-5 text-gray-600 flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
           </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed pl-9">
+          <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
             Specializujeme se na PLA (perfektní pro dekorativní věci, hračky, prototypy) a PETG (odolnější, snese vyšší teploty, ideální na funkční díly). V našem skladu ve Frýdku-Místku máme základní barvy po ruce, speciální odstíny rád objednám!
           </p>
         </details>
 
-        <details class="glass-white rounded-xl p-6 hover-lift group">
-          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3">
+        <details class="glass-white rounded-xl hover-lift group">
+          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
             <svg class="w-6 h-6 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
             </svg>
-            Jak velké věci dokážeme vytisknout?
+            <span class="flex-1">Jak velké věci dokážeme vytisknout?</span>
+            <ChevronDown class="w-5 h-5 text-gray-600 flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
           </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed pl-9">
+          <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
             Naše 3D tiskárna zvládne rozměry 180×180×180 mm. To znamená, že vytiskneme prakticky cokoliv od miniaturních šperků po větší držáky či krabičky. Potřebujete něco většího? Rozdělíme model na části a pak ho slepíme!
           </p>
         </details>
 
-        <details class="glass-white rounded-xl p-6 hover-lift group">
-          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3">
+        <details class="glass-white rounded-xl hover-lift group">
+          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
             <MapPin class="w-6 h-6 text-orange-500 flex-shrink-0" />
-            Kam 3D tisk dodáváme?
+            <span class="flex-1">Kam 3D tisk dodáváme?</span>
+            <ChevronDown class="w-5 h-5 text-gray-600 flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
           </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed pl-9">
+          <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
             I když jsme z Frýdku-Místku, expedujeme po celé České republice! Zásilkovna, Balíkovna nebo osobní předání – jak chcete. Místní zákazníci z Frýdku-Místku a okolí si mohou výtisky vyzvednout přímo u nás!
           </p>
         </details>
 
-        <details class="glass-white rounded-xl p-6 hover-lift group">
-          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3">
+        <details class="glass-white rounded-xl hover-lift group">
+          <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
             <Lightbulb class="w-6 h-6 text-orange-500 flex-shrink-0" />
-            Nemám 3D model – pomůžete?
+            <span class="flex-1">Nemám 3D model – pomůžete?</span>
+            <ChevronDown class="w-5 h-5 text-gray-600 flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
           </summary>
-          <p class="mt-4 text-gray-600 leading-relaxed pl-9">
+          <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
             Jasně! Buď vám najdu hotový model z databází, nebo podle dohody navrhnu úplně nový na míru. Stačí mi říct, co potřebujete, a já vymyslím, jak to ve Frýdku-Místku rychle a kvalitně vytisknout!
           </p>
         </details>
@@ -431,6 +457,66 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
       </p>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Contact Info -->
+        <div class="flex flex-col">
+          <h3 class="text-2xl font-bold text-gray-900 mb-6">Kontaktní informace</h3>
+
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">Michal Trněný</p>
+                <p class="text-gray-600">IČ 14406713 – nejsem plátce DPH</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
+                <MapPin class="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <p class="text-gray-900">Jana Čapka 3081</p>
+                <p class="text-gray-900">738 01 Frýdek-Místek</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <a href="mailto:michal@fajny3dtisk.cz" class="text-red-600 hover:text-orange-500 font-semibold transition-colors">
+                  michal@fajny3dtisk.cz
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
+                <Instagram class="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <a href="https://www.instagram.com/fajny_3dtisk/" target="_blank" rel="noopener noreferrer" class="text-red-600 hover:text-orange-500 font-semibold transition-colors">
+                  @fajny_3dtisk
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Response Info -->
+          <div class="mt-6 bg-orange-50 border-l-4 border-orange-500 rounded-lg p-4">
+            <p class="text-sm text-gray-700 leading-relaxed">
+              <span class="font-semibold text-gray-900">Rychlá odezva:</span> Na dotazy odpovídám běžně do 24 hodin, často i rychleji. Frank zatím hlídá, aby nic neuniklo!
+            </p>
+          </div>
+        </div>
+
         <!-- Contact Form -->
         <div class="glass-white rounded-2xl p-8">
           <form id="contact-form">
@@ -488,48 +574,6 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
               Odeslat poptávku
             </button>
           </form>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="glass-white rounded-2xl p-8 flex flex-col justify-center">
-          <h3 class="text-2xl font-bold text-gray-900 mb-6">Kontaktní informace</h3>
-
-          <div class="space-y-4">
-            <div class="flex items-start gap-4">
-              <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
-              </div>
-              <div>
-                <p class="font-semibold text-gray-900">Michal Trněný</p>
-                <p class="text-gray-600">IČ 14406713 – nejsem plátce DPH</p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-              <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
-                <MapPin class="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p class="text-gray-900">Jana Čapka 3081</p>
-                <p class="text-gray-900">738 01 Frýdek-Místek</p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-              <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-              <div>
-                <a href="mailto:michal@fajny3dtisk.cz" class="text-red-600 hover:text-orange-500 font-semibold transition-colors">
-                  michal@fajny3dtisk.cz
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
