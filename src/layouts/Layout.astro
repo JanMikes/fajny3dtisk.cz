@@ -15,9 +15,10 @@ const { title, description } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content={description} />
-		<meta name="keywords" content="3d tisk, 3D tisk Frýdek-Místek, 3D tisk na zakázku, rychlý 3D tisk, PLA tisk, PETG tisk, 3D prototypy, 3D modelování, 3D služby Frýdek-Místek, plastový 3D tisk, malosériová výroba" />
-		<meta name="author" content="Jan Mikeš - j.mikes@me.com" />
-		<meta name="robots" content="index, follow" />
+		<meta name="author" content="Michal Trněný - Fajný 3D tisk" />
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+		<meta name="language" content="cs" />
+		<meta name="revisit-after" content="7 days" />
 
 		<!-- Apple -->
 		<meta name="apple-mobile-web-app-title" content="Fajný 3D tisk" />
@@ -26,8 +27,13 @@ const { title, description } = Astro.props;
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content="https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Fajný 3D tisk - Profesionální 3D tiskové služby ve Frýdku-Místku" />
 		<meta property="og:url" content="https://fajny3dtisk.cz/" />
 		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="cs_CZ" />
+		<meta property="og:site_name" content="Fajný 3D tisk" />
 
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image" />
@@ -38,10 +44,13 @@ const { title, description } = Astro.props;
 		<!-- Canonical -->
 		<link rel="canonical" href="https://fajny3dtisk.cz/" />
 
-		<!-- Geo -->
+		<!-- Geo & Local SEO -->
 		<meta name="geo.region" content="CZ-MSK" />
 		<meta name="geo.placename" content="Frýdek-Místek" />
+		<meta name="geo.position" content="49.6833;18.3500" />
 		<meta name="ICBM" content="49.6833, 18.3500" />
+		<meta name="DC.title" content={title} />
+		<link rel="alternate" hreflang="cs" href="https://fajny3dtisk.cz/" />
 
 		<!-- Icons -->
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -49,6 +58,10 @@ const { title, description } = Astro.props;
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 		<link rel="manifest" href="/manifest.json" />
+
+		<!-- Preload critical resources -->
+		<link rel="preload" href="/fajny3d-tisk-logo.jpg" as="image" type="image/jpeg" />
+		<link rel="preload" href="/img/hero.jpg" as="image" type="image/jpeg" />
 
 		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
