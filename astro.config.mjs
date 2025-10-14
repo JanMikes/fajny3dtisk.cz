@@ -5,8 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://fajny3dtisk.cz',
-  vite: {
-    plugins: [tailwindcss()]
-  }
+    site: 'https://fajny3dtisk.cz',
+    vite: {
+        plugins: [tailwindcss()]
+    }
 });

@@ -1,0 +1,74 @@
+---
+import { Menu, X } from 'lucide-astro';
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 glass-white">
+  <div class="container-custom">
+    <div class="flex items-center justify-between py-4">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <img src="/fajny3d-tisk-logo.jpg" alt="Fajný 3D tisk logo" class="w-12 h-12 rounded-full ring-2 ring-red-500/50 transition-transform group-hover:scale-110" />
+        <span class="font-bold text-xl text-gray-900">Fajný <span class="gradient-text">3D tisk</span></span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden md:flex items-center gap-8">
+        <li><a href="#proc-ja" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">Proč já?</a></li>
+        <li><a href="#materialy" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">Materiály</a></li>
+        <li><a href="#proces" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">Jak to funguje</a></li>
+        <li><a href="#ukazky" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">Ukázky</a></li>
+        <li><a href="#faq" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">FAQ</a></li>
+        <li>
+          <a href="#kontakt" class="inline-flex items-center px-6 py-2.5 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out">
+            Kontakt
+          </a>
+        </li>
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700 hover:text-red-600 transition-all duration-300 ease-in-out" aria-label="Toggle menu">
+        <Menu class="w-6 h-6" id="menu-icon" />
+        <X class="w-6 h-6 hidden" id="close-icon" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden glass-white border-t border-gray-200/50">
+    <ul class="container-custom py-6 space-y-4">
+      <li><a href="#proc-ja" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">Proč já?</a></li>
+      <li><a href="#materialy" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">Materiály</a></li>
+      <li><a href="#proces" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">Jak to funguje</a></li>
+      <li><a href="#ukazky" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">Ukázky</a></li>
+      <li><a href="#faq" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">FAQ</a></li>
+      <li>
+        <a href="#kontakt" class="inline-flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300 ease-in-out">
+          Kontakt
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  menuBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+    menuIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+
+  // Close mobile menu when clicking on a link
+  const mobileLinks = mobileMenu?.querySelectorAll('a');
+  mobileLinks?.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    });
+  });
+</script>
