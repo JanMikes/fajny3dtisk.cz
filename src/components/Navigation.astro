@@ -1,5 +1,7 @@
 ---
 import { Menu, X } from 'lucide-astro';
+import { Image } from 'astro:assets';
+import logo from '../../public/fajny3d-tisk-logo.jpg';
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 glass-white">
@@ -7,7 +9,15 @@ import { Menu, X } from 'lucide-astro';
     <div class="flex items-center justify-between py-4">
       <!-- Logo -->
       <a href="#" class="flex items-center gap-3 group">
-        <img src="/fajny3d-tisk-logo.jpg" alt="Fajný 3D tisk logo" class="w-12 h-12 rounded-full ring-2 ring-red-500/50 transition-transform group-hover:scale-110" />
+        <Image
+          src={logo}
+          alt="Fajný 3D tisk logo"
+          width={96}
+          height={96}
+          class="w-12 h-12 rounded-full ring-2 ring-red-500/50 transition-transform group-hover:scale-110"
+          format="webp"
+          quality={85}
+        />
         <span class="font-bold text-xl text-gray-900">Fajný <span class="gradient-text">3D tisk</span></span>
       </a>
 
