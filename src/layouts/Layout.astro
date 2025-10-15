@@ -204,14 +204,6 @@ const { title, description } = Astro.props;
 				once: true,
 				offset: 100,
 			});
-
-			// Ensure AOS doesn't interfere with hover transitions
-			document.addEventListener('DOMContentLoaded', () => {
-				const aosElements = document.querySelectorAll('[data-aos]');
-				aosElements.forEach(el => {
-					el.style.transition = 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out';
-				});
-			});
 		</script>
 	</body>
 </html>

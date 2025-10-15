@@ -51,6 +51,11 @@
     @apply transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-2xl;
   }
 
+  /* Apply hover transitions only after AOS animation completes */
+  [data-aos].aos-animate {
+    transition: all 0.3s ease-in-out !important;
+  }
+
   /* Section spacing */
   .section-padding {
     @apply py-20 md:py-28;
