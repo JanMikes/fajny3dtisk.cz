@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Import Inter font locally from Fontsource - Only used weights */
+@import "@fontsource/inter/400.css"; /* Normal - body text */
+@import "@fontsource/inter/500.css"; /* Medium - navigation */
+@import "@fontsource/inter/600.css"; /* Semibold - buttons, links */
+@import "@fontsource/inter/700.css"; /* Bold - headings, labels */
+@import "@fontsource/inter/900.css"; /* Black - major headings */
+
 @layer base {
   body {
     @apply font-sans antialiased;

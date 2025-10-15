@@ -2,7 +2,15 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { Image, Picture } from 'astro:assets';
 import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram } from 'lucide-astro';
+
+// Import images for optimization
+import logo from '../../public/fajny3d-tisk-logo.jpg';
+import heroImg from '../../public/img/hero.jpg';
+import michalImg from '../../public/img/michal.jpg';
+import sabinaImg from '../../public/img/sabina.jpg';
+import frankImg from '../../public/img/frank.jpg';
 ---
 
 <Layout
@@ -14,7 +22,15 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
   <!-- Hero Section -->
   <section class="min-h-screen flex items-center justify-center text-white relative overflow-hidden pt-10 md:pt-14">
     <!-- Background image -->
-    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/img/hero.jpg');"></div>
+    <Picture
+      src={heroImg}
+      alt="3D tisk pozadí - Fajný 3D tisk Frýdek-Místek"
+      formats={['webp', 'jpg']}
+      widths={[640, 1024, 1920]}
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+    />
 
     <!-- Brand-colored overlay for readability -->
     <div class="absolute inset-0 bg-gradient-to-br from-red-950/50 via-black/35 to-red-900/45"></div>
@@ -29,10 +45,14 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
       <div class="max-w-4xl mx-auto space-y-3 md:space-y-6">
         <!-- Logo -->
         <div class="flex justify-center mb-2 md:mb-4 animate-fade-in">
-          <img
-            src="/fajny3d-tisk-logo.jpg"
+          <Image
+            src={logo}
             alt="Fajný 3D tisk - Profesionální 3D tisk ve Frýdku-Místku logo"
+            width={192}
+            height={192}
             class="w-24 h-24 md:w-36 md:h-36 rounded-full ring-4 ring-white/30 shadow-2xl hover:scale-110 transition-transform duration-500"
+            format="webp"
+            quality={85}
           />
         </div>
 
@@ -93,10 +113,14 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
         <!-- Michal -->
         <div class="glass-white rounded-2xl p-8 hover-lift group" data-aos="fade-up" data-aos-delay="100">
           <div class="flex justify-center mb-6">
-            <img
-              src="/img/michal.jpg"
+            <Image
+              src={michalImg}
               alt="Michal Trněný - profesionální 3D tiskař ve Frýdku-Místku, majitel Fajný 3D tisk"
+              width={320}
+              height={320}
               class="w-40 h-40 rounded-full object-cover ring-4 ring-red-500/50 group-hover:ring-red-500 transition-all"
+              format="webp"
+              quality={85}
             />
           </div>
           <h3 class="text-2xl font-bold text-gray-900 text-center mb-2">Michal</h3>
@@ -110,10 +134,14 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
         <!-- Sabina -->
         <div class="glass-white rounded-2xl p-8 hover-lift group" data-aos="fade-up" data-aos-delay="200">
           <div class="flex justify-center mb-6">
-            <img
-              src="/img/sabina.jpg"
+            <Image
+              src={sabinaImg}
               alt="Sabina - balení a expedice 3D tisků Fajný 3D tisk Frýdek-Místek"
+              width={320}
+              height={320}
               class="w-40 h-40 rounded-full object-cover ring-4 ring-orange-500/50 group-hover:ring-orange-500 transition-all"
+              format="webp"
+              quality={85}
             />
           </div>
           <h3 class="text-2xl font-bold text-gray-900 text-center mb-2">Sabina</h3>
@@ -127,10 +155,14 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
         <!-- Frank -->
         <div class="glass-white rounded-2xl p-8 hover-lift group" data-aos="fade-up" data-aos-delay="300">
           <div class="flex justify-center mb-6">
-            <img
-              src="/img/frank.jpg"
+            <Image
+              src={frankImg}
               alt="Frank - psí kontrolor kvality 3D tisku ve Frýdku-Místku"
+              width={320}
+              height={320}
               class="w-40 h-40 rounded-full object-cover ring-4 ring-red-500/50 group-hover:ring-red-500 transition-all"
+              format="webp"
+              quality={85}
             />
           </div>
           <h3 class="text-2xl font-bold text-gray-900 text-center mb-2">Frank</h3>
@@ -709,16 +741,25 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
 </script>
 
 <script>
-  // GLightbox initialization
-  document.addEventListener('DOMContentLoaded', () => {
-    // Initialize GLightbox for gallery
+  // GLightbox initialization - Wait for deferred script to load
+  function initGLightbox() {
     if (typeof GLightbox !== 'undefined') {
       const lightbox = GLightbox({
         touchNavigation: true,
         loop: true,
         autoplayVideos: true
       });
+    } else {
+      // Retry if GLightbox not loaded yet
+      setTimeout(initGLightbox, 100);
     }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize GLightbox after script loads
+    window.addEventListener('load', () => {
+      initGLightbox();
+    });
 
     // Contact form handling
     const contactForm = document.getElementById('contact-form');

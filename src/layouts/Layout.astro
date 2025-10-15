@@ -21,6 +21,9 @@ const { title, description } = Astro.props;
 		<meta name="language" content="cs" />
 		<meta name="revisit-after" content="7 days" />
 
+		<!-- Content Security Policy -->
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com https://api.staticforms.xyz; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://api.staticforms.xyz; base-uri 'self'; form-action 'self' https://api.staticforms.xyz;" />
+
 		<!-- Apple -->
 		<meta name="apple-mobile-web-app-title" content="Fajný 3D tisk" />
 
@@ -60,17 +63,9 @@ const { title, description } = Astro.props;
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 		<link rel="manifest" href="/manifest.json" />
 
-		<!-- Preload critical resources -->
-		<link rel="preload" href="/fajny3d-tisk-logo.jpg" as="image" type="image/jpeg" />
-		<link rel="preload" href="/img/hero.jpg" as="image" type="image/jpeg" />
+		<!-- Note: Hero and logo images are optimized by Astro and loaded with fetchpriority="high" -->
 
-		<!-- Fonts -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-		<!-- GLightbox CSS -->
-		<link rel="stylesheet" href="/glightbox/css/glightbox.min.css" />
+		<!-- GLightbox CSS will be loaded after page load via script below -->
 
 		<title>{title}</title>
 
@@ -192,8 +187,23 @@ const { title, description } = Astro.props;
 	<body class="font-sans antialiased bg-gray-50 text-gray-900">
 		<slot />
 
-		<!-- GLightbox JS -->
-		<script is:inline src="/glightbox/js/glightbox.min.js"></script>
+		<!-- GLightbox - Deferred loading for better performance -->
+		<script is:inline>
+			// Defer GLightbox CSS and JS loading until after page load
+			window.addEventListener('load', function() {
+				// Load CSS
+				const link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.href = '/glightbox/css/glightbox.min.css';
+				document.head.appendChild(link);
+
+				// Load JS
+				const script = document.createElement('script');
+				script.src = '/glightbox/js/glightbox.min.js';
+				script.async = true;
+				document.body.appendChild(script);
+			});
+		</script>
 
 		<!-- AOS (Animate On Scroll) -->
 		<script>
