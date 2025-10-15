@@ -52,8 +52,11 @@
   }
 
   /* Apply hover transitions only after AOS animation completes */
+  /* Note: Using transition-property to avoid overriding AOS animation duration */
   [data-aos].aos-animate {
-    transition: all 0.3s ease-in-out !important;
+    transition-property: transform, box-shadow, background-color, border-color, color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
   }
 
   /* Section spacing */

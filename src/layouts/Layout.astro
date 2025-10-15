@@ -199,10 +199,13 @@ const { title, description } = Astro.props;
 		<script>
 			import AOS from 'aos';
 			AOS.init({
-				duration: 800,
+				duration: 10000,
 				easing: 'ease-in-out',
 				once: true,
-				offset: 100,
+				offset: 120,
+				// Performance optimizations
+				throttleDelay: 200,      // Reduce scroll event frequency (default: 99ms)
+				debounceDelay: 100,      // Reduce resize event checks (default: 50ms)
 			});
 		</script>
 	</body>
