@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { Image, Picture } from 'astro:assets';
-import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram } from 'lucide-astro';
+import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, User, Quote } from 'lucide-astro';
 
 // Import images for optimization
 import logo from '../../public/fajny3d-tisk-logo.jpg';
@@ -482,6 +482,181 @@ import frankImg from '../../public/img/frank.jpg';
     </div>
   </section>
 
+  <!-- Testimonials Section -->
+  <section id="recenze" class="section-padding bg-gradient-to-br from-orange-600 via-red-600 to-orange-700 text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+
+    <div class="relative z-10">
+      <div class="container-custom">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-center mb-3" data-aos="fade-down">
+          Co říkají naši zákazníci?
+        </h2>
+        <p class="text-xl md:text-2xl text-center text-white/90 mb-12 font-semibold" data-aos="fade-up">
+          Garantujeme 100% spokojenost!
+        </p>
+      </div>
+
+      <!-- Desktop: Two rows with infinite scroll animation -->
+      <div class="hidden md:block space-y-6 w-full">
+        <!-- Row 1 - Scrolling Right -->
+        <div class="testimonials-track testimonials-scroll-right overflow-hidden">
+          <div class="testimonials-row inline-flex gap-6">
+            {[
+              { name: "Janaj321", text: "V pořádku, děkuji 😊" },
+              { name: "1jarka1", text: "Vše v pořádku. Rychlé odeslání zboží. Určitě doporučuji." },
+              { name: "Castrillo1312", text: "Moc hezké náušnice, děkuji." },
+              { name: "sestradika", text: "Milé jednání, rychlé dodání. Doporučuji" },
+              { name: "kikus9", text: "Super 😊" },
+              { name: "jitkatonka", text: "Vše super, krásně zabaleno, rychle odesláno. Děkuji a doporučuji." },
+              { name: "ladko77", text: "Super predajca, odporúčam každému. Děkujem" },
+            ].map((testimonial) => (
+              <div class="glass rounded-2xl p-6 w-[360px] flex-shrink-0">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-white/30 flex items-center justify-center">
+                      <User class="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-white text-base mb-2">{testimonial.name}</h4>
+                    <p class="text-white/90 text-sm leading-relaxed">{testimonial.text}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* Duplicate for seamless loop */}
+            {[
+              { name: "Janaj321", text: "V pořádku, děkuji 😊" },
+              { name: "1jarka1", text: "Vše v pořádku. Rychlé odeslání zboží. Určitě doporučuji." },
+              { name: "Castrillo1312", text: "Moc hezké náušnice, děkuji." },
+              { name: "sestradika", text: "Milé jednání, rychlé dodání. Doporučuji" },
+              { name: "kikus9", text: "Super 😊" },
+              { name: "jitkatonka", text: "Vše super, krásně zabaleno, rychle odesláno. Děkuji a doporučuji." },
+              { name: "ladko77", text: "Super predajca, odporúčam každému. Děkujem" },
+            ].map((testimonial) => (
+              <div class="glass rounded-2xl p-6 w-[360px] flex-shrink-0">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-white/30 flex items-center justify-center">
+                      <User class="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-white text-base mb-2">{testimonial.name}</h4>
+                    <p class="text-white/90 text-sm leading-relaxed">{testimonial.text}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Row 2 - Scrolling Left -->
+        <div class="testimonials-track testimonials-scroll-left overflow-hidden">
+          <div class="testimonials-row inline-flex gap-6">
+            {[
+              { name: "boruvkova.pastelka", text: "Vše naprosto v pořádku, děkuji a doporučuji 😊" },
+              { name: "anickan.1", text: "Bez problémů." },
+              { name: "hostess", text: "Děkuji a doporučuji. 😊" },
+              { name: "Mateusz00055", text: "Polecam" },
+              { name: "anicka321321", text: "Vše OK" },
+              { name: "kris_v", text: "Vše v pořádku (top) moc děkuji a doporučuji." },
+              { name: "vendyssichov", text: "Doporučuji, vše v pořádku. Rychlé odeslání a dáreček potěšil. Děkuji 😊" },
+            ].map((testimonial) => (
+              <div class="glass rounded-2xl p-6 w-[360px] flex-shrink-0">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-white/30 flex items-center justify-center">
+                      <User class="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-white text-base mb-2">{testimonial.name}</h4>
+                    <p class="text-white/90 text-sm leading-relaxed">{testimonial.text}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* Duplicate for seamless loop */}
+            {[
+              { name: "boruvkova.pastelka", text: "Vše naprosto v pořádku, děkuji a doporučuji 😊" },
+              { name: "anickan.1", text: "Bez problémů." },
+              { name: "hostess", text: "Děkuji a doporučuji. 😊" },
+              { name: "Mateusz00055", text: "Polecam" },
+              { name: "anicka321321", text: "Vše OK" },
+              { name: "kris_v", text: "Vše v pořádku (top) moc děkuji a doporučuji." },
+              { name: "vendyssichov", text: "Doporučuji, vše v pořádku. Rychlé odeslání a dáreček potěšil. Děkuji 😊" },
+            ].map((testimonial) => (
+              <div class="glass rounded-2xl p-6 w-[360px] flex-shrink-0">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-white/30 flex items-center justify-center">
+                      <User class="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-white text-base mb-2">{testimonial.name}</h4>
+                    <p class="text-white/90 text-sm leading-relaxed">{testimonial.text}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile: Swipeable carousel -->
+      <div class="md:hidden">
+        <div class="flex items-center justify-center gap-2 mb-4 text-white/60 text-sm">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          <span>Přejeďte prstem</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+
+        <div class="overflow-x-auto scrollbar-hide">
+          <div class="inline-flex gap-4 px-4 py-2">
+            {[
+              { name: "Janaj321", text: "V pořádku, děkuji 😊" },
+              { name: "1jarka1", text: "Vše v pořádku. Rychlé odeslání zboží. Určitě doporučuji." },
+              { name: "Castrillo1312", text: "Moc hezké náušnice, děkuji." },
+              { name: "sestradika", text: "Milé jednání, rychlé dodání. Doporučuji" },
+              { name: "kikus9", text: "Super 😊" },
+              { name: "jitkatonka", text: "Vše super, krásně zabaleno, rychle odesláno. Děkuji a doporučuji." },
+              { name: "ladko77", text: "Super predajca, odporúčam každému. Děkujem" },
+              { name: "boruvkova.pastelka", text: "Vše naprosto v pořádku, děkuji a doporučuji 😊" },
+              { name: "anickan.1", text: "Bez problémů." },
+              { name: "hostess", text: "Děkuji a doporučuji. 😊" },
+              { name: "Mateusz00055", text: "Polecam" },
+              { name: "anicka321321", text: "Vše OK" },
+              { name: "kris_v", text: "Vše v pořádku (top) moc děkuji a doporučuji." },
+              { name: "vendyssichov", text: "Doporučuji, vše v pořádku. Rychlé odeslání a dáreček potěšil. Děkuji 😊" },
+            ].map((testimonial) => (
+              <div class="glass rounded-2xl p-6 w-[280px] flex-shrink-0">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-white/30 flex items-center justify-center">
+                      <User class="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-white text-base mb-2">{testimonial.name}</h4>
+                    <p class="text-white/90 text-sm leading-relaxed">{testimonial.text}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact Section -->
   <section id="kontakt" class="section-padding bg-white">
     <div class="container-custom max-w-5xl">
@@ -679,6 +854,56 @@ import frankImg from '../../public/img/frank.jpg';
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Testimonials Infinite Scroll Animations */
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .testimonials-track {
+    width: 100%;
+  }
+
+  .testimonials-row {
+    width: fit-content;
+  }
+
+  .testimonials-scroll-right .testimonials-row {
+    animation: scroll-right 40s linear infinite;
+  }
+
+  .testimonials-scroll-left .testimonials-row {
+    animation: scroll-left 40s linear infinite;
+  }
+
+  /* Pause animation on hover */
+  .testimonials-track:hover .testimonials-row {
+    animation-play-state: paused;
+  }
+
+  /* Mobile scrollbar hide */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 </style>
 
