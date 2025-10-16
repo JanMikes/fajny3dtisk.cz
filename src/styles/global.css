@@ -30,6 +30,16 @@
   .glass-white {
     @apply bg-white/90 backdrop-blur-lg border border-gray-200/50 shadow-xl;
     transition: all 0.3s ease-in-out !important;
+    /* Fix for mobile shadow glitch - ensure proper shadow rendering */
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    /* Prevent border/shadow rendering issues on mobile */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    /* Prevent overflow artifacts */
+    overflow: hidden;
+    will-change: transform;
   }
 
   /* Gradient text */
@@ -97,4 +107,29 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   @apply from-red-600 to-orange-600;
+}
+
+/* Mobile-specific fixes for card rendering issues */
+@media (max-width: 768px) {
+  .glass-white {
+    /* Force hardware acceleration on mobile */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    /* Reduce blur intensity on mobile to prevent artifacts */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* Ensure crisp borders on mobile */
+    border-width: 1px;
+    border-style: solid;
+    /* Prevent subpixel rendering issues */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .glass {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }

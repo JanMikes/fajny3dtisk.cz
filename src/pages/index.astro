@@ -896,14 +896,26 @@ import frankImg from '../../public/img/frank.jpg';
     animation-play-state: paused;
   }
 
-  /* Mobile scrollbar hide */
+  /* Mobile scrollbar hide - enhanced for all browsers */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    /* Prevent iOS momentum scroll shadows/indicators */
+    -webkit-overflow-scrolling: touch;
+    overflow: -moz-scrollbars-none;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar-track,
+  .scrollbar-hide::-webkit-scrollbar-thumb {
+    display: none !important;
+    background: transparent !important;
   }
 </style>
 
