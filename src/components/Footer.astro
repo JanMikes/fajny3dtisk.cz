@@ -1,5 +1,13 @@
 ---
 import { Mail, Instagram, Check } from 'lucide-astro';
+import type { Translations } from '../i18n/types';
+
+interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
@@ -7,53 +15,53 @@ import { Mail, Instagram, Check } from 'lucide-astro';
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
       <!-- About Section -->
       <div class="space-y-4">
-        <h4 class="text-xl font-bold mb-4">3D tisk Frýdek-Místek</h4>
+        <h4 class="text-xl font-bold mb-4">{t.footer.aboutHeading}</h4>
         <p class="text-gray-300 leading-relaxed">
-          Fajný 3D tisk je rodinná služba specializující se na rychlý a kvalitní 3D tisk ve Frýdku-Místku a okolí. Tiskneme z materiálů PLA a PETG s expresním dodáním do 48 hodin.
+          {t.footer.aboutText}
         </p>
         <div class="pt-2 text-sm text-gray-400">
-          <p class="font-semibold text-white">Michal Trněný</p>
-          <p>Jana Čapka 3081</p>
-          <p>738 01 Frýdek-Místek</p>
+          <p class="font-semibold text-white">{t.contact.ownerName}</p>
+          <p>{t.contact.address1}</p>
+          <p>{t.contact.address2}</p>
         </div>
       </div>
 
       <!-- Services Section -->
       <div class="space-y-4">
-        <h4 class="text-xl font-bold mb-4">Naše služby 3D tisku</h4>
+        <h4 class="text-xl font-bold mb-4">{t.footer.servicesHeading}</h4>
         <ul class="space-y-3">
           <li class="flex items-start gap-2">
             <Check class="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
-            <span class="text-gray-300">3D tisk na zakázku PLA a PETG</span>
+            <span class="text-gray-300">{t.footer.services.printing}</span>
           </li>
           <li class="flex items-start gap-2">
             <Check class="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
-            <span class="text-gray-300">Rychlé dodání do 48h</span>
+            <span class="text-gray-300">{t.footer.services.fastDelivery}</span>
           </li>
           <li class="flex items-start gap-2">
             <Check class="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
-            <span class="text-gray-300">3D modelování na míru</span>
+            <span class="text-gray-300">{t.footer.services.modeling}</span>
           </li>
           <li class="flex items-start gap-2">
             <Check class="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
-            <span class="text-gray-300">Expedice po celé ČR</span>
+            <span class="text-gray-300">{t.footer.services.shipping}</span>
           </li>
           <li class="flex items-start gap-2">
             <Check class="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
-            <span class="text-gray-300">Osobní odběr Frýdek-Místek</span>
+            <span class="text-gray-300">{t.footer.services.pickup}</span>
           </li>
           <li class="flex items-start gap-2">
             <Check class="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
-            <span class="text-gray-300">Poradenství zdarma</span>
+            <span class="text-gray-300">{t.footer.services.consulting}</span>
           </li>
         </ul>
       </div>
 
       <!-- Contact Section -->
       <div class="space-y-4">
-        <h4 class="text-xl font-bold mb-4">Proč 3D tisk u nás?</h4>
+        <h4 class="text-xl font-bold mb-4">{t.footer.whyUsHeading}</h4>
         <p class="text-gray-300 leading-relaxed mb-6">
-          Ve Frýdku-Místku nabízíme nejrychlejší 3D tisk v regionu. Naše moderní 3D tiskárna dokáže zpracovat jakýkoliv projekt – od jednoduchých prototypů po složité mechanické díly.
+          {t.footer.whyUsText}
         </p>
         <div class="space-y-3">
           <a href="mailto:michal@fajny3dtisk.cz" class="flex items-center gap-3 text-gray-300 hover:text-orange-500 transition-all duration-300 ease-in-out group">
@@ -70,9 +78,9 @@ import { Mail, Instagram, Check } from 'lucide-astro';
 
     <!-- Bottom Bar -->
     <div class="border-t border-gray-700 pt-8 text-center space-y-2">
-      <p class="text-gray-300 font-semibold">Plastové (3D Tisk) sny na počkání</p>
+      <p class="text-gray-300 font-semibold">{t.footer.tagline}</p>
       <p class="text-sm text-gray-400">
-        Michal Trněný &copy; {new Date().getFullYear()} | Fajný 3D tisk | Frýdek-Místek | 3D tisk na zakázku | PLA PETG materiály
+        {t.footer.copyright.replace('{year}', currentYear.toString())}
       </p>
     </div>
   </div>

@@ -1,24 +1,133 @@
 ---
 import '../styles/global.css';
 import 'aos/dist/aos.css';
+import type { Translations } from '../i18n/types';
 
 interface Props {
 	title: string;
 	description: string;
+	lang: string;
+	locale: string;
+	url: string;
+	t: Translations;
 }
 
-const { title, description } = Astro.props;
+const { title, description, lang, locale, url, t } = Astro.props;
+
+// Create structured data object
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	"@id": "https://fajny3dtisk.cz/#organization",
+	"name": t.structuredData.businessName,
+	"alternateName": t.structuredData.alternateName,
+	"description": t.structuredData.description,
+	"image": [
+		"https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg",
+		"https://fajny3dtisk.cz/img/michal.jpg"
+	],
+	"logo": {
+		"@type": "ImageObject",
+		"url": "https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg",
+		"width": "512",
+		"height": "512"
+	},
+	"url": "https://fajny3dtisk.cz/",
+	"telephone": "",
+	"email": "michal@fajny3dtisk.cz",
+	"address": {
+		"@type": "PostalAddress",
+		"streetAddress": "Jana Čapka 3081",
+		"addressLocality": "Frýdek-Místek",
+		"addressRegion": "Moravskoslezský kraj",
+		"postalCode": "738 01",
+		"addressCountry": "CZ"
+	},
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": 49.6833,
+		"longitude": 18.3500
+	},
+	"areaServed": [
+		{
+			"@type": "City",
+			"name": "Frýdek-Místek"
+		},
+		{
+			"@type": "City",
+			"name": "Ostrava"
+		},
+		{
+			"@type": "City",
+			"name": "Havířov"
+		},
+		{
+			"@type": "City",
+			"name": "Třinec"
+		},
+		{
+			"@type": "State",
+			"name": t.structuredData.countryName
+		}
+	],
+	"hasOfferCatalog": {
+		"@type": "OfferCatalog",
+		"name": t.structuredData.offerCatalogName,
+		"itemListElement": [
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": t.structuredData.services.pla.name,
+					"description": t.structuredData.services.pla.description
+				}
+			},
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": t.structuredData.services.petg.name,
+					"description": t.structuredData.services.petg.description
+				}
+			},
+			{
+				"@type": "Offer",
+				"itemOffered": {
+					"@type": "Service",
+					"name": t.structuredData.services.modeling.name,
+					"description": t.structuredData.services.modeling.description
+				}
+			}
+		]
+	},
+	"priceRange": "$$",
+	"openingHours": "Mo-Su 08:00-22:00",
+	"founder": {
+		"@type": "Person",
+		"name": "Michal Trněný",
+		"jobTitle": t.structuredData.founderJobTitle,
+		"email": "michal@fajny3dtisk.cz"
+	},
+	"sameAs": [
+		"https://www.instagram.com/fajny_3dtisk/"
+	],
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": "5",
+		"reviewCount": "1"
+	}
+};
 ---
 
 <!doctype html>
-<html lang="cs" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content={description} />
 		<meta name="author" content="Michal Trněný - Fajný 3D tisk" />
 		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-		<meta name="language" content="cs" />
+		<meta name="language" content={lang} />
 		<meta name="revisit-after" content="7 days" />
 
 		<!-- Content Security Policy -->
@@ -34,9 +143,9 @@ const { title, description } = Astro.props;
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta property="og:image:alt" content="Fajný 3D tisk - Profesionální 3D tiskové služby ve Frýdku-Místku" />
-		<meta property="og:url" content="https://fajny3dtisk.cz/" />
+		<meta property="og:url" content={url} />
 		<meta property="og:type" content="website" />
-		<meta property="og:locale" content="cs_CZ" />
+		<meta property="og:locale" content={locale} />
 		<meta property="og:site_name" content="Fajný 3D tisk" />
 
 		<!-- Twitter -->
@@ -46,7 +155,7 @@ const { title, description } = Astro.props;
 		<meta name="twitter:image" content="https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg" />
 
 		<!-- Canonical -->
-		<link rel="canonical" href="https://fajny3dtisk.cz/" />
+		<link rel="canonical" href={url} />
 
 		<!-- Geo & Local SEO -->
 		<meta name="geo.region" content="CZ-MSK" />
@@ -54,7 +163,11 @@ const { title, description } = Astro.props;
 		<meta name="geo.position" content="49.6833;18.3500" />
 		<meta name="ICBM" content="49.6833, 18.3500" />
 		<meta name="DC.title" content={title} />
+
+		<!-- Hreflang tags for language alternatives -->
 		<link rel="alternate" hreflang="cs" href="https://fajny3dtisk.cz/" />
+		<link rel="alternate" hreflang="pl" href="https://fajny3dtisk.cz/fajny-druk-3d/" />
+		<link rel="alternate" hreflang="x-default" href="https://fajny3dtisk.cz/" />
 
 		<!-- Icons -->
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -79,110 +192,7 @@ const { title, description } = Astro.props;
 		</script>
 
 		<!-- Structured Data - LocalBusiness -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "LocalBusiness",
-			"@id": "https://fajny3dtisk.cz/#organization",
-			"name": "Fajný 3D tisk",
-			"alternateName": "Fajný 3D tisk Frýdek-Místek",
-			"description": "Profesionální 3D tisk na zakázku ve Frýdku-Místku a okolí. Rychlý 3D tisk z PLA a PETG do 48h s osobním přístupem a kvalitními výsledky.",
-			"image": [
-				"https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg",
-				"https://fajny3dtisk.cz/img/michal.jpg"
-			],
-			"logo": {
-				"@type": "ImageObject",
-				"url": "https://fajny3dtisk.cz/fajny3d-tisk-logo.jpg",
-				"width": "512",
-				"height": "512"
-			},
-			"url": "https://fajny3dtisk.cz/",
-			"telephone": "",
-			"email": "michal@fajny3dtisk.cz",
-			"address": {
-				"@type": "PostalAddress",
-				"streetAddress": "Jana Čapka 3081",
-				"addressLocality": "Frýdek-Místek",
-				"addressRegion": "Moravskoslezský kraj",
-				"postalCode": "738 01",
-				"addressCountry": "CZ"
-			},
-			"geo": {
-				"@type": "GeoCoordinates",
-				"latitude": 49.6833,
-				"longitude": 18.3500
-			},
-			"areaServed": [
-				{
-					"@type": "City",
-					"name": "Frýdek-Místek"
-				},
-				{
-					"@type": "City",
-					"name": "Ostrava"
-				},
-				{
-					"@type": "City",
-					"name": "Havířov"
-				},
-				{
-					"@type": "City",
-					"name": "Třinec"
-				},
-				{
-					"@type": "State",
-					"name": "Česká republika"
-				}
-			],
-			"hasOfferCatalog": {
-				"@type": "OfferCatalog",
-				"name": "3D tiskové služby",
-				"itemListElement": [
-					{
-						"@type": "Offer",
-						"itemOffered": {
-							"@type": "Service",
-							"name": "3D tisk z PLA",
-							"description": "3D tisk z PLA materiálu - ideální pro figurky, šperky, prototypy a dekorativní předměty"
-						}
-					},
-					{
-						"@type": "Offer",
-						"itemOffered": {
-							"@type": "Service",
-							"name": "3D tisk z PETG",
-							"description": "3D tisk z PETG materiálu - odolný materiál vhodný pro mechanické díly a funkční prototypy"
-						}
-					},
-					{
-						"@type": "Offer",
-						"itemOffered": {
-							"@type": "Service",
-							"name": "3D modelování",
-							"description": "Návrh a vytvoření 3D modelů na zakázku podle vašich požadavků"
-						}
-					}
-				]
-			},
-			"priceRange": "$$",
-			"openingHours": "Mo-Su 08:00-22:00",
-			"founder": {
-				"@type": "Person",
-				"name": "Michal Trněný",
-				"jobTitle": "3D tiskař a majitel",
-				"email": "michal@fajny3dtisk.cz"
-			},
-			"sameAs": [
-				"https://www.instagram.com/fajny_3dtisk/"
-			],
-			"aggregateRating": {
-				"@type": "AggregateRating",
-				"ratingValue": "5",
-				"reviewCount": "1"
-			}
-		}
-		</script>
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
 	</head>
 	<body class="font-sans antialiased bg-gray-50 text-gray-900">
 		<slot />

@@ -2,6 +2,13 @@
 import { Menu, X } from 'lucide-astro';
 import { Image } from 'astro:assets';
 import logo from '../../public/fajny3d-tisk-logo.jpg';
+import type { Translations } from '../i18n/types';
+
+interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 glass-white">
@@ -11,27 +18,27 @@ import logo from '../../public/fajny3d-tisk-logo.jpg';
       <a href="#" class="flex items-center gap-3 group">
         <Image
           src={logo}
-          alt="Fajný 3D tisk logo"
+          alt={t.nav.logoAlt}
           width={96}
           height={96}
           class="w-12 h-12 rounded-full ring-2 ring-red-500/50 transition-transform group-hover:scale-110"
           format="webp"
           quality={85}
         />
-        <span class="font-bold text-xl text-gray-900">Fajný <span class="gradient-text">3D tisk</span></span>
+        <span class="font-bold text-xl text-gray-900">{t.nav.brandName.split(' ')[0]} <span class="gradient-text">{t.nav.brandName.split(' ').slice(1).join(' ')}</span></span>
       </a>
 
       <!-- Desktop Navigation -->
       <ul class="hidden lg:flex items-center gap-6">
-        <li><a href="#proc-ja" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">Proč já?</a></li>
-        <li><a href="#materialy" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">Materiály</a></li>
-        <li><a href="#proces" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">Jak to funguje</a></li>
-        <li><a href="#ukazky" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">Ukázky</a></li>
-        <li><a href="#recenze" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">Recenze</a></li>
-        <li><a href="#faq" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">FAQ</a></li>
+        <li><a href="#proc-ja" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.whyMe}</a></li>
+        <li><a href="#materialy" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.materials}</a></li>
+        <li><a href="#proces" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.howItWorks}</a></li>
+        <li><a href="#ukazky" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.gallery}</a></li>
+        <li><a href="#recenze" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.reviews}</a></li>
+        <li><a href="#faq" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.faq}</a></li>
         <li>
           <a href="#kontakt" class="inline-flex items-center px-6 py-2.5 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out">
-            Kontakt
+            {t.nav.contact}
           </a>
         </li>
       </ul>
@@ -47,15 +54,15 @@ import logo from '../../public/fajny3d-tisk-logo.jpg';
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden lg:hidden glass-white border-t border-gray-200/50">
     <ul class="container-custom py-6 space-y-4">
-      <li><a href="#proc-ja" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">Proč já?</a></li>
-      <li><a href="#materialy" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">Materiály</a></li>
-      <li><a href="#proces" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">Jak to funguje</a></li>
-      <li><a href="#ukazky" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">Ukázky</a></li>
-      <li><a href="#recenze" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">Recenze</a></li>
-      <li><a href="#faq" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">FAQ</a></li>
+      <li><a href="#proc-ja" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.whyMe}</a></li>
+      <li><a href="#materialy" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.materials}</a></li>
+      <li><a href="#proces" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.howItWorks}</a></li>
+      <li><a href="#ukazky" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.gallery}</a></li>
+      <li><a href="#recenze" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.reviews}</a></li>
+      <li><a href="#faq" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.faq}</a></li>
       <li>
         <a href="#kontakt" class="inline-flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300 ease-in-out">
-          Kontakt
+          {t.nav.contact}
         </a>
       </li>
     </ul>
