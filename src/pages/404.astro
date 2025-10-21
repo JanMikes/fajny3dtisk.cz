@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { languages } from '../i18n/config';
+
+const { translations: t } = languages.cs;
+
+const title = '404 - Stránka nenalezena | Fajný 3D tisk';
+const description = 'Hledaná stránka neexistuje. Vraťte se zpět na hlavní stránku Fajný 3D tisk Frýdek-Místek.';
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={t.lang}
+  locale={t.locale}
+  url="https://fajny3dtisk.cz/404"
+  t={t}
+>
+  <Navigation t={t} />
+
+  <!-- 404 Section -->
+  <section class="min-h-screen flex items-center justify-center text-white relative overflow-hidden pt-20">
+    <!-- Gradient background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-red-700 via-orange-700 to-red-800"></div>
+
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 opacity-20">
+      <div class="absolute top-20 left-10 w-72 h-72 bg-red-600/50 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-20 right-10 w-96 h-96 bg-orange-600/50 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- Pattern overlay -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+
+    <div class="container-custom text-center relative z-10">
+      <div class="max-w-3xl mx-auto space-y-6">
+        <!-- 404 Number -->
+        <div class="text-9xl md:text-[12rem] font-black leading-none gradient-text bg-gradient-to-r from-white via-orange-200 to-white bg-clip-text text-transparent animate-fade-in">
+          404
+        </div>
+
+        <!-- Heading -->
+        <h1 class="text-3xl md:text-5xl font-black leading-tight animate-fade-in-up">
+          Jejda! Tato stránka se nenašla
+        </h1>
+
+        <!-- Message -->
+        <div class="glass rounded-2xl p-6 md:p-8 animate-fade-in-up" style="animation-delay: 0.2s;">
+          <p class="text-lg md:text-xl text-white/90 leading-relaxed">
+            Vypadá to, že jste zabloudili do neznámé části internetu. Možná Frank schoval tuto stránku, nebo ji tiskárna ještě nedotiskla...
+          </p>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-fade-in-up" style="animation-delay: 0.4s;">
+          <a
+            href="/"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-white text-red-600 text-lg font-bold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            Zpět na hlavní stránku
+          </a>
+
+          <a
+            href="/#kontakt"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-orange-500 text-white text-lg font-bold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out"
+          >
+            Kontaktujte nás
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Helpful Links -->
+        <div class="pt-8 animate-fade-in-up" style="animation-delay: 0.6s;">
+          <p class="text-white/80 mb-4">Možná hledáte:</p>
+          <div class="flex flex-wrap gap-3 justify-center">
+            <a href="/#o-mne" class="px-4 py-2 glass-white text-gray-900 rounded-full hover:bg-white transition-all duration-300 font-semibold text-sm">
+              O mně
+            </a>
+            <a href="/#materialy" class="px-4 py-2 glass-white text-gray-900 rounded-full hover:bg-white transition-all duration-300 font-semibold text-sm">
+              Materiály
+            </a>
+            <a href="/#ukazky" class="px-4 py-2 glass-white text-gray-900 rounded-full hover:bg-white transition-all duration-300 font-semibold text-sm">
+              Ukázky
+            </a>
+            <a href="/#faq" class="px-4 py-2 glass-white text-gray-900 rounded-full hover:bg-white transition-all duration-300 font-semibold text-sm">
+              FAQ
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer t={t} />
+</Layout>
+
+<style>
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 1s ease-out;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 1s ease-out;
+  }
+</style>
