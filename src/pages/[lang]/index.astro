@@ -1,0 +1,18 @@
+---
+import PageTemplate from '../../components/PageTemplate.astro';
+import { languages, defaultLang } from '../../i18n/config';
+
+// Generate static paths for all languages except the default (Czech)
+export function getStaticPaths() {
+  return Object.entries(languages)
+    .filter(([code]) => code !== defaultLang)
+    .map(([code, config]) => ({
+      params: { lang: config.path },
+      props: { translations: config.translations, url: config.url }
+    }));
+}
+
+const { translations: t, url } = Astro.props;
+---
+
+<PageTemplate t={t} url={url} />

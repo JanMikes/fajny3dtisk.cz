@@ -1,10 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
+import Navigation from './Navigation.astro';
+import Footer from './Footer.astro';
 import { Image, Picture } from 'astro:assets';
 import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, User, Quote } from 'lucide-astro';
-import { pl } from '../i18n/pl';
+import type { Translations } from '../i18n/types';
 
 // Import images for optimization
 import logo from '../../public/fajny3d-tisk-logo.jpg';
@@ -13,7 +13,12 @@ import michalImg from '../../public/img/michal.jpg';
 import sabinaImg from '../../public/img/sabina.jpg';
 import frankImg from '../../public/img/frank.jpg';
 
-const t = pl;
+interface Props {
+  t: Translations;
+  url: string;
+}
+
+const { t, url } = Astro.props;
 ---
 
 <Layout
@@ -21,7 +26,7 @@ const t = pl;
   description={t.seo.description}
   lang={t.lang}
   locale={t.locale}
-  url="https://fajny3dtisk.cz/fajny-druk-3d/"
+  url={url}
   t={t}
 >
   <Navigation t={t} />

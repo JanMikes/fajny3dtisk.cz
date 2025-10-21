@@ -1,0 +1,3 @@
+# Redirect old Polish URL to new standard i18n URL
+/fajny-druk-3d/ /pl/ 301
+/fajny-druk-3d /pl/ 301
