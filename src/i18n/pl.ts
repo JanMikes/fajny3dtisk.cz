@@ -73,8 +73,8 @@ export const pl: Translations = {
 
   materials: {
     heading: 'Materiały do druku 3D:',
-    subheading: 'PLA i PETG dla Frydku-Mistku',
-    intro: 'Obecnie panuję nad materiałami PLA i PETG. Powierzchnia druku ma miłe 180 × 180 × 180 mm, więc zwykłe pudełka, uchwyty czy urocze statki kosmiczne nie stanowią problemu.',
+    subheading: 'PLA, PETG, TPU, ASA, ABS i PC',
+    intro: 'Obecnie panuję nad sześcioma materiałami: PLA, PETG, TPU, ASA, ABS i PC. Powierzchnia druku ma miłe 256 × 256 × 256 mm, więc zwykłe pudełka, uchwyty czy urocze statki kosmiczne nie stanowią problemu.',
     pla: {
       title: 'PLA',
       description: 'Idealny do figurek, biżuterii, prototypów i drobnych gadżetów marketingowych. Świetnie wygląda, a drukowanie z niego to przyjemność.',
@@ -83,7 +83,23 @@ export const pl: Translations = {
       title: 'PETG',
       description: 'Uchwyty, części mechaniczne, wodoodporne pojemniki i wszystko, co musi wytrzymać wyższe temperatury. Trochę wytrzymałości jeszcze nikogo nie zabiło.',
     },
-    colorsNote: 'Kolory? Podstawowe mam w magazynie, specjalne odcienie chętnie zamówię. Wielokolorowego druku w jednej warstwie jeszcze nie umiem – drukarka wyskoczyłaby mi z tego jak Frank, gdy widzi karmę.',
+    tpu: {
+      title: 'TPU',
+      description: 'TPU jest elastyczny jak guma do majtek i wytrzyma prawie wszystko. Nadaje się do drukowania rzeczy, które mają się zginać, tłumić wstrząsy lub po prostu coś wytrzymać – na przykład uszczelki, etui na telefon lub gumowe nóżki pod wasze mistrzowskie dzieła. Nie łamie się, nie zagina i wytrzyma nawet kontrolę jakości Franka.',
+    },
+    asa: {
+      title: 'ASA',
+      description: 'ASA to twardziel wśród filamentów – słońce, deszcz, mróz? Żaden problem. Idealny do użytku zewnętrznego – osłony, uchwyty, części do samochodu lub cokolwiek, co ma przetrwać nawet czeskie lato. Zachowuje kolor i kształt, nawet gdy inni już dawno się poddali.',
+    },
+    abs: {
+      title: 'ABS',
+      description: 'ABS to klasyk wśród wytrzymałych materiałów. Świetny do części funkcjonalnych, części zamiennych lub modeli, które muszą wytrzymać trochę więcej ciepła niż poranna kawa. Mocniejszy niż PLA i niezawodny partner do projektów, gdzie nie chodzi tylko o wygląd.',
+    },
+    pc: {
+      title: 'PC',
+      description: 'PC, czyli poliwęglan, to czołg wśród tworzyw. Niezwykle wytrzymały, żaroodporny i nie boi się solidnego obciążenia. Nadaje się do części technicznych lub mechanicznie obciążonych – po prostu tam, gdzie inne filamenty błagają o litość.',
+    },
+    colorsNote: 'Kolory? Podstawowe mam w magazynie, specjalne odcienie chętnie zamówię. Wielokolorowy druk? Tak! Nowa drukarka radzi sobie z tym perfekcyjnie.',
   },
 
   process: {
@@ -137,11 +153,11 @@ export const pl: Translations = {
       },
       materials: {
         question: 'Jakich materiałów używamy do druku 3D?',
-        answer: 'Specjalizujemy się w PLA (idealny do rzeczy dekoracyjnych, zabawek, prototypów) i PETG (bardziej wytrzymały, znosi wyższe temperatury, idealny do części funkcjonalnych). W naszym magazynie w Frydku-Mistku mamy podstawowe kolory pod ręką, specjalne odcienie chętnie zamówię!',
+        answer: 'Drukujemy z sześciu materiałów: PLA (idealny do rzeczy dekoracyjnych, zabawek, prototypów), PETG (bardziej wytrzymały, znosi wyższe temperatury), TPU (elastyczny i wytrzymały), ASA (do użytku zewnętrznego, odporny na UV), ABS (wytrzymały, termoodporny) i PC czyli poliwęglan (niezwykle wytrzymały i żaroodporny). W naszym magazynie w Frydku-Mistku mamy podstawowe kolory pod ręką, specjalne odcienie chętnie zamówię!',
       },
       delivery: {
         question: 'Dokąd dostarczamy druki 3D?',
-        answer: 'Choć jesteśmy z Frydku-Mistku, wysyłamy do całej Republiki Czeskiej! Zásilkovna, Balíkovna lub osobisty odbiór – jak chcecie. Lokalni klienci z Frydku-Mistku, Ostrawy, Havířova, Trzinca i okolic mogą odebrać wydruki bezpośrednio u nas!',
+        answer: 'Choć jesteśmy z Frydku-Mistku, wysyłamy do całej Republiki Czeskiej, a także na Słowację, do Polski i Niemiec! Zásilkovna, Balíkovna lub osobisty odbiór – jak chcecie. Lokalni klienci z Frydku-Mistku, Ostrawy, Havířova, Trzinca i okolic mogą odebrać wydruki bezpośrednio u nas!',
       },
       speed: {
         question: 'Jak szybki jest druk 3D?',
@@ -149,7 +165,7 @@ export const pl: Translations = {
       },
       size: {
         question: 'Jak duże rzeczy możemy wydrukować?',
-        answer: 'Nasza drukarka 3D radzi sobie z wymiarami 180×180×180 mm. To oznacza, że wydrukujemy praktycznie wszystko od miniaturowej biżuterii po większe uchwyty czy pudełka. Potrzebujecie czegoś większego? Podzielimy model na części i potem go sklejmy!',
+        answer: 'Nasza drukarka 3D radzi sobie z wymiarami 256×256×256 mm. To oznacza, że wydrukujemy praktycznie wszystko od miniaturowej biżuterii po większe uchwyty czy pudełka. Potrzebujecie czegoś większego? Podzielimy model na części i potem go sklejmy!',
       },
       noModel: {
         question: 'Nie mam modelu 3D – pomożecie?',
@@ -188,10 +204,10 @@ export const pl: Translations = {
 
   footer: {
     aboutHeading: 'Druk 3D Frydek-Mistek',
-    aboutText: 'Fajny Druk 3D to rodzinna usługa specjalizująca się w szybkim i jakościowym druku 3D w Frydku-Mistku i okolicach. Drukujemy z materiałów PLA i PETG z ekspresową dostawą do 48 godzin.',
+    aboutText: 'Fajny Druk 3D to rodzinna usługa specjalizująca się w szybkim i jakościowym druku 3D w Frydku-Mistku i okolicach. Drukujemy z sześciu różnych materiałów (PLA, PETG, TPU, ASA, ABS, PC) z ekspresową dostawą do 48 godzin.',
     servicesHeading: 'Nasze usługi druku 3D',
     services: {
-      printing: 'Druk 3D na zamówienie PLA i PETG',
+      printing: 'Druk 3D na zamówienie',
       fastDelivery: 'Szybka dostawa do 48h',
       modeling: 'Modelowanie 3D na miarę',
       shipping: 'Wysyłka do całej Republiki Czeskiej',
@@ -201,7 +217,7 @@ export const pl: Translations = {
     whyUsHeading: 'Dlaczego druk 3D u nas?',
     whyUsText: 'W Frydku-Mistku oferujemy najszybszy druk 3D w regionie. Nasza nowoczesna drukarka 3D potrafi przetworzyć każdy projekt – od prostych prototypów po skomplikowane części mechaniczne.',
     tagline: 'Plastikowe (Druk 3D) marzenia na już',
-    copyright: 'Michał Trněný © {year} | Fajny Druk 3D | Frydek-Mistek | Druk 3D na zamówienie | Materiały PLA PETG',
+    copyright: 'Michał Trněný © {year} | Fajny Druk 3D | Frydek-Mistek | Druk 3D na zamówienie | Materiały PLA PETG TPU ASA ABS PC',
   },
 
   seo: {
@@ -216,7 +232,7 @@ export const pl: Translations = {
   structuredData: {
     businessName: 'Fajny Druk 3D',
     alternateName: 'Fajny Druk 3D Frydek-Mistek',
-    description: 'Profesjonalny druk 3D na zamówienie w Frydku-Mistku i okolicach. Szybki druk 3D z PLA i PETG do 48h z osobistym podejściem i jakościowymi wynikami.',
+    description: 'Profesjonalny druk 3D na zamówienie w Frydku-Mistku i okolicach. Szybki druk 3D z sześciu materiałów (PLA, PETG, TPU, ASA, ABS, PC) do 48h z osobistym podejściem i jakościowymi wynikami.',
     countryName: 'Republika Czeska',
     offerCatalogName: 'Usługi druku 3D',
     services: {
@@ -227,6 +243,22 @@ export const pl: Translations = {
       petg: {
         name: 'Druk 3D z PETG',
         description: 'Druk 3D z materiału PETG - wytrzymały materiał odpowiedni do części mechanicznych i funkcjonalnych prototypów',
+      },
+      tpu: {
+        name: 'Druk 3D z TPU',
+        description: 'Druk 3D z materiału TPU - elastyczny i wytrzymały materiał do uszczelek, etui i części tłumiących',
+      },
+      asa: {
+        name: 'Druk 3D z ASA',
+        description: 'Druk 3D z materiału ASA - odporny na UV materiał do użytku zewnętrznego i trudnych warunków',
+      },
+      abs: {
+        name: 'Druk 3D z ABS',
+        description: 'Druk 3D z materiału ABS - wytrzymały i termoodporny materiał do części funkcjonalnych',
+      },
+      pc: {
+        name: 'Druk 3D z PC (poliwęglan)',
+        description: 'Druk 3D z poliwęglanu - niezwykle wytrzymały i żaroodporny materiał do wymagających aplikacji',
       },
       modeling: {
         name: 'Modelowanie 3D',

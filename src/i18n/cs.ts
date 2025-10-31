@@ -73,8 +73,8 @@ export const cs: Translations = {
 
   materials: {
     heading: '3D tisk materiály:',
-    subheading: 'PLA a PETG pro Frýdek-Místek',
-    intro: 'Aktuálně kraluji nad materiály PLA a PETG. Tisková plocha má sympatických 180 × 180 × 180 mm, takže běžné krabičky, držáky či roztomilé kosmické lodě nejsou problém.',
+    subheading: 'PLA, PETG, TPU, ASA, ABS a PC',
+    intro: 'Aktuálně kraluji nad šesti materiály: PLA, PETG, TPU, ASA, ABS a PC. Tisková plocha má sympatických 256 × 256 × 256 mm, takže běžné krabičky, držáky či roztomilé kosmické lodě nejsou problém.',
     pla: {
       title: 'PLA',
       description: 'Ideální na figurky, šperky, prototypy a drobné marketingové předměty. Skvěle vypadá a tisknout s ním je radost.',
@@ -83,7 +83,23 @@ export const cs: Translations = {
       title: 'PETG',
       description: 'Držáky, mechanické díly, vodotěsné nádoby a cokoli, co potřebuje vydržet vyšší teploty. Trochu houževnatosti nikoho ještě nezabilo.',
     },
-    colorsNote: 'Barvy? Základní mám skladem, speciální odstíny rád doobjednám. Mnohobarevný tisk v jedné vrstvě zatím neumím – tiskárna by se mi z toho rozskočila jak Frank, když vidí granule.',
+    tpu: {
+      title: 'TPU',
+      description: 'TPU je pružný jak guma do trenek a vydrží skoro všechno. Hodí se na tisk věcí, co se mají ohýbat, tlumit nárazy nebo prostě něco vydržet – třeba těsnění, pouzdra na telefon nebo gumové nožičky pod vaše mistrovské výtvory. Neláme se, nehne se a zvládne i Frankovu kontrolu kvality.',
+    },
+    asa: {
+      title: 'ASA',
+      description: 'ASA je takový drsňák mezi filamenty – slunce, déšť, mráz? Žádný problém. Ideální pro venkovní použití – kryty, držáky, díly do auta nebo cokoliv, co má přežít i české léto. Barvu a tvar si drží, i když ostatní už dávno rezignovali.',
+    },
+    abs: {
+      title: 'ABS',
+      description: 'ABS je klasika mezi houževnatými materiály. Skvělý na funkční díly, náhradní součástky nebo modely, které musejí snést trochu víc tepla než ranní kafe. Pevnější než PLA a spolehlivý parťák pro projekty, kde nejde jen o parádu.',
+    },
+    pc: {
+      title: 'PC',
+      description: 'PC, neboli polykarbonát, je tank mezi plasty. Extrémně pevný, žáruvzdorný a nebojí se pořádné zátěže. Hodí se na technické nebo mechanicky namáhané díly – prostě tam, kde ostatní filamenty prosí o milost.',
+    },
+    colorsNote: 'Barvy? Základní mám skladem, speciální odstíny rád doobjednám. Mnohobarevný tisk? Ano! Nová tiskárna to zvládá na jedničku.',
   },
 
   process: {
@@ -137,11 +153,11 @@ export const cs: Translations = {
       },
       materials: {
         question: 'Jaké materiály používáme pro 3D tisk?',
-        answer: 'Specializujeme se na PLA (perfektní pro dekorativní věci, hračky, prototypy) a PETG (odolnější, snese vyšší teploty, ideální na funkční díly). V našem skladu ve Frýdku-Místku máme základní barvy po ruce, speciální odstíny rád objednám!',
+        answer: 'Tiskneme ze šesti materiálů: PLA (perfektní pro dekorativní věci, hračky, prototypy), PETG (odolnější, snese vyšší teploty), TPU (pružný a odolný), ASA (venkovní použití, UV odolný), ABS (houževnatý, tepelně odolný) a PC neboli polykarbonát (extrémně pevný a žáruvzdorný). V našem skladu ve Frýdku-Místku máme základní barvy po ruce, speciální odstíny rád objednám!',
       },
       delivery: {
         question: 'Kam 3D tisk dodáváme?',
-        answer: 'I když jsme z Frýdku-Místku, expedujeme po celé České republice! Zásilkovna, Balíkovna nebo osobní předání – jak chcete. Místní zákazníci z Frýdku-Místku, Ostravy, Havířova, Třince a okolí si mohou výtisky vyzvednout přímo u nás!',
+        answer: 'I když jsme z Frýdku-Místku, expedujeme po celé České republice a také na Slovensko, do Polska a Německa! Zásilkovna, Balíkovna nebo osobní předání – jak chcete. Místní zákazníci z Frýdku-Místku, Ostravy, Havířova, Třince a okolí si mohou výtisky vyzvednout přímo u nás!',
       },
       speed: {
         question: 'Jak rychlý je 3D tisk?',
@@ -149,7 +165,7 @@ export const cs: Translations = {
       },
       size: {
         question: 'Jak velké věci dokážeme vytisknout?',
-        answer: 'Naše 3D tiskárna zvládne rozměry 180×180×180 mm. To znamená, že vytiskneme prakticky cokoliv od miniaturních šperků po větší držáky či krabičky. Potřebujete něco většího? Rozdělíme model na části a pak ho slepíme!',
+        answer: 'Naše 3D tiskárna zvládne rozměry 256×256×256 mm. To znamená, že vytiskneme prakticky cokoliv od miniaturních šperků po větší držáky či krabičky. Potřebujete něco většího? Rozdělíme model na části a pak ho slepíme!',
       },
       noModel: {
         question: 'Nemám 3D model – pomůžete?',
@@ -188,10 +204,10 @@ export const cs: Translations = {
 
   footer: {
     aboutHeading: '3D tisk Frýdek-Místek',
-    aboutText: 'Fajný 3D tisk je rodinná služba specializující se na rychlý a kvalitní 3D tisk ve Frýdku-Místku a okolí. Tiskneme z materiálů PLA a PETG s expresním dodáním do 48 hodin.',
+    aboutText: 'Fajný 3D tisk je rodinná služba specializující se na rychlý a kvalitní 3D tisk ve Frýdku-Místku a okolí. Tiskneme ze šesti různých materiálů (PLA, PETG, TPU, ASA, ABS, PC) s expresním dodáním do 48 hodin.',
     servicesHeading: 'Naše služby 3D tisku',
     services: {
-      printing: '3D tisk na zakázku PLA a PETG',
+      printing: '3D tisk na zakázku',
       fastDelivery: 'Rychlé dodání do 48h',
       modeling: '3D modelování na míru',
       shipping: 'Expedice po celé ČR',
@@ -201,7 +217,7 @@ export const cs: Translations = {
     whyUsHeading: 'Proč 3D tisk u nás?',
     whyUsText: 'Ve Frýdku-Místku nabízíme nejrychlejší 3D tisk v regionu. Naše moderní 3D tiskárna dokáže zpracovat jakýkoliv projekt – od jednoduchých prototypů po složité mechanické díly.',
     tagline: 'Plastové (3D Tisk) sny na počkání',
-    copyright: 'Michal Trněný © {year} | Fajný 3D tisk | Frýdek-Místek | 3D tisk na zakázku | PLA PETG materiály',
+    copyright: 'Michal Trněný © {year} | Fajný 3D tisk | Frýdek-Místek | 3D tisk na zakázku | PLA PETG TPU ASA ABS PC materiály',
   },
 
   seo: {
@@ -216,7 +232,7 @@ export const cs: Translations = {
   structuredData: {
     businessName: 'Fajný 3D tisk',
     alternateName: 'Fajný 3D tisk Frýdek-Místek',
-    description: 'Profesionální 3D tisk na zakázku ve Frýdku-Místku a okolí. Rychlý 3D tisk z PLA a PETG do 48h s osobním přístupem a kvalitními výsledky.',
+    description: 'Profesionální 3D tisk na zakázku ve Frýdku-Místku a okolí. Rychlý 3D tisk ze šesti materiálů (PLA, PETG, TPU, ASA, ABS, PC) do 48h s osobním přístupem a kvalitními výsledky.',
     countryName: 'Česká republika',
     offerCatalogName: '3D tiskové služby',
     services: {
@@ -227,6 +243,22 @@ export const cs: Translations = {
       petg: {
         name: '3D tisk z PETG',
         description: '3D tisk z PETG materiálu - odolný materiál vhodný pro mechanické díly a funkční prototypy',
+      },
+      tpu: {
+        name: '3D tisk z TPU',
+        description: '3D tisk z TPU materiálu - pružný a odolný materiál pro těsnění, pouzdra a tlumící díly',
+      },
+      asa: {
+        name: '3D tisk z ASA',
+        description: '3D tisk z ASA materiálu - UV odolný materiál pro venkovní použití a náročné podmínky',
+      },
+      abs: {
+        name: '3D tisk z ABS',
+        description: '3D tisk z ABS materiálu - houževnatý a tepelně odolný materiál pro funkční díly',
+      },
+      pc: {
+        name: '3D tisk z PC (polykarbonát)',
+        description: '3D tisk z polykarbonátu - extrémně pevný a žáruvzdorný materiál pro náročné aplikace',
       },
       modeling: {
         name: '3D modelování',

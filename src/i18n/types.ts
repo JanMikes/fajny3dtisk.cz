@@ -87,6 +87,22 @@ export interface Translations {
       title: string;
       description: string;
     };
+    tpu: {
+      title: string;
+      description: string;
+    };
+    asa: {
+      title: string;
+      description: string;
+    };
+    abs: {
+      title: string;
+      description: string;
+    };
+    pc: {
+      title: string;
+      description: string;
+    };
     colorsNote: string;
   };
 
@@ -237,6 +253,22 @@ export interface Translations {
         description: string;
       };
       petg: {
+        name: string;
+        description: string;
+      };
+      tpu: {
+        name: string;
+        description: string;
+      };
+      asa: {
+        name: string;
+        description: string;
+      };
+      abs: {
+        name: string;
+        description: string;
+      };
+      pc: {
         name: string;
         description: string;
       };
