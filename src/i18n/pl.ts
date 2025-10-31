@@ -85,19 +85,19 @@ export const pl: Translations = {
     },
     tpu: {
       title: 'TPU',
-      description: 'TPU jest elastyczny jak guma do majtek i wytrzyma prawie wszystko. Nadaje się do drukowania rzeczy, które mają się zginać, tłumić wstrząsy lub po prostu coś wytrzymać – na przykład uszczelki, etui na telefon lub gumowe nóżki pod wasze mistrzowskie dzieła. Nie łamie się, nie zagina i wytrzyma nawet kontrolę jakości Franka.',
+      description: 'Filament TPU jest elastyczny i wytrzymały, idealny do drukowania rzeczy, które mają się zginać lub tłumić wstrząsy, takich jak uszczelki, etui na telefon lub gumowe nóżki. Dzięki swojej elastyczności się nie łamie i wytrzyma nawet wymagające użytkowanie.',
     },
     asa: {
       title: 'ASA',
-      description: 'ASA to twardziel wśród filamentów – słońce, deszcz, mróz? Żaden problem. Idealny do użytku zewnętrznego – osłony, uchwyty, części do samochodu lub cokolwiek, co ma przetrwać nawet czeskie lato. Zachowuje kolor i kształt, nawet gdy inni już dawno się poddali.',
+      description: 'Filament ASA jest mocny i odporny na promieniowanie słoneczne i warunki atmosferyczne, więc jest idealny do użytku zewnętrznego – na przykład na osłony, uchwyty lub części do samochodu. Dodatkowo długo zachowuje kolor i kształt nawet na bezpośrednim słońcu.',
     },
     abs: {
       title: 'ABS',
-      description: 'ABS to klasyk wśród wytrzymałych materiałów. Świetny do części funkcjonalnych, części zamiennych lub modeli, które muszą wytrzymać trochę więcej ciepła niż poranna kawa. Mocniejszy niż PLA i niezawodny partner do projektów, gdzie nie chodzi tylko o wygląd.',
+      description: 'Filament ABS jest wytrzymałym i odpornym plastikiem, który się używa do części funkcjonalnych, części zamiennych lub modeli narażonych na wyższe temperatury. Jest mocniejszy niż zwykły PLA.',
     },
     pc: {
       title: 'PC',
-      description: 'PC, czyli poliwęglan, to czołg wśród tworzyw. Niezwykle wytrzymały, żaroodporny i nie boi się solidnego obciążenia. Nadaje się do części technicznych lub mechanicznie obciążonych – po prostu tam, gdzie inne filamenty błagają o litość.',
+      description: 'Filament PC jest niezwykle wytrzymałym i termoodpornym materiałem odpowiednim do części technicznych i mechanicznie obciążonych. Nadaje się tam, gdzie potrzebna jest wysoka odporność na wstrząsy i ciepło.',
     },
     colorsNote: 'Kolory? Podstawowe mam w magazynie, specjalne odcienie chętnie zamówię. Wielokolorowy druk? Tak! Nowa drukarka radzi sobie z tym perfekcyjnie.',
   },

@@ -85,19 +85,19 @@ export const cs: Translations = {
     },
     tpu: {
       title: 'TPU',
-      description: 'TPU je pružný jak guma do trenek a vydrží skoro všechno. Hodí se na tisk věcí, co se mají ohýbat, tlumit nárazy nebo prostě něco vydržet – třeba těsnění, pouzdra na telefon nebo gumové nožičky pod vaše mistrovské výtvory. Neláme se, nehne se a zvládne i Frankovu kontrolu kvality.',
+      description: 'TPU filament je pružný a odolný materiál, který se hodí na tisk věcí, co se mají ohýbat nebo tlumit nárazy, jako jsou těsnění, pouzdra na telefon nebo gumové nožičky. Díky své elasticitě se neláme a vydrží i náročné používání.',
     },
     asa: {
       title: 'ASA',
-      description: 'ASA je takový drsňák mezi filamenty – slunce, déšť, mráz? Žádný problém. Ideální pro venkovní použití – kryty, držáky, díly do auta nebo cokoliv, co má přežít i české léto. Barvu a tvar si drží, i když ostatní už dávno rezignovali.',
+      description: 'ASA filament je pevný a odolný vůči slunečnímu záření a počasí, takže je ideální pro venkovní použití – třeba na kryty, držáky nebo díly do auta. Navíc si dlouho udrží barvu a tvar i na přímém slunci.',
     },
     abs: {
       title: 'ABS',
-      description: 'ABS je klasika mezi houževnatými materiály. Skvělý na funkční díly, náhradní součástky nebo modely, které musejí snést trochu víc tepla než ranní kafe. Pevnější než PLA a spolehlivý parťák pro projekty, kde nejde jen o parádu.',
+      description: 'ABS filament je houževnatý a odolný plast, který se používá pro funkční díly, náhradní součástky nebo modely vystavené vyšším teplotám. Je pevnější než běžný PLA.',
     },
     pc: {
       title: 'PC',
-      description: 'PC, neboli polykarbonát, je tank mezi plasty. Extrémně pevný, žáruvzdorný a nebojí se pořádné zátěže. Hodí se na technické nebo mechanicky namáhané díly – prostě tam, kde ostatní filamenty prosí o milost.',
+      description: 'PC filament je extrémně pevný a teplotně odolný materiál vhodný pro technické a mechanicky namáhané díly. Hodí se tam, kde je potřeba vysoká odolnost vůči nárazům a teplu.',
     },
     colorsNote: 'Barvy? Základní mám skladem, speciální odstíny rád doobjednám. Mnohobarevný tisk? Ano! Nová tiskárna to zvládá na jedničku.',
   },
