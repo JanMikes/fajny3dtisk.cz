@@ -69,6 +69,7 @@ export const pl: Translations = {
         description: 'Nie jesteście pewni materiału, ustawień czy czegokolwiek? Wyślijcie mi model, a wspólnie go dopracujemy, żeby wynik był fajny.',
       },
     },
+    pricingNote: 'Każdego klienta traktuję indywidualnie – cenę liczę na miarę według materiału, złożoności i post-processingu. Staram się o najwyższą jakość w najlepszej cenie!',
   },
 
   materials: {
@@ -163,6 +164,10 @@ export const pl: Translations = {
         question: 'Jak szybki jest druk 3D?',
         answer: 'W przeciwieństwie do dużych firm, gdzie czekacie tygodniami, u nas w Frydku-Mistku drukujemy ekspresowo! Zazwyczaj do 48 godzin, a gdy naprawdę pali się dom, dam radę ekspresowo w ciągu 24 godzin. Frank w tym czasie pilnuje, żeby drukarka się nie zatrzymała, a Sabina już przygotowuje pakowanie.',
       },
+      pricing: {
+        question: 'Ile kosztuje druk 3D?',
+        answer: 'Każdy wydruk to oryginał, więc i cena jest zawsze na miarę! Zależy od zużycia materiału, rodzaju plastiku, długości druku i ewentualnego post-processingu (usuwanie podpór, klejenie i podobne cuda). Minimalna cena zamówienia to 250 CZK – nawet gdyby to była kostka wielkości grochu, przygotowanie i kontrola jakości Franka muszą swoje kosztować. Nie martw się, dokładną cenę wyliczę w ciągu 48 godzin!',
+      },
       size: {
         question: 'Jak duże rzeczy możemy wydrukować?',
         answer: 'Nasza drukarka 3D radzi sobie z wymiarami 256×256×256 mm. To oznacza, że wydrukujemy praktycznie wszystko od miniaturowej biżuterii po większe uchwyty czy pudełka. Potrzebujecie czegoś większego? Podzielimy model na części i potem go sklejmy!',
@@ -178,6 +183,8 @@ export const pl: Translations = {
     heading: 'Kontakt',
     subheading: 'na druk 3D Frydek-Mistek',
     intro: 'Macie pomysł? Chcecie szybką wycenę? Wypełnijcie formularz, a odezwę się do was z prędkością stopionego filamentu. Wprawdzie jesteśmy z Frydku-Mistku, ale przesyłkę wyślemy wszędzie! Obsługujemy Ostravę, Havířov, Trziniec, Czeski Cieszyn i cały kraj morawsko-śląski.',
+    minimumPriceLabel: 'Minimalna cena:',
+    minimumPriceText: 'Minimalna cena zamówienia to 250 CZK.',
     infoHeading: 'Informacje kontaktowe',
     ownerName: 'Michał Trněný',
     ownerInfo: 'IČ 14406713 – nie jestem płatnikiem VAT',

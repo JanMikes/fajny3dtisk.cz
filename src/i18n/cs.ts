@@ -69,6 +69,7 @@ export const cs: Translations = {
         description: 'Nejste si jistí materiálem, nastavením nebo vůbec ničím? Pošlete mi model a společně ho doladíme, aby výsledek byl fajný.',
       },
     },
+    pricingNote: 'Každého zákazníka beru individuálně – cenu počítám na míru podle materiálu, složitosti a post-processingu. Snažím se o nejvyšší kvalitu za nejlepší cenu!',
   },
 
   materials: {
@@ -163,6 +164,10 @@ export const cs: Translations = {
         question: 'Jak rychlý je 3D tisk?',
         answer: 'Na rozdíl od velkých firem, kde čekáte týdny, u nás ve Frýdku-Místku tiskneme express! Běžně do 48 hodin, a když opravdu hoří, zvládnu express za 24 hodin. Frank zatím hlídá, aby se tiskárna nezastavila, a Sabina už připravuje balení.',
       },
+      pricing: {
+        question: 'Kolik stojí 3D tisk?',
+        answer: 'Každý tisk je originál, takže i cena je vždy na míru! Závisí na spotřebě materiálu, typu plastu, délce tisku a případném post-processingu (odstraňování podpor, lepení a podobné lahůdky). Minimální cena zakázky je 250 Kč – i kdyby to byla kostička velikosti hrášku, příprava a Frankova kontrola kvality si své vyžádají. Nebojte, přesnou cenu vám spočítám do 48 hodin!',
+      },
       size: {
         question: 'Jak velké věci dokážeme vytisknout?',
         answer: 'Naše 3D tiskárna zvládne rozměry 256×256×256 mm. To znamená, že vytiskneme prakticky cokoliv od miniaturních šperků po větší držáky či krabičky. Potřebujete něco většího? Rozdělíme model na části a pak ho slepíme!',
@@ -178,6 +183,8 @@ export const cs: Translations = {
     heading: 'Kontakt',
     subheading: 'na 3D tisk Frýdek-Místek',
     intro: 'Máte nápad? Chcete rychlou cenovku? Vyplňte formulář a já se vám ozvu rychlostí roztaveného filamentu. Jsme sice z Frýdku-Místku, zásilku vám ale pošleme kamkoliv! Obsluhujeme Ostravu, Havířov, Třinec, Český Těšín a celý Moravskoslezský kraj.',
+    minimumPriceLabel: 'Minimální cena:',
+    minimumPriceText: 'Minimální cena zakázky je 250 Kč.',
     infoHeading: 'Kontaktní informace',
     ownerName: 'Michal Trněný',
     ownerInfo: 'IČ 14406713 – nejsem plátce DPH',

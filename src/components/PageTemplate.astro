@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from './Navigation.astro';
 import Footer from './Footer.astro';
 import { Image, Picture } from 'astro:assets';
-import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, User, Quote } from 'lucide-astro';
+import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, User, Quote, Tag } from 'lucide-astro';
 import type { Translations } from '../i18n/types';
 
 // Import images for optimization
@@ -230,6 +230,19 @@ const { t, url } = Astro.props;
           <p class="text-white/90 text-center leading-relaxed" set:html={t.whyUs.features.consulting.description}></p>
         </div>
       </div>
+
+      {t.whyUs.pricingNote && (
+        <div class="text-center max-w-3xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="500">
+          <div class="flex justify-center mb-4">
+            <div class="p-3 bg-white/20 rounded-full">
+              <Tag class="w-8 h-8" />
+            </div>
+          </div>
+          <p class="text-white/90 text-lg">
+            {t.whyUs.pricingNote}
+          </p>
+        </div>
+      )}
     </div>
   </section>
 
@@ -721,6 +734,17 @@ const { t, url } = Astro.props;
               {t.faq.questions.delivery.answer}
             </p>
           </details>
+
+          <details class="glass-white rounded-xl group faq-item" data-aos="fade-up" data-aos-delay="400">
+            <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
+              <Lightbulb class="w-6 h-6 text-orange-500 flex-shrink-0" />
+              <span class="flex-1">{t.faq.questions.noModel.question}</span>
+              <ChevronDown class="w-5 h-5 text-gray-600 flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
+            </summary>
+            <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
+              {t.faq.questions.noModel.answer}
+            </p>
+          </details>
         </div>
 
         <!-- Right Column -->
@@ -738,6 +762,17 @@ const { t, url } = Astro.props;
 
           <details class="glass-white rounded-xl group faq-item" data-aos="fade-up" data-aos-delay="200">
             <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
+              <Tag class="w-6 h-6 text-orange-500 flex-shrink-0" />
+              <span class="flex-1">{t.faq.questions.pricing.question}</span>
+              <ChevronDown class="w-5 h-5 text-gray-600 flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
+            </summary>
+            <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
+              {t.faq.questions.pricing.answer}
+            </p>
+          </details>
+
+          <details class="glass-white rounded-xl group faq-item" data-aos="fade-up" data-aos-delay="300">
+            <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
               <svg class="w-6 h-6 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
               </svg>
@@ -746,17 +781,6 @@ const { t, url } = Astro.props;
             </summary>
             <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
               {t.faq.questions.size.answer}
-            </p>
-          </details>
-
-          <details class="glass-white rounded-xl group faq-item" data-aos="fade-up" data-aos-delay="300">
-            <summary class="cursor-pointer font-bold text-lg text-gray-900 flex items-center gap-3 px-5 py-4">
-              <Lightbulb class="w-6 h-6 text-orange-500 flex-shrink-0" />
-              <span class="flex-1">{t.faq.questions.noModel.question}</span>
-              <ChevronDown class="w-5 h-5 text-gray-600 flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
-            </summary>
-            <p class="pb-6 px-6 text-gray-600 leading-relaxed pl-[60px]">
-              {t.faq.questions.noModel.answer}
             </p>
           </details>
         </div>
@@ -830,10 +854,15 @@ const { t, url } = Astro.props;
           </div>
 
           <!-- Quick Response Info -->
-          <div class="mt-6 bg-orange-50 border-l-4 border-orange-500 rounded-lg p-4">
+          <div class="mt-6 bg-orange-50 border-l-4 border-orange-500 rounded-lg p-4 space-y-2">
             <p class="text-sm text-gray-700 leading-relaxed">
               <span class="font-semibold text-gray-900">{t.contact.quickResponseLabel}</span> {t.contact.quickResponseText}
             </p>
+            {t.contact.minimumPriceText && (
+              <p class="text-sm text-gray-700 leading-relaxed">
+                <span class="font-semibold text-gray-900">{t.contact.minimumPriceLabel}</span> {t.contact.minimumPriceText}
+              </p>
+            )}
           </div>
         </div>
 

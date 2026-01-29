@@ -72,6 +72,7 @@ export interface Translations {
         description: string;
       };
     };
+    pricingNote?: string;
   };
 
   // Materials Section
@@ -171,6 +172,10 @@ export interface Translations {
         question: string;
         answer: string;
       };
+      pricing: {
+        question: string;
+        answer: string;
+      };
       size: {
         question: string;
         answer: string;
@@ -187,6 +192,8 @@ export interface Translations {
     heading: string;
     subheading: string;
     intro: string;
+    minimumPriceLabel?: string;
+    minimumPriceText?: string;
     infoHeading: string;
     ownerName: string;
     ownerInfo: string;
