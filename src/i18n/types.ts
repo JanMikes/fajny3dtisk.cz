@@ -14,6 +14,7 @@ export interface Translations {
     reviews: string;
     faq: string;
     contact: string;
+    calculator: string;
   };
 
   // Hero Section
@@ -216,6 +217,93 @@ export interface Translations {
       errorTitle: string;
       errorMessage: string;
     };
+  };
+
+  // Calculator (price estimator page)
+  calculator: {
+    seo: { title: string; description: string };
+    pageTitle: string;
+    pageSubtitle: string;
+    badgeEstimate: string;
+    dropzone: {
+      title: string;
+      hint: string;
+      formats: string;
+      privacy: string;
+      button: string;
+      loadAnother: string;
+      loading: string;
+    };
+    errors: {
+      unsupported: string;
+      parse: string;
+      tooBig: string;
+    };
+    controls: {
+      heading: string;
+      materialLabel: string;
+      infillLabel: string;
+      infillHint: string;
+      quantityLabel: string;
+      advancedToggle: string;
+      qualityLabel: string;
+      quality: { draft: string; standard: string; fine: string };
+      wallCountLabel: string;
+    };
+    results: {
+      heading: string;
+      dimensions: string;
+      volume: string;
+      weight: string;
+      time: string;
+      timeNote: string;
+      pricePerPiece: string;
+      total: string;
+      minOrderNote: string;
+      emptyHint: string;
+      perPieceSuffix: string;
+    };
+    warnings: {
+      notWatertight: string;
+      exceedsBed: string;
+      tiny: string;
+    };
+    disclaimer: {
+      callout: string;
+      priceNote: string;
+      howTitle: string;
+      howText: string;
+    };
+    quote: {
+      cta: string;
+      heading: string;
+      intro: string;
+      specsHeading: string;
+      nameLabel: string;
+      namePlaceholder: string;
+      emailLabel: string;
+      emailPlaceholder: string;
+      phoneLabel: string;
+      phonePlaceholder: string;
+      noteLabel: string;
+      notePlaceholder: string;
+      submit: string;
+      sending: string;
+      successTitle: string;
+      successMessage: string;
+      errorTitle: string;
+      errorMessage: string;
+      messageHeader: string;
+    };
+    units: { pieces: string };
+    homeCta: {
+      badge: string;
+      title: string;
+      subtitle: string;
+      button: string;
+      note: string;
+    };
+    heroButton: string;
   };
 
   // Footer

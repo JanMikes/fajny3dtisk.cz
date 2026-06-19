@@ -1,0 +1,8 @@
+---
+import CalculatorPage from '../components/CalculatorPage.astro';
+import { languages } from '../i18n/config';
+
+const { translations: t, url } = languages.cs;
+---
+
+<CalculatorPage t={t} url={`${url}kalkulacka`} path="" />

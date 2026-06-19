@@ -1,21 +1,30 @@
 ---
-import { Menu, X } from 'lucide-astro';
+import { Menu, X, Calculator } from 'lucide-astro';
 import { Image } from 'astro:assets';
 import logo from '../../public/logo-wordmark.png';
 import type { Translations } from '../i18n/types';
 
 interface Props {
   t: Translations;
+  /** locale path segment: '' for cs (default), 'pl' for Polish */
+  path?: string;
+  /** 'home' = on the single-page homepage (pure #anchors);
+   *  'subpage' = on another page, so anchors point back to the homepage */
+  variant?: 'home' | 'subpage';
 }
 
-const { t } = Astro.props;
+const { t, path = '', variant = 'home' } = Astro.props;
+const base = path ? `/${path}/` : '/';
+const anchor = (id: string) => (variant === 'subpage' ? `${base}#${id}` : `#${id}`);
+const calculatorHref = `${base}kalkulacka`;
+const logoHref = variant === 'subpage' ? base : '#';
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 glass-white">
   <div class="container-custom">
     <div class="flex items-center justify-between py-4">
       <!-- Logo (wordmark) -->
-      <a href="#" class="flex items-center group" aria-label={t.nav.brandName}>
+      <a href={logoHref} class="flex items-center group" aria-label={t.nav.brandName}>
         <Image
           src={logo}
           alt={t.nav.logoAlt}
@@ -29,14 +38,19 @@ const { t } = Astro.props;
 
       <!-- Desktop Navigation -->
       <ul class="hidden lg:flex items-center gap-6">
-        <li><a href="#proc-ja" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.whyMe}</a></li>
-        <li><a href="#materialy" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.materials}</a></li>
-        <li><a href="#proces" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.howItWorks}</a></li>
-        <li><a href="#ukazky" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.gallery}</a></li>
-        <li><a href="#recenze" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.reviews}</a></li>
-        <li><a href="#faq" class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.faq}</a></li>
+        <li><a href={anchor('proc-ja')} class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.whyMe}</a></li>
+        <li><a href={anchor('materialy')} class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.materials}</a></li>
+        <li><a href={anchor('proces')} class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.howItWorks}</a></li>
+        <li><a href={anchor('ukazky')} class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.gallery}</a></li>
+        <li><a href={anchor('recenze')} class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.reviews}</a></li>
+        <li><a href={anchor('faq')} class="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 ease-in-out">{t.nav.faq}</a></li>
         <li>
-          <a href="#kontakt" class="inline-flex items-center px-6 py-2.5 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out">
+          <a href={calculatorHref} class="inline-flex items-center gap-1.5 text-orange-600 hover:text-orange-500 font-semibold transition-all duration-300 ease-in-out">
+            <Calculator class="w-4 h-4" />{t.nav.calculator}
+          </a>
+        </li>
+        <li>
+          <a href={anchor('kontakt')} class="inline-flex items-center px-6 py-2.5 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out">
             {t.nav.contact}
           </a>
         </li>
@@ -53,14 +67,19 @@ const { t } = Astro.props;
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden lg:hidden glass-white border-t border-gray-200/50">
     <ul class="container-custom py-6 space-y-4">
-      <li><a href="#proc-ja" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.whyMe}</a></li>
-      <li><a href="#materialy" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.materials}</a></li>
-      <li><a href="#proces" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.howItWorks}</a></li>
-      <li><a href="#ukazky" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.gallery}</a></li>
-      <li><a href="#recenze" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.reviews}</a></li>
-      <li><a href="#faq" class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.faq}</a></li>
+      <li><a href={anchor('proc-ja')} class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.whyMe}</a></li>
+      <li><a href={anchor('materialy')} class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.materials}</a></li>
+      <li><a href={anchor('proces')} class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.howItWorks}</a></li>
+      <li><a href={anchor('ukazky')} class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.gallery}</a></li>
+      <li><a href={anchor('recenze')} class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.reviews}</a></li>
+      <li><a href={anchor('faq')} class="block text-gray-700 hover:text-red-600 font-medium py-2 transition-all duration-300 ease-in-out">{t.nav.faq}</a></li>
       <li>
-        <a href="#kontakt" class="inline-flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300 ease-in-out">
+        <a href={calculatorHref} class="flex items-center gap-2 text-orange-600 hover:text-orange-500 font-semibold py-2 transition-all duration-300 ease-in-out">
+          <Calculator class="w-4 h-4" />{t.nav.calculator}
+        </a>
+      </li>
+      <li>
+        <a href={anchor('kontakt')} class="inline-flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300 ease-in-out">
           {t.nav.contact}
         </a>
       </li>

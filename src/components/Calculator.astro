@@ -1,0 +1,565 @@
+---
+import {
+  MATERIALS,
+  QUALITY_PRESETS,
+  GEOMETRY,
+  DEFAULT_MATERIAL_ID,
+  DEFAULT_QUALITY_ID,
+} from '../lib/materials';
+import {
+  Calculator,
+  Upload,
+  ShieldCheck,
+  RefreshCw,
+  Move3d,
+  Layers,
+  Ruler,
+  Box,
+  Weight,
+  Clock,
+  Info,
+  ChevronDown,
+  ArrowRight,
+  Send,
+} from 'lucide-astro';
+import type { Translations } from '../i18n/types';
+
+interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
+const c = t.calculator;
+const quality = c.controls.quality as Record<string, string>;
+---
+
+<section id="kalkulacka" class="relative pt-28 md:pt-32 pb-16 md:pb-24 bg-gray-50 min-h-screen">
+  <div class="container-custom">
+    <!-- Header -->
+    <div class="max-w-3xl mx-auto text-center mb-10 md:mb-12">
+      <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold mb-5">
+        <Calculator class="w-4 h-4" /> {c.badgeEstimate}
+      </span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-5">
+        <span class="gradient-text">{c.pageTitle}</span>
+      </h1>
+      <p class="text-lg text-gray-600 leading-relaxed">{c.pageSubtitle}</p>
+    </div>
+
+    <!-- Shared (hidden) file input -->
+    <input id="calc-fileinput" type="file" accept=".stl,.obj,.3ds" class="sr-only" />
+
+    <!-- Main grid -->
+    <div class="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
+      <!-- Viewer -->
+      <div class="lg:col-span-3 lg:sticky lg:top-24">
+        <div
+          id="calc-viewer-card"
+          class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-xl transition-all"
+          style="aspect-ratio: 4 / 3; background: radial-gradient(circle at 50% 35%, #fff4e8 0%, #f5f5f5 72%);"
+        >
+          <canvas id="calc-canvas" class="absolute inset-0 h-full w-full hidden" style="touch-action: none;"></canvas>
+
+          <!-- Empty state / dropzone -->
+          <label
+            for="calc-fileinput"
+            id="calc-dropzone"
+            class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 cursor-pointer"
+          >
+            <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center mb-4">
+              <Upload class="w-8 h-8 text-orange-500" />
+            </div>
+            <p class="text-xl font-bold text-gray-900 mb-1">{c.dropzone.title}</p>
+            <p class="text-gray-500 mb-4">{c.dropzone.hint}</p>
+            <span class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full shadow">
+              {c.dropzone.button}
+            </span>
+            <p class="text-xs text-gray-400 mt-4">{c.dropzone.formats}</p>
+            <p id="calc-error" class="hidden mt-4 text-sm font-medium text-red-600 max-w-xs"></p>
+          </label>
+
+          <!-- Loading -->
+          <div id="calc-loading" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-white/70 backdrop-blur-sm">
+            <div class="w-12 h-12 rounded-full border-4 border-orange-200 border-t-orange-500 animate-spin mb-4"></div>
+            <p class="text-gray-700 font-medium">{c.dropzone.loading}</p>
+          </div>
+
+          <!-- Orbit hint -->
+          <div
+            id="calc-viewhint"
+            class="hidden absolute bottom-3 left-1/2 -translate-x-1/2 items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/45 text-white text-xs backdrop-blur-sm pointer-events-none"
+          >
+            <Move3d class="w-3.5 h-3.5" />
+          </div>
+        </div>
+
+        <!-- File info + reload -->
+        <div class="flex items-center justify-between gap-3 mt-4">
+          <div id="calc-fileinfo" class="hidden min-w-0 flex items-center gap-2 text-sm text-gray-600">
+            <Box class="w-4 h-4 text-gray-400 flex-shrink-0" />
+            <span id="calc-filename" class="truncate"></span>
+          </div>
+          <label
+            for="calc-fileinput"
+            id="calc-loadanother"
+            class="hidden flex-shrink-0 inline-flex items-center gap-1.5 text-sm font-semibold text-red-600 hover:text-orange-500 cursor-pointer transition-colors"
+          >
+            <RefreshCw class="w-4 h-4" /> {c.dropzone.loadAnother}
+          </label>
+        </div>
+        <p class="flex items-center gap-2 mt-3 text-xs text-gray-400">
+          <ShieldCheck class="w-4 h-4 flex-shrink-0" /> {c.dropzone.privacy}
+        </p>
+      </div>
+
+      <!-- Controls + results -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Controls -->
+        <div class="glass-white rounded-2xl p-6">
+          <h2 class="flex items-center gap-2 text-lg font-bold text-gray-900 mb-5">
+            <Layers class="w-5 h-5 text-orange-500" /> {c.controls.heading}
+          </h2>
+
+          <div class="space-y-5">
+            <div>
+              <label for="calc-material" class="block text-sm font-semibold text-gray-700 mb-1.5">{c.controls.materialLabel}</label>
+              <select id="calc-material" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                {MATERIALS.map((m) => <option value={m.id} selected={m.id === DEFAULT_MATERIAL_ID}>{m.name}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label for="calc-infill" class="text-sm font-semibold text-gray-700">{c.controls.infillLabel}</label>
+                <span id="calc-infill-val" class="text-sm font-bold text-orange-600">15 %</span>
+              </div>
+              <input id="calc-infill" type="range" min="0" max="100" step="5" value={Math.round(GEOMETRY.defaultInfill * 100)} class="w-full accent-orange-500" />
+              <p class="text-xs text-gray-400 mt-1">{c.controls.infillHint}</p>
+            </div>
+
+            <div>
+              <label for="calc-quantity" class="block text-sm font-semibold text-gray-700 mb-1.5">{c.controls.quantityLabel}</label>
+              <input id="calc-quantity" type="number" min="1" value="1" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+            </div>
+
+            <details class="group border-t border-gray-100 pt-4">
+              <summary class="flex items-center justify-between cursor-pointer text-sm font-semibold text-gray-700 list-none">
+                {c.controls.advancedToggle}
+                <ChevronDown class="w-4 h-4 transition-transform group-open:rotate-180" />
+              </summary>
+              <div class="space-y-5 mt-4">
+                <div>
+                  <label for="calc-quality" class="block text-sm font-semibold text-gray-700 mb-1.5">{c.controls.qualityLabel}</label>
+                  <select id="calc-quality" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    {QUALITY_PRESETS.map((q) => <option value={q.id} selected={q.id === DEFAULT_QUALITY_ID}>{quality[q.id]}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label for="calc-walls" class="block text-sm font-semibold text-gray-700 mb-1.5">{c.controls.wallCountLabel}</label>
+                  <input id="calc-walls" type="number" min="1" max="8" value={GEOMETRY.defaultWallCount} class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="glass-white rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold text-gray-900">{c.results.heading}</h2>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold">
+              <Info class="w-3.5 h-3.5" /> {c.badgeEstimate}
+            </span>
+          </div>
+
+          <p id="calc-empty" class="text-gray-500 text-sm py-8 text-center">{c.results.emptyHint}</p>
+
+          <div id="calc-output" class="hidden">
+            <div class="text-center py-4 mb-4 rounded-xl bg-gradient-to-br from-orange-50 to-red-50 border border-orange-100">
+              <div id="calc-price" class="text-4xl md:text-5xl font-black gradient-text leading-tight"></div>
+              <div id="calc-price-sub" class="hidden text-sm text-gray-500 mt-1"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <div class="rounded-lg bg-gray-50 p-3">
+                <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-1"><Ruler class="w-3.5 h-3.5" /> {c.results.dimensions}</div>
+                <div id="calc-dim" class="text-sm font-semibold text-gray-900">—</div>
+              </div>
+              <div class="rounded-lg bg-gray-50 p-3">
+                <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-1"><Box class="w-3.5 h-3.5" /> {c.results.volume}</div>
+                <div id="calc-vol" class="text-sm font-semibold text-gray-900">—</div>
+              </div>
+              <div class="rounded-lg bg-gray-50 p-3">
+                <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-1"><Weight class="w-3.5 h-3.5" /> {c.results.weight}</div>
+                <div id="calc-weight" class="text-sm font-semibold text-gray-900">—</div>
+              </div>
+              <div class="rounded-lg bg-gray-50 p-3">
+                <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-1"><Clock class="w-3.5 h-3.5" /> {c.results.time}</div>
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span id="calc-time" class="text-sm font-semibold text-gray-900">—</span>
+                  <span class="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">{c.results.timeNote}</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="calc-warnings" class="space-y-2 mb-4"></div>
+          </div>
+
+          <!-- Disclaimer — always visible -->
+          <div class="rounded-xl bg-amber-50 border-l-4 border-amber-500 p-4 space-y-2">
+            <div class="flex items-start gap-2">
+              <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                <path d="M12 9v4"></path>
+                <path d="M12 17h.01"></path>
+              </svg>
+              <p class="text-sm text-amber-900 font-medium leading-relaxed">{c.disclaimer.callout}</p>
+            </div>
+            <p class="text-sm text-amber-800 leading-relaxed pl-7">{c.disclaimer.priceNote}</p>
+          </div>
+
+          <details class="group mt-3">
+            <summary class="flex items-center gap-1.5 cursor-pointer text-sm font-semibold text-gray-600 hover:text-gray-900 list-none">
+              <Info class="w-4 h-4" /> {c.disclaimer.howTitle}
+              <ChevronDown class="w-4 h-4 transition-transform group-open:rotate-180 ml-auto" />
+            </summary>
+            <p class="text-sm text-gray-500 leading-relaxed mt-2">{c.disclaimer.howText}</p>
+          </details>
+
+          <button id="calc-quote-cta" type="button" class="w-full mt-5 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold rounded-full hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+            {c.quote.cta} <ArrowRight class="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote section -->
+    <div id="calc-quote-section" class="hidden mt-12 max-w-3xl mx-auto scroll-mt-28">
+      <div class="glass-white rounded-2xl p-8">
+        <h2 class="text-2xl md:text-3xl font-black text-gray-900 mb-2">{c.quote.heading}</h2>
+        <p class="text-gray-600 mb-6">{c.quote.intro}</p>
+
+        <div class="mb-6 rounded-xl bg-gray-50 border border-gray-200 p-4">
+          <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">{c.quote.specsHeading}</p>
+          <div id="calc-quote-specs" class="text-sm text-gray-600">—</div>
+        </div>
+
+        <form id="calc-quote-form">
+          <div class="grid sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="q-name" class="block text-gray-900 font-semibold mb-1.5 text-sm">{c.quote.nameLabel}</label>
+              <input id="q-name" name="name" type="text" required placeholder={c.quote.namePlaceholder} class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+            </div>
+            <div>
+              <label for="q-email" class="block text-gray-900 font-semibold mb-1.5 text-sm">{c.quote.emailLabel}</label>
+              <input id="q-email" name="email" type="email" required placeholder={c.quote.emailPlaceholder} class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="q-phone" class="block text-gray-900 font-semibold mb-1.5 text-sm">{c.quote.phoneLabel}</label>
+            <input id="q-phone" name="phone" type="tel" placeholder={c.quote.phonePlaceholder} class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+          </div>
+          <div class="mb-6">
+            <label for="q-note" class="block text-gray-900 font-semibold mb-1.5 text-sm">{c.quote.noteLabel}</label>
+            <textarea id="q-note" name="note" rows="4" placeholder={c.quote.notePlaceholder} class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"></textarea>
+          </div>
+          <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold rounded-full hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+            <Send class="w-5 h-5" /> {c.quote.submit}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- i18n + config payload for the client script -->
+  <script type="application/json" id="calc-data" set:html={JSON.stringify({ i18n: c, lang: t.lang })} />
+
+  <script>
+    import { MATERIALS, GEOMETRY, PRICING } from '../lib/materials';
+    import { computeGeometryStats, estimator } from '../lib/printCalc';
+
+    const dataEl = document.getElementById('calc-data');
+    const parsed = JSON.parse(dataEl?.textContent || '{}');
+    const i18n = parsed.i18n;
+    const lang = parsed.lang || 'cs';
+
+    const STATIC_FORMS_KEY = 'sf_m7fcd4fjm9k29127jge1mia0';
+    const MAX_BYTES = 50 * 1024 * 1024;
+
+    const $ = (id: string) => document.getElementById(id) as any;
+    const fmt0 = new Intl.NumberFormat(lang, { maximumFractionDigits: 0 });
+    const fmt1 = new Intl.NumberFormat(lang, { maximumFractionDigits: 1 });
+
+    const money = (v: number) => `~ ${fmt0.format(Math.round(v))} ${PRICING.currency}`;
+    function fmtTime(hours: number) {
+      const total = Math.max(1, Math.round(hours * 60));
+      if (total < 60) return `≈ ${total} min`;
+      const h = Math.floor(total / 60);
+      const m = total % 60;
+      return m ? `≈ ${h} h ${m} min` : `≈ ${h} h`;
+    }
+
+    const card = $('calc-viewer-card');
+    const canvas = $('calc-canvas');
+    const dropzone = $('calc-dropzone');
+    const loading = $('calc-loading');
+    const errorEl = $('calc-error');
+    const fileInput = $('calc-fileinput');
+    const fileInfo = $('calc-fileinfo');
+    const fileNameEl = $('calc-filename');
+    const loadAnother = $('calc-loadanother');
+    const viewHint = $('calc-viewhint');
+
+    const matSel = $('calc-material');
+    const infillEl = $('calc-infill');
+    const infillVal = $('calc-infill-val');
+    const qtyEl = $('calc-quantity');
+    const qualityEl = $('calc-quality');
+    const wallsEl = $('calc-walls');
+
+    const emptyEl = $('calc-empty');
+    const outputEl = $('calc-output');
+    const priceEl = $('calc-price');
+    const priceSub = $('calc-price-sub');
+    const dimEl = $('calc-dim');
+    const volEl = $('calc-vol');
+    const weightEl = $('calc-weight');
+    const timeEl = $('calc-time');
+    const warnEl = $('calc-warnings');
+
+    const quoteCta = $('calc-quote-cta');
+    const quoteSection = $('calc-quote-section');
+    const quoteForm = $('calc-quote-form');
+    const quoteSpecs = $('calc-quote-specs');
+
+    let stats: any = null;
+    let viewer: any = null;
+    let fileName = '';
+    let lastEstimate: any = null;
+    let lastSettings: any = null;
+
+    function setState(state: 'empty' | 'loading' | 'loaded') {
+      dropzone.classList.toggle('hidden', state !== 'empty');
+      loading.classList.toggle('hidden', state !== 'loading');
+      canvas.classList.toggle('hidden', state !== 'loaded');
+      fileInfo.classList.toggle('hidden', state !== 'loaded');
+      loadAnother.classList.toggle('hidden', state !== 'loaded');
+      viewHint.classList.toggle('hidden', state !== 'loaded');
+      viewHint.classList.toggle('flex', state === 'loaded');
+    }
+
+    function showError(msg: string) {
+      setState('empty');
+      errorEl.textContent = msg;
+      errorEl.classList.remove('hidden');
+    }
+
+    const extOk = (name: string) => /\.(stl|obj|3ds)$/i.test(name);
+
+    async function handleFile(file: File | null | undefined) {
+      if (!file) return;
+      errorEl.classList.add('hidden');
+      if (!extOk(file.name)) return showError(i18n.errors.unsupported);
+      if (file.size > MAX_BYTES) return showError(i18n.errors.tooBig);
+      setState('loading');
+      try {
+        const mod = await import('../lib/modelViewer');
+        const { position, geometry } = await mod.parseModelFile(file);
+        setState('loaded');
+        if (!viewer) viewer = new mod.ModelViewer(canvas);
+        viewer.setGeometry(geometry);
+        stats = computeGeometryStats(position);
+        fileName = file.name;
+        fileNameEl.textContent = file.name;
+        recompute();
+      } catch (err: any) {
+        console.error('[calculator]', err);
+        showError(err && err.name === 'UnsupportedFormatError' ? i18n.errors.unsupported : i18n.errors.parse);
+      }
+    }
+
+    function readSettings() {
+      return {
+        materialId: matSel.value,
+        infill: (parseFloat(infillEl.value) || 0) / 100,
+        quantity: parseInt(qtyEl.value, 10) || 1,
+        qualityId: qualityEl.value,
+        wallCount: parseInt(wallsEl.value, 10) || GEOMETRY.defaultWallCount,
+      };
+    }
+
+    const warnText = (w: string) =>
+      ({
+        not_watertight: i18n.warnings.notWatertight,
+        exceeds_bed: i18n.warnings.exceedsBed,
+        tiny: i18n.warnings.tiny,
+      } as Record<string, string>)[w] || w;
+
+    function specLines(est: any, s: any) {
+      const mat = MATERIALS.find((m) => m.id === s.materialId);
+      const dims = `${fmt1.format(est.size.x)} × ${fmt1.format(est.size.y)} × ${fmt1.format(est.size.z)} mm`;
+      const lines = [
+        `${i18n.controls.materialLabel}: ${mat ? mat.name : s.materialId}`,
+        `${i18n.controls.infillLabel}: ${Math.round(s.infill * 100)} %`,
+        `${i18n.controls.quantityLabel}: ${est.quantity}`,
+        `${i18n.results.dimensions}: ${dims}`,
+        `${i18n.results.volume}: ${fmt1.format(est.volumeCm3)} cm³`,
+        `${i18n.results.weight}: ${fmt1.format(est.weightG)} g`,
+        `${i18n.results.time}: ${fmtTime(est.timeHours)} (${i18n.results.timeNote})`,
+      ];
+      if (est.quantity > 1) lines.push(`${i18n.results.pricePerPiece}: ${money(est.pricePerPiece)}`);
+      lines.push(`${i18n.results.total}: ${money(est.totalPrice)}`);
+      if (fileName) lines.push(`Model: ${fileName}`);
+      return lines;
+    }
+
+    function renderSpecs(est: any, s: any) {
+      if (!quoteSpecs) return;
+      const ul = document.createElement('ul');
+      ul.className = 'space-y-1';
+      for (const line of specLines(est, s)) {
+        const li = document.createElement('li');
+        li.textContent = line;
+        ul.appendChild(li);
+      }
+      quoteSpecs.replaceChildren(ul);
+    }
+
+    function recompute() {
+      infillVal.textContent = `${Math.round(parseFloat(infillEl.value) || 0)} %`;
+      if (!stats) {
+        emptyEl.classList.remove('hidden');
+        outputEl.classList.add('hidden');
+        return;
+      }
+      const s = readSettings();
+      const est = estimator.estimate(stats, s);
+      lastEstimate = est;
+      lastSettings = s;
+
+      priceEl.textContent = money(est.totalPrice);
+      if (est.minApplied) {
+        priceSub.textContent = i18n.results.minOrderNote;
+        priceSub.classList.remove('hidden');
+      } else if (est.quantity > 1) {
+        priceSub.textContent = `${money(est.pricePerPiece)} ${i18n.results.perPieceSuffix} × ${est.quantity}`;
+        priceSub.classList.remove('hidden');
+      } else {
+        priceSub.classList.add('hidden');
+      }
+      dimEl.textContent = `${fmt1.format(est.size.x)} × ${fmt1.format(est.size.y)} × ${fmt1.format(est.size.z)} mm`;
+      volEl.textContent = `${fmt1.format(est.volumeCm3)} cm³`;
+      weightEl.textContent = `${fmt1.format(est.weightG)} g`;
+      timeEl.textContent = fmtTime(est.timeHours);
+
+      const frag = document.createDocumentFragment();
+      for (const w of est.warnings) {
+        const div = document.createElement('div');
+        div.className = 'flex items-start gap-2 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2';
+        div.innerHTML =
+          '<svg class="w-4 h-4 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg><span></span>';
+        (div.querySelector('span') as HTMLElement).textContent = warnText(w);
+        frag.appendChild(div);
+      }
+      warnEl.replaceChildren(frag);
+
+      emptyEl.classList.add('hidden');
+      outputEl.classList.remove('hidden');
+
+      if (quoteSection && !quoteSection.classList.contains('hidden')) renderSpecs(est, s);
+    }
+
+    // --- wiring ---
+    fileInput.addEventListener('change', () => handleFile(fileInput.files && fileInput.files[0]));
+
+    ['dragenter', 'dragover'].forEach((ev) =>
+      card.addEventListener(ev, (e: Event) => {
+        e.preventDefault();
+        card.classList.add('calc-dragover');
+      }),
+    );
+    ['dragleave', 'drop'].forEach((ev) =>
+      card.addEventListener(ev, (e: Event) => {
+        e.preventDefault();
+        card.classList.remove('calc-dragover');
+      }),
+    );
+    card.addEventListener('drop', (e: DragEvent) => {
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      handleFile(f);
+    });
+
+    [matSel, infillEl, qtyEl, qualityEl, wallsEl].forEach((el) => {
+      el.addEventListener('input', recompute);
+      el.addEventListener('change', recompute);
+    });
+
+    quoteCta.addEventListener('click', () => {
+      quoteSection.classList.remove('hidden');
+      if (lastEstimate && lastSettings) renderSpecs(lastEstimate, lastSettings);
+      quoteSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    quoteForm.addEventListener('submit', async (e: SubmitEvent) => {
+      e.preventDefault();
+      const fd = new FormData(quoteForm as HTMLFormElement);
+      const note = (fd.get('note') as string) || '';
+      let message = i18n.quote.messageHeader + '\n\n';
+      if (lastEstimate && lastSettings) {
+        message += i18n.quote.specsHeading + ':\n' + specLines(lastEstimate, lastSettings).map((l: string) => '- ' + l).join('\n');
+        message += `\n\n(${i18n.badgeEstimate})`;
+      }
+      if (note) message += '\n\n' + note;
+
+      const btn = (quoteForm as HTMLFormElement).querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = i18n.quote.sending;
+      }
+
+      try {
+        const res = await fetch('https://api.staticforms.xyz/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            accessKey: STATIC_FORMS_KEY,
+            name: fd.get('name'),
+            email: fd.get('email'),
+            replyTo: fd.get('email'),
+            phone: fd.get('phone'),
+            subject: i18n.quote.messageHeader,
+            message,
+            $source: 'Kalkulacka fajny3dtisk.cz',
+          }),
+        });
+        if (!res.ok) throw new Error('submit failed');
+        quoteForm.innerHTML =
+          '<div class="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg text-center"><p class="font-bold text-lg mb-2"></p><p></p></div>';
+        const p = quoteForm.querySelectorAll('p');
+        p[0].textContent = i18n.quote.successTitle;
+        p[1].textContent = i18n.quote.successMessage;
+      } catch (err) {
+        quoteForm.innerHTML =
+          '<div class="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg text-center"><p class="font-bold text-lg mb-2"></p><p></p></div>';
+        const p = quoteForm.querySelectorAll('p');
+        p[0].textContent = i18n.quote.errorTitle;
+        p[1].textContent = i18n.quote.errorMessage;
+      }
+    });
+
+    // --- init ---
+    setState('empty');
+    recompute();
+  </script>
+
+  <style>
+    #calc-viewer-card.calc-dragover {
+      outline: 3px dashed #f59222;
+      outline-offset: -10px;
+      background: radial-gradient(circle at 50% 35%, #ffe8cc 0%, #f5f5f5 72%) !important;
+    }
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+  </style>
+</section>

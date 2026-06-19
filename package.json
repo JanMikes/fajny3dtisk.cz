@@ -17,6 +17,10 @@
     "aos": "^2.3.4",
     "astro": "^5.14.4",
     "lucide-astro": "^0.545.0",
-    "tailwindcss": "^4.1.14"
+    "tailwindcss": "^4.1.14",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.184.1"
   }
 }

@@ -2,7 +2,7 @@
 import PageTemplate from '../components/PageTemplate.astro';
 import { languages } from '../i18n/config';
 
-const { translations: t, url } = languages.cs;
+const { translations: t, url, path } = languages.cs;
 ---
 
-<PageTemplate t={t} url={url} />
+<PageTemplate t={t} url={url} path={path} />

@@ -1,5 +1,5 @@
 ---
-import PageTemplate from '../../components/PageTemplate.astro';
+import CalculatorPage from '../../components/CalculatorPage.astro';
 import { languages, defaultLang } from '../../i18n/config';
 
 // Generate static paths for all languages except the default (Czech)
@@ -8,11 +8,11 @@ export function getStaticPaths() {
     .filter(([code]) => code !== defaultLang)
     .map(([code, config]) => ({
       params: { lang: config.path },
-      props: { translations: config.translations, url: config.url, path: config.path }
+      props: { translations: config.translations, url: config.url, path: config.path },
     }));
 }
 
 const { translations: t, url, path } = Astro.props;
 ---
 
-<PageTemplate t={t} url={url} path={path} />
+<CalculatorPage t={t} url={`${url}kalkulacka`} path={path} />

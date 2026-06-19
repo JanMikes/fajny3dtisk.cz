@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from './Navigation.astro';
 import Footer from './Footer.astro';
 import { Image, Picture } from 'astro:assets';
-import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, User, Quote, Tag } from 'lucide-astro';
+import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, User, Quote, Tag, ArrowRight } from 'lucide-astro';
 import type { Translations } from '../i18n/types';
 
 // Import images for optimization
@@ -15,9 +15,12 @@ import frankImg from '../../public/img/frank.jpg';
 interface Props {
   t: Translations;
   url: string;
+  path?: string;
 }
 
-const { t, url } = Astro.props;
+const { t, url, path = '' } = Astro.props;
+const base = path ? `/${path}/` : '/';
+const calculatorHref = `${base}kalkulacka`;
 ---
 
 <Layout
@@ -28,7 +31,7 @@ const { t, url } = Astro.props;
   url={url}
   t={t}
 >
-  <Navigation t={t} />
+  <Navigation t={t} path={path} variant="home" />
 
   <!-- Hero Section -->
   <section class="min-h-screen flex items-center justify-center text-white relative overflow-hidden">
@@ -65,8 +68,8 @@ const { t, url } = Astro.props;
         <!-- Subheading -->
         <p class="text-lg md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;" set:html={t.hero.subheading.replace('\n', '<br />')}></p>
 
-        <!-- CTA Button -->
-        <div class="pt-2 md:pt-4 animate-fade-in-up" style="animation-delay: 0.4s;">
+        <!-- CTA Buttons -->
+        <div class="pt-2 md:pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 animate-fade-in-up" style="animation-delay: 0.4s;">
           <a
             href="#kontakt"
             class="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-red-600 to-orange-500 text-white text-base md:text-lg font-bold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out"
@@ -75,6 +78,12 @@ const { t, url } = Astro.props;
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
             </svg>
+          </a>
+          <a
+            href={calculatorHref}
+            class="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-white/10 border border-white/30 text-white text-base md:text-lg font-bold rounded-full backdrop-blur-sm hover:bg-white/20 hover:scale-105 transition-all duration-300 ease-in-out"
+          >
+            <Calculator class="w-5 h-5" />{t.calculator.heroButton}
           </a>
         </div>
       </div>
@@ -410,6 +419,28 @@ const { t, url } = Astro.props;
           <p class="text-white/90 leading-relaxed">
             {t.process.delivery.description}
           </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Price Calculator CTA -->
+  <section class="section-padding bg-gray-50">
+    <div class="container-custom">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-red-600 via-orange-500 to-orange-600 text-white px-6 py-12 md:p-14 text-center shadow-2xl" data-aos="fade-up">
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-sm font-semibold mb-5">
+            <Calculator class="w-4 h-4" />{t.calculator.homeCta.badge}
+          </span>
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-black mb-4">{t.calculator.homeCta.title}</h2>
+          <p class="text-white/90 text-lg mb-8">{t.calculator.homeCta.subtitle}</p>
+          <a
+            href={calculatorHref}
+            class="inline-flex items-center gap-2 px-8 py-4 bg-white text-red-600 text-lg font-bold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out"
+          >
+            {t.calculator.homeCta.button}<ArrowRight class="w-5 h-5" />
+          </a>
+          <p class="text-white/70 text-sm mt-5">{t.calculator.homeCta.note}</p>
         </div>
       </div>
     </div>
