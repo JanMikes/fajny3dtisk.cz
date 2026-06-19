@@ -7,6 +7,41 @@
 @import "@fontsource/inter/700.css"; /* Bold - headings, labels */
 @import "@fontsource/inter/900.css"; /* Black - major headings */
 
+/* Brand color override — orange-forward palette.
+   Primary brand orange = #f59222 (FIXED, matches the new logo).
+   The `orange` scale is retuned around it, and the `red` scale is
+   repurposed into a warm rust / burnt-orange that acts as the deeper
+   end of the same orange family. This keeps gradient depth while making
+   the whole site read as orange (less red) — every `orange-*`/`red-*`
+   utility and gradient picks up the new tones automatically. */
+@theme {
+  /* Orange — primary (orange-500 is the fixed brand color) */
+  --color-orange-50: #fff4e8;
+  --color-orange-100: #fde7ce;
+  --color-orange-200: #fccf9c;
+  --color-orange-300: #f9b364;
+  --color-orange-400: #f69e39;
+  --color-orange-500: #f59222;
+  --color-orange-600: #e6780c;
+  --color-orange-700: #b7550e;
+  --color-orange-800: #8d3d11;
+  --color-orange-900: #742f13;
+  --color-orange-950: #471708;
+
+  /* Red → warm rust / burnt-orange (the deep end of the orange family) */
+  --color-red-50: #fff4e9;
+  --color-red-100: #fde5ce;
+  --color-red-200: #fac79e;
+  --color-red-300: #f59e63;
+  --color-red-400: #f17934;
+  --color-red-500: #eb5a12;
+  --color-red-600: #ce4910;
+  --color-red-700: #aa3910;
+  --color-red-800: #872f12;
+  --color-red-900: #6f2914;
+  --color-red-950: #441408;
+}
+
 @layer base {
   body {
     @apply font-sans antialiased;
@@ -49,7 +84,7 @@
 
   /* Animated gradient background */
   .gradient-bg {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d1f1f 25%, #1a1a1a 50%, #2d1f1f 75%, #1a1a1a 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2118 25%, #1a1a1a 50%, #2c2118 75%, #1a1a1a 100%);
     background-size: 400% 400%;
     animation: gradient-shift 15s ease infinite;
   }

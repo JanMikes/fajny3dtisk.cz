@@ -7,7 +7,6 @@ import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, C
 import type { Translations } from '../i18n/types';
 
 // Import images for optimization
-import logo from '../../public/fajny3d-tisk-logo.jpg';
 import heroImg from '../../public/img/hero.jpg';
 import michalImg from '../../public/img/michal.jpg';
 import sabinaImg from '../../public/img/sabina.jpg';
@@ -55,19 +54,6 @@ const { t, url } = Astro.props;
 
     <div class="container-custom text-center relative z-10">
       <div class="max-w-4xl mx-auto space-y-3 md:space-y-6">
-        <!-- Logo -->
-        <div class="flex justify-center mb-2 md:mb-4 animate-fade-in">
-          <Image
-            src={logo}
-            alt={t.hero.logoAlt}
-            width={192}
-            height={192}
-            class="w-24 h-24 md:w-36 md:h-36 rounded-full ring-4 ring-white/30 shadow-2xl hover:scale-110 transition-transform duration-500"
-            format="webp"
-            quality={85}
-          />
-        </div>
-
         <!-- Heading -->
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight animate-fade-in-up">
           {t.hero.heading}<br />
