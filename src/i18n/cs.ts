@@ -75,7 +75,7 @@ export const cs: Translations = {
   materials: {
     heading: '3D tisk materiály:',
     subheading: 'PLA, PETG, TPU, ASA, ABS a PC',
-    intro: 'Aktuálně kraluji nad šesti materiály: PLA, PETG, TPU, ASA, ABS a PC. Tisková plocha má sympatických 256 × 256 × 256 mm, takže běžné krabičky, držáky či roztomilé kosmické lodě nejsou problém.',
+    intro: 'Aktuálně tisknu z šesti druhů materiálů: PLA, PETG, TPU, ASA, ABS a PC. Tisková plocha má sympatických 256 × 256 × 256 mm, takže běžné krabičky, držáky či roztomilé kosmické lodě nejsou problém.',
     pla: {
       title: 'PLA',
       description: 'Ideální na figurky, šperky, prototypy a drobné marketingové předměty. Skvěle vypadá a tisknout s ním je radost.',
