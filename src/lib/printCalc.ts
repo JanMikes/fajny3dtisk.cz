@@ -196,7 +196,8 @@ export class HeuristicEstimator implements Estimator {
     const wallThickness = wallCount * GEOMETRY.lineWidthMm;
     const shellMm3 = Math.min(stats.areaMm2 * wallThickness, solidMm3);
     const interiorMm3 = Math.max(solidMm3 - shellMm3, 0);
-    const printedMm3 = shellMm3 + interiorMm3 * infill;
+    // calibration factor folds in real-world slicer behaviour (see materials.ts)
+    const printedMm3 = (shellMm3 + interiorMm3 * infill) * PRICING.volumeCalibration;
 
     // weight
     const printedCm3 = printedMm3 / MM3_PER_CM3;
@@ -221,7 +222,8 @@ export class HeuristicEstimator implements Estimator {
     const layers = Math.max(1, Math.ceil(stats.size.z / layerHeight));
     const layerOverheadSec = layers * PRICING.perLayerOverheadSec;
     const timeHours =
-      (depositionSec + layerOverheadSec + PRICING.fixedTimeOverheadMin * 60) / 3600;
+      ((depositionSec + layerOverheadSec + PRICING.fixedTimeOverheadMin * 60) / 3600) *
+      PRICING.timeCalibration;
 
     // price build-up — pricePerGram is the customer charge per gram (CZK/g)
     const materialCost = weightG * material.pricePerGram;

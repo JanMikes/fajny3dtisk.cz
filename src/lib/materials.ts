@@ -77,6 +77,22 @@ export const PRICING = {
 
   /** filament diameter, mm (1.75 standard) */
   filamentDiameterMm: 1.75,
+
+  // ---- calibration: tune these against real slicer results ----------------
+  /**
+   * Multiplier on estimated printed-plastic volume — affects weight, filament
+   * length AND print time. Slicers deposit less than the naive shell+infill
+   * volume (line overlap, double-counted wall surfaces, sparse fill of thick
+   * walls). Lower this if the calculator over-estimates weight, raise it if it
+   * under-estimates. Calibrated from real prints — refine as more arrive:
+   *   2026-06 "Trychtýř" funnel, PETG: slicer 186.4 g vs raw estimate 255.5 g.
+   */
+  volumeCalibration: 0.73,
+  /**
+   * Final multiplier on estimated print time (residual after volumeCalibration).
+   *   2026-06 "Trychtýř" funnel: slicer 7 h 04 m.
+   */
+  timeCalibration: 1.06,
 };
 
 /** Print-quality presets. Layer height drives both detail and time. */
