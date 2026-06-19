@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
     "@fontsource/inter": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.10",
     "@tailwindcss/vite": "^4.1.14",
     "aos": "^2.3.4",
     "astro": "^5.14.4",

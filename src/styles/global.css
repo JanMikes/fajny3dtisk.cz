@@ -1,11 +1,29 @@
 @import "tailwindcss";
 
-/* Import Inter font locally from Fontsource - Only used weights */
-@import "@fontsource/inter/400.css"; /* Normal - body text */
-@import "@fontsource/inter/500.css"; /* Medium - navigation */
-@import "@fontsource/inter/600.css"; /* Semibold - buttons, links */
-@import "@fontsource/inter/700.css"; /* Bold - headings, labels */
-@import "@fontsource/inter/900.css"; /* Black - major headings */
+/* Body / UI font — Space Grotesk (the proportional sibling of Space Mono):
+   a mono-flavoured, monoline grotesk that echoes the ScienceGothic logo
+   without being an actual monospace. Self-hosted via Fontsource. */
+@import "@fontsource/space-grotesk/400.css"; /* Normal - body text */
+@import "@fontsource/space-grotesk/500.css"; /* Medium - navigation */
+@import "@fontsource/space-grotesk/600.css"; /* Semibold - buttons, links */
+@import "@fontsource/space-grotesk/700.css"; /* Bold - labels, emphasis */
+
+/* Display font — ScienceGothic, the typeface used in the logo.
+   Self-hosted, subset to Latin + Czech. Used for headings only. */
+@font-face {
+  font-family: 'ScienceGothic';
+  src: url('/fonts/ScienceGothic-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ScienceGothic';
+  src: url('/fonts/ScienceGothic-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* Brand color override — orange-forward palette.
    Primary brand orange = #f59222 (FIXED, matches the new logo).
@@ -15,6 +33,11 @@
    the whole site read as orange (less red) — every `orange-*`/`red-*`
    utility and gradient picks up the new tones automatically. */
 @theme {
+  /* Body / UI typeface (default sans) */
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Display / heading typeface (logo font) */
+  --font-display: 'ScienceGothic', 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+
   /* Orange — primary (orange-500 is the fixed brand color) */
   --color-orange-50: #fff4e8;
   --color-orange-100: #fde7ce;
@@ -45,7 +68,7 @@
 @layer base {
   body {
     @apply font-sans antialiased;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--font-sans);
     overflow-x: hidden;
   }
 
@@ -53,7 +76,19 @@
     scroll-behavior: smooth;
     overflow-x: hidden;
   }
+
+  /* Headings use the logo typeface (ScienceGothic) */
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
 }
+
+/* Heading weights — dialled down from the markup's font-black/font-bold.
+   Unlayered so they override Tailwind's utility layer. Tune here:
+   h1/h2 = SemiBold (600), h3 = Medium (500). */
+h1, h2 { font-weight: 600; }
+h3 { font-weight: 500; }
 
 @layer utilities {
   /* Glassmorphism effect */
