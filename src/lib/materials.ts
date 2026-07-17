@@ -123,9 +123,9 @@ export const GEOMETRY = {
   defaultInfill: 0.15,
 };
 
-/** Build volume of the printer, mm (per the site FAQ: 180×180×180). */
+/** Build volume of the printer, mm (per the site FAQ: 256×256×256). */
 export const PRINTER = {
-  bedX: 180,
-  bedY: 180,
-  bedZ: 180,
+  bedX: 256,
+  bedY: 256,
+  bedZ: 256,
 };

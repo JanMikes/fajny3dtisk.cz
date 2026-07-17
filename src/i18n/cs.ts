@@ -65,7 +65,7 @@ export const cs: Translations = {
     },
     warnings: {
       notWatertight: 'Model nejspíš není uzavřený (vodotěsný), takže odhad objemu může být nepřesný. Pro jistotu mě kontaktujte.',
-      exceedsBed: 'Model je větší než tisková plocha 180 × 180 × 180 mm. Půjde nejspíš rozdělit na části — ozvěte se mi.',
+      exceedsBed: 'Model je větší než tisková plocha 256 × 256 × 256 mm. Půjde nejspíš rozdělit na části — ozvěte se mi.',
       tiny: 'Model je velmi malý — zkontrolujte prosím, že je v milimetrech.',
     },
     disclaimer: {

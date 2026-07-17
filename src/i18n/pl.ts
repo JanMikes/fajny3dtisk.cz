@@ -65,7 +65,7 @@ export const pl: Translations = {
     },
     warnings: {
       notWatertight: 'Model prawdopodobnie nie jest zamknięty (wodoszczelny), więc szacunek objętości może być niedokładny. Na wszelki wypadek skontaktuj się ze mną.',
-      exceedsBed: 'Model jest większy niż pole druku 180 × 180 × 180 mm. Prawdopodobnie da się go podzielić na części — odezwij się do mnie.',
+      exceedsBed: 'Model jest większy niż pole druku 256 × 256 × 256 mm. Prawdopodobnie da się go podzielić na części — odezwij się do mnie.',
       tiny: 'Model jest bardzo mały — sprawdź, czy jest podany w milimetrach.',
     },
     disclaimer: {
