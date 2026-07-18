@@ -17,6 +17,12 @@ export const cs: Translations = {
     calculator: 'Kalkulačka',
   },
 
+  banner: {
+    title: 'Jsme na dovolené',
+    text: 'Od soboty 18. 7. do neděle 26. 7. 2026 čerpáme dovolenou. Objednávky a e-maily vyřídíme hned po návratu — od pondělí 27. 7. Děkujeme za trpělivost! 🧡',
+    closeLabel: 'Zavřít oznámení',
+  },
+
   calculator: {
     seo: {
       title: 'Kalkulačka ceny 3D tisku online | Fajný 3D tisk Frýdek-Místek',

@@ -1,0 +1,78 @@
+---
+import { X } from 'lucide-astro';
+import type { Translations } from '../i18n/types';
+
+interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
+const banner = t.banner;
+---
+
+{banner && (
+  <div id="holiday-banner" class="holiday-banner mx-auto w-full max-w-xl">
+    <div class="flex items-start gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200 shadow-lg px-4 py-3 md:px-5 md:py-3.5 text-left">
+      <!-- Icon -->
+      <div class="flex-shrink-0 grid place-items-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-orange-100 text-lg md:text-xl" aria-hidden="true">
+        🏖️
+      </div>
+
+      <!-- Text -->
+      <div class="flex-1 min-w-0">
+        <p class="text-sm md:text-base font-bold text-gray-900 leading-snug">{banner.title}</p>
+        <p class="text-xs md:text-sm text-gray-600 leading-snug mt-0.5">{banner.text}</p>
+      </div>
+
+      <!-- Dismiss -->
+      <button
+        id="holiday-banner-close"
+        type="button"
+        aria-label={banner.closeLabel}
+        class="flex-shrink-0 -mr-1 -mt-0.5 p-1 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+      >
+        <X class="w-4 h-4 md:w-5 md:h-5" />
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Bump the date suffix whenever the holiday period changes so a new
+      // announcement re-appears even for visitors who dismissed the old one.
+      const KEY = 'holiday-banner-dismissed:2026-07-18';
+      const banner = document.getElementById('holiday-banner');
+      if (!banner) return;
+
+      let dismissed = false;
+      try { dismissed = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
+
+      if (dismissed) {
+        banner.remove();
+        return;
+      }
+
+      document.getElementById('holiday-banner-close')?.addEventListener('click', () => {
+        banner.style.display = 'none';
+        try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      });
+    })();
+  </script>
+
+  <style>
+    .holiday-banner {
+      animation: holiday-banner-in 0.7s ease-out both;
+    }
+
+    @keyframes holiday-banner-in {
+      from {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+)}

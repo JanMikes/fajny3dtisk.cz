@@ -17,6 +17,13 @@ export interface Translations {
     calculator: string;
   };
 
+  // Holiday / vacation announcement banner (optional — remove to hide sitewide)
+  banner?: {
+    title: string;
+    text: string;
+    closeLabel: string;
+  };
+
   // Hero Section
   hero: {
     logoAlt: string;

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Navigation from './Navigation.astro';
+import HolidayBanner from './HolidayBanner.astro';
 import Footer from './Footer.astro';
 import { Image, Picture } from 'astro:assets';
 import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, User, Quote, Tag, ArrowRight } from 'lucide-astro';
@@ -57,6 +58,9 @@ const calculatorHref = `${base}kalkulacka`;
 
     <div class="container-custom text-center relative z-10">
       <div class="max-w-4xl mx-auto space-y-3 md:space-y-6">
+        <!-- Holiday / vacation announcement -->
+        <HolidayBanner t={t} />
+
         <!-- Heading -->
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight animate-fade-in-up">
           {t.hero.heading}<br />

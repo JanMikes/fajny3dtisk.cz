@@ -17,6 +17,12 @@ export const pl: Translations = {
     calculator: 'Kalkulator',
   },
 
+  banner: {
+    title: 'Jesteśmy na urlopie',
+    text: 'Od soboty 18.07 do niedzieli 26.07.2026 jesteśmy na urlopie. Zamówienia i e-maile obsłużymy zaraz po powrocie — od poniedziałku 27.07. Dziękujemy za cierpliwość! 🧡',
+    closeLabel: 'Zamknij powiadomienie',
+  },
+
   calculator: {
     seo: {
       title: 'Kalkulator ceny druku 3D online | Fajny Druk 3D Frydek-Mistek',
