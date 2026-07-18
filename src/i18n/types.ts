@@ -20,8 +20,8 @@ export interface Translations {
   // Holiday / vacation announcement banner (optional — remove to hide sitewide)
   banner?: {
     title: string;
+    dates: string;
     text: string;
-    closeLabel: string;
   };
 
   // Hero Section

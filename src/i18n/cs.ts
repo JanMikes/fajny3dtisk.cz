@@ -19,8 +19,8 @@ export const cs: Translations = {
 
   banner: {
     title: 'Jsme na dovolené',
-    text: 'Od soboty 18. 7. do neděle 26. 7. 2026 čerpáme dovolenou. Objednávky a e-maily vyřídíme hned po návratu — od pondělí 27. 7. Děkujeme za trpělivost! 🧡',
-    closeLabel: 'Zavřít oznámení',
+    dates: '18.–26. 7. 2026',
+    text: 'Objednávky a e-maily vyřídíme hned po návratu — od pondělí 27. 7. Děkujeme za trpělivost! 🧡',
   },
 
   calculator: {

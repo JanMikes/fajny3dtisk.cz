@@ -1,63 +1,41 @@
 ---
-import { X } from 'lucide-astro';
 import type { Translations } from '../i18n/types';
 
 interface Props {
   t: Translations;
+  /** Extra classes for the outer wrapper (spacing per placement). */
+  class?: string;
 }
 
-const { t } = Astro.props;
+const { t, class: className = '' } = Astro.props;
 const banner = t.banner;
 ---
 
 {banner && (
-  <div id="holiday-banner" class="holiday-banner mx-auto w-full max-w-xl">
-    <div class="flex items-start gap-3 rounded-2xl bg-white/95 backdrop-blur-md border border-orange-200 shadow-lg px-4 py-3 md:px-5 md:py-3.5 text-left">
-      <!-- Icon -->
-      <div class="flex-shrink-0 grid place-items-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-orange-100 text-lg md:text-xl" aria-hidden="true">
-        🏖️
-      </div>
+  <div class={`holiday-banner mx-auto w-full max-w-xl ${className}`}>
+    <div class="relative overflow-hidden rounded-2xl border border-orange-200/80 bg-gradient-to-br from-orange-50 to-white shadow-lg shadow-orange-900/5">
+      <!-- Warm accent bar -->
+      <div class="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-orange-500 to-red-500" aria-hidden="true"></div>
 
-      <!-- Text -->
-      <div class="flex-1 min-w-0">
-        <p class="text-sm md:text-base font-bold text-gray-900 leading-snug">{banner.title}</p>
-        <p class="text-xs md:text-sm text-gray-600 leading-snug mt-0.5">{banner.text}</p>
-      </div>
+      <div class="flex items-start gap-3 sm:gap-4 pl-5 pr-4 py-3.5 md:py-4 text-left">
+        <!-- Icon -->
+        <div class="flex-shrink-0 grid place-items-center w-10 h-10 md:w-11 md:h-11 rounded-full bg-gradient-to-br from-orange-100 to-amber-100 ring-1 ring-orange-200/70 text-lg md:text-xl" aria-hidden="true">
+          🏖️
+        </div>
 
-      <!-- Dismiss -->
-      <button
-        id="holiday-banner-close"
-        type="button"
-        aria-label={banner.closeLabel}
-        class="flex-shrink-0 -mr-1 -mt-0.5 p-1 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
-      >
-        <X class="w-4 h-4 md:w-5 md:h-5" />
-      </button>
+        <!-- Text -->
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <p class="text-sm md:text-base font-bold text-gray-900 leading-snug">{banner.title}</p>
+            <span class="inline-flex items-center rounded-full bg-orange-500/10 px-2 py-0.5 text-[11px] md:text-xs font-semibold text-orange-700 whitespace-nowrap">
+              {banner.dates}
+            </span>
+          </div>
+          <p class="text-xs md:text-sm text-gray-600 leading-snug mt-1">{banner.text}</p>
+        </div>
+      </div>
     </div>
   </div>
-
-  <script>
-    (function () {
-      // Bump the date suffix whenever the holiday period changes so a new
-      // announcement re-appears even for visitors who dismissed the old one.
-      const KEY = 'holiday-banner-dismissed:2026-07-18';
-      const banner = document.getElementById('holiday-banner');
-      if (!banner) return;
-
-      let dismissed = false;
-      try { dismissed = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
-
-      if (dismissed) {
-        banner.remove();
-        return;
-      }
-
-      document.getElementById('holiday-banner-close')?.addEventListener('click', () => {
-        banner.style.display = 'none';
-        try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
-      });
-    })();
-  </script>
 
   <style>
     .holiday-banner {
@@ -72,6 +50,12 @@ const banner = t.banner;
       to {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .holiday-banner {
+        animation: none;
       }
     }
   </style>

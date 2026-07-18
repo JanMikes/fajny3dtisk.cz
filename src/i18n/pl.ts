@@ -19,8 +19,8 @@ export const pl: Translations = {
 
   banner: {
     title: 'Jesteśmy na urlopie',
-    text: 'Od soboty 18.07 do niedzieli 26.07.2026 jesteśmy na urlopie. Zamówienia i e-maile obsłużymy zaraz po powrocie — od poniedziałku 27.07. Dziękujemy za cierpliwość! 🧡',
-    closeLabel: 'Zamknij powiadomienie',
+    dates: '18–26.07.2026',
+    text: 'Zamówienia i e-maile obsłużymy zaraz po powrocie — od poniedziałku 27.07. Dziękujemy za cierpliwość! 🧡',
   },
 
   calculator: {

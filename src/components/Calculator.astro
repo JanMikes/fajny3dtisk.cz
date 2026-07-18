@@ -22,6 +22,7 @@ import {
   ArrowRight,
   Send,
 } from 'lucide-astro';
+import HolidayBanner from './HolidayBanner.astro';
 import type { Translations } from '../i18n/types';
 
 interface Props {
@@ -35,6 +36,9 @@ const quality = c.controls.quality as Record<string, string>;
 
 <section id="kalkulacka" class="relative pt-28 md:pt-32 pb-16 md:pb-24 bg-gray-50 min-h-screen">
   <div class="container-custom">
+    <!-- Holiday / vacation announcement -->
+    <HolidayBanner t={t} class="mb-8 md:mb-10" />
+
     <!-- Header -->
     <div class="max-w-3xl mx-auto text-center mb-10 md:mb-12">
       <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold mb-5">
