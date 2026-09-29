@@ -4,7 +4,7 @@ import Navigation from './Navigation.astro';
 import HolidayBanner from './HolidayBanner.astro';
 import Footer from './Footer.astro';
 import { Image, Picture } from 'astro:assets';
-import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, User, Quote, Tag, ArrowRight } from 'lucide-astro';
+import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, Phone, User, Quote, Tag, ArrowRight } from 'lucide-astro';
 import type { Translations } from '../i18n/types';
 
 // Import images for optimization
@@ -846,6 +846,17 @@ const calculatorHref = `${base}kalkulacka`;
               <div>
                 <p class="text-gray-900">{t.contact.address1}</p>
                 <p class="text-gray-900">{t.contact.address2}</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
+                <Phone class="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <a href="tel:+420702887319" class="text-red-600 hover:text-orange-500 font-semibold transition-colors whitespace-nowrap">
+                  +420 702 887 319
+                </a>
               </div>
             </div>
 

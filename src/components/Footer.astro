@@ -1,5 +1,5 @@
 ---
-import { Mail, Instagram, Check } from 'lucide-astro';
+import { Mail, Phone, Instagram, Check } from 'lucide-astro';
 import type { Translations } from '../i18n/types';
 
 interface Props {
@@ -64,6 +64,10 @@ const currentYear = new Date().getFullYear();
           {t.footer.whyUsText}
         </p>
         <div class="space-y-3">
+          <a href="tel:+420702887319" class="flex items-center gap-3 text-gray-300 hover:text-orange-500 transition-all duration-300 ease-in-out group">
+            <Phone class="w-5 h-5 text-orange-500 group-hover:scale-110 transition-transform" />
+            <span class="whitespace-nowrap">+420 702 887 319</span>
+          </a>
           <a href="mailto:michal@fajny3dtisk.cz" class="flex items-center gap-3 text-gray-300 hover:text-orange-500 transition-all duration-300 ease-in-out group">
             <Mail class="w-5 h-5 text-orange-500 group-hover:scale-110 transition-transform" />
             <span>michal@fajny3dtisk.cz</span>

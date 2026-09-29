@@ -285,6 +285,7 @@ export interface Translations {
       cta: string;
       heading: string;
       intro: string;
+      callText: string;
       specsHeading: string;
       nameLabel: string;
       namePlaceholder: string;

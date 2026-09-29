@@ -21,6 +21,7 @@ import {
   ChevronDown,
   ArrowRight,
   Send,
+  Phone,
 } from 'lucide-astro';
 import HolidayBanner from './HolidayBanner.astro';
 import type { Translations } from '../i18n/types';
@@ -241,7 +242,12 @@ const quality = c.controls.quality as Record<string, string>;
     <div id="calc-quote-section" class="hidden mt-12 max-w-3xl mx-auto scroll-mt-28">
       <div class="glass-white rounded-2xl p-8">
         <h2 class="text-2xl md:text-3xl font-black text-gray-900 mb-2">{c.quote.heading}</h2>
-        <p class="text-gray-600 mb-6">{c.quote.intro}</p>
+        <p class="text-gray-600 mb-3">{c.quote.intro}</p>
+        <p class="text-gray-600 mb-6 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <Phone class="w-4 h-4 text-orange-500" />
+          {c.quote.callText}
+          <a href="tel:+420702887319" class="text-red-600 hover:text-orange-500 font-semibold transition-colors whitespace-nowrap">+420 702 887 319</a>
+        </p>
 
         <div class="mb-6 rounded-xl bg-gray-50 border border-gray-200 p-4">
           <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">{c.quote.specsHeading}</p>
