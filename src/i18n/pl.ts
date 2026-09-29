@@ -17,11 +17,6 @@ export const pl: Translations = {
     calculator: 'Kalkulator',
   },
 
-  banner: {
-    title: 'Jesteśmy na urlopie',
-    dates: '18–26.07.2026',
-    text: 'Zamówienia i e-maile obsłużymy zaraz po powrocie — od poniedziałku 27.07. Dziękujemy za cierpliwość! 🧡',
-  },
 
   calculator: {
     seo: {

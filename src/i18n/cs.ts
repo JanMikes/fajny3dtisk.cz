@@ -17,11 +17,6 @@ export const cs: Translations = {
     calculator: 'Kalkulačka',
   },
 
-  banner: {
-    title: 'Jsme na dovolené',
-    dates: '18.–26. 7. 2026',
-    text: 'Objednávky a e-maily vyřídíme hned po návratu — od pondělí 27. 7. Děkujeme za trpělivost! 🧡',
-  },
 
   calculator: {
     seo: {
