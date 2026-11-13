@@ -103,9 +103,9 @@ export const pl: Translations = {
     disclaimer: {
       scopeTitle: 'Pracę ręczną i modelowanie ustalam osobno',
       callout: 'Przygotowanie wydruku, usuwanie podpór, obróbka, poprawki modelu ani modelowanie na zamówienie nie są wliczone w wycenę. Ich cenę zawsze podaję z góry.',
-      priceNote: 'Także cena materiału i druku jest orientacyjna: liczę ją z kształtu modelu, a nie z pełnego cięcia w slicerze, więc może się różnić w zależności od orientacji części i podpór. Wiążącą cenę potwierdzę po sprawdzeniu modelu.',
-      howTitle: 'Jak liczona jest cena?',
-      howText: 'Na podstawie kształtu modelu szacuję, ile plastiku zostanie zużyte (ścianki, pełne warstwy i wypełnienie) oraz jak długo będzie pracować drukarka. Cena to suma materiału i czasu pracy drukarki. Przy większej liczbie sztuk zakładam, że drukują się razem. To nie jest pełny slicer, więc traktuj wynik jako szacunek, a nie wiążącą ofertę.',
+      priceNote: 'To nie jest pełny slicer, więc jest to orientacyjny szacunek, który może się różnić w zależności od orientacji części i podpór. Ostateczną cenę otrzymasz od Michała po sprawdzeniu modelu — łącznie z ewentualną pracą ręczną, której kalkulator nie zna.',
+      howTitle: 'Jak kalkulator liczy cenę?',
+      howText: 'Kalkulator bierze pod uwagę tylko trzy rzeczy: kształt modelu, materiał i czas druku. Na podstawie kształtu modelu szacuje, ile plastiku zostanie zużyte (ścianki, pełne warstwy i wypełnienie) oraz jak długo będzie pracować drukarka; podana kwota to suma ceny materiału i czasu pracy drukarki. Przy większej liczbie sztuk zakłada, że drukują się razem.',
     },
     quote: {
       cta: 'Chcę dokładną cenę',

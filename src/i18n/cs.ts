@@ -103,9 +103,9 @@ export const cs: Translations = {
     disclaimer: {
       scopeTitle: 'Ruční práce a modelování se domlouvají zvlášť',
       callout: 'Příprava tisku, odstranění podpěr, začištění, úpravy modelu ani modelování na zakázku v odhadu nejsou. Jejich cenu vám vždy řeknu předem.',
-      priceNote: 'I cena materiálu a tisku je orientační: počítám ji z tvaru modelu, ne z ostrého slicování, takže se může lišit podle orientace dílu a podpěr. Závaznou cenu vám potvrdím po kontrole modelu.',
-      howTitle: 'Jak se cena počítá?',
-      howText: 'Z tvaru modelu odhadnu, kolik plastu se spotřebuje (stěny, plné vrstvy a výplň) a jak dlouho bude tiskárna tisknout. Cena je součet materiálu a času tiskárny. U více kusů počítám s tím, že se tisknou společně. Není to plnohodnotný slicer, takže výsledek berte jako odhad, ne jako závaznou nabídku.',
+      priceNote: 'Není to plnohodnotný slicer, takže jde o orientační odhad, který se může lišit podle orientace dílu a podpěr. Konečnou cenu dostanete od Michala po kontrole modelu — včetně případné ruční práce, kterou kalkulačka nezná.',
+      howTitle: 'Jak kalkulačka počítá cenu?',
+      howText: 'Kalkulačka počítá jen se třemi věcmi: s tvarem modelu, materiálem a časem tisku. Z tvaru modelu odhadne, kolik plastu se spotřebuje (stěny, plné vrstvy a výplň) a jak dlouho bude tiskárna tisknout; výsledná částka je součet ceny materiálu a času tiskárny. U více kusů předpokládá, že se tisknou společně.',
     },
     quote: {
       cta: 'Chci přesnou cenu',
