@@ -70,11 +70,16 @@
     @apply font-sans antialiased;
     font-family: var(--font-sans);
     overflow-x: hidden;
+    /* `clip` (not `hidden`) so the page does not become a scroll container —
+       `hidden` silently breaks every `position: sticky` below it. The
+       `hidden` line stays as the fallback for browsers without `clip`. */
+    overflow-x: clip;
   }
 
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Headings use the logo typeface (ScienceGothic) */

@@ -5,17 +5,22 @@
  * │  MICHAL: tune the numbers in this file to match your real pricing.        │
  * │                                                                           │
  * │  • `density` values are physically correct — leave them alone.            │
- * │  • `pricePerGram` is YOUR CUSTOMER PRICE per gram of printed plastic,      │
- * │    in CZK/g (it already includes your markup).                            │
+ * │  • `costPerKg` is what YOU PAY for a kilogram of filament, in CZK.         │
+ * │  • `materialMarkup` is added on top of that cost (0.40 = +40 %).          │
  * │  • `machineRatePerHour` is your charge for printer time, CZK/h.           │
  * │                                                                           │
- * │  Confirmed by Michal: PLA 1, PETG 1, ASA 2.3 CZK/g · 15 CZK/h ·           │
- * │  minimum order 250 CZK. TPU / ABS / PC below are PLACEHOLDERS.            │
+ * │  Confirmed by Michal (2026-11): PLA 300, PETG 300, ASA 350 CZK/kg ·        │
+ * │  markup 40–45 % · 25 CZK/h · minimum order 250 CZK.                       │
+ * │  TPU / ABS / PC costs below are PLACEHOLDERS.                             │
  * └─────────────────────────────────────────────────────────────────────────┘
  *
- * The calculator only ever produces a ROUGH estimate (it does not slice the
- * model), so these knobs just need to get the ballpark right. Calibrate by
- * printing a couple of known parts in your slicer and comparing.
+ * WHAT THE PRICE COVERS: material + printer time, nothing else. Manual work
+ * (model preparation, post-processing, design/modelling) is agreed
+ * individually and is deliberately NOT part of this calculation — the UI says
+ * so. Do not add labour fees here without changing that wording too.
+ *
+ * The calculator only ever produces an estimate (it does not slice the model).
+ * Calibrate by slicing known parts and comparing — see `PRICING` below.
  */
 
 export interface Material {
@@ -25,18 +30,18 @@ export interface Material {
   name: string;
   /** g/cm³ — physical filament density (do not change) */
   density: number;
-  /** CZK per gram of printed plastic — your customer price (incl. markup) */
-  pricePerGram: number;
+  /** CZK per kilogram of filament — your purchase cost (before markup) */
+  costPerKg: number;
 }
 
 /** The six materials offered, in display order. */
 export const MATERIALS: Material[] = [
-  { id: 'pla',  name: 'PLA',  density: 1.24, pricePerGram: 1.0 },   // confirmed
-  { id: 'petg', name: 'PETG', density: 1.27, pricePerGram: 1.0 },   // confirmed
-  { id: 'asa',  name: 'ASA',  density: 1.07, pricePerGram: 2.3 },   // confirmed
-  { id: 'tpu',  name: 'TPU',  density: 1.21, pricePerGram: 2.5 },   // PLACEHOLDER — confirm
-  { id: 'abs',  name: 'ABS',  density: 1.04, pricePerGram: 1.5 },   // PLACEHOLDER — confirm
-  { id: 'pc',   name: 'PC',   density: 1.20, pricePerGram: 3.0 },   // PLACEHOLDER — confirm
+  { id: 'pla',  name: 'PLA',  density: 1.24, costPerKg: 300 },   // confirmed
+  { id: 'petg', name: 'PETG', density: 1.27, costPerKg: 300 },   // confirmed
+  { id: 'asa',  name: 'ASA',  density: 1.07, costPerKg: 350 },   // confirmed
+  { id: 'tpu',  name: 'TPU',  density: 1.21, costPerKg: 750 },   // PLACEHOLDER — confirm
+  { id: 'abs',  name: 'ABS',  density: 1.04, costPerKg: 450 },   // PLACEHOLDER — confirm
+  { id: 'pc',   name: 'PC',   density: 1.20, costPerKg: 900 },   // PLACEHOLDER — confirm
 ];
 
 export const DEFAULT_MATERIAL_ID = 'pla';
@@ -49,51 +54,55 @@ export function getMaterial(id: string): Material {
 export const PRICING = {
   /** currency symbol used in the UI */
   currency: 'Kč',
-  /** printer-time charge, CZK per hour (confirmed: 15) */
-  machineRatePerHour: 15,
-  /** flat prep/slicing fee added to every job. 0 = off. */
-  setupFee: 0,
-  /** support removal / cleanup fee added to every job. 0 = off. */
-  postProcessingFee: 0,
-  /** extra margin on top, as a fraction (0 = off; per-gram price already
-   *  includes your markup, so this defaults to 0) */
-  margin: 0,
-  /** minimum charge per piece, CZK (confirmed: 250) */
+  /** markup on the filament purchase cost, as a fraction (0.40 = cost × 1.40) */
+  materialMarkup: 0.4,
+  /** printer-time charge, CZK per hour (confirmed: 25) */
+  machineRatePerHour: 25,
+  /** minimum charge per ORDER, CZK (confirmed: 250) */
   minOrderPrice: 250,
-  /** estimated price is rounded to the nearest multiple of this (keeps it
+  /** the order total is rounded to the nearest multiple of this (keeps it
    *  visibly "approximate" rather than falsely precise) */
   roundToNearest: 5,
-
-  // ---- print-time estimate (the rough part) ------------------------------
-  /** effective average print head speed, mm/s. Volumetric flow is derived as
-   *  speed × line width × layer height, so this folds in the perimeter/infill
-   *  mix and travel. Lower = slower = longer time = pricier. */
-  printSpeedMmS: 80,
-  /** extra seconds per layer (Z moves, retractions, small features). Makes
-   *  tall/thin parts cost more time than their volume alone implies. */
-  perLayerOverheadSec: 2,
-  /** fixed time added per print (heat-up, first layers, removal), minutes */
-  fixedTimeOverheadMin: 8,
 
   /** filament diameter, mm (1.75 standard) */
   filamentDiameterMm: 1.75,
 
   // ---- calibration: tune these against real slicer results ----------------
+  //
+  // Benchmarks so far (0.2 mm layers, 15 % infill):
+  //   A  2026-06  "Trychtýř" funnel, 1 pc, PETG ........ 186.4 g · 7 h 04 min
+  //   B  2026-11  "2020-item" profile, 40 pcs on 1 plate  255.26 g · 14 h 59 min
+  //               (22.3 min of printing per piece + 6 min 16 s prepare, once)
+  //
+  // Time is modelled as  pieces × (plastic ÷ flow + layers × perLayerOverhead)
+  //                      + plates × platePrepare.
+  // `printSpeedMmS` and `perLayerOverheadSec` are solved from A and B together
+  // (two benchmarks, two unknowns) and reproduce both within 1 %. That is a
+  // fit, not a validation — re-solve when a third benchmark arrives.
+
   /**
-   * Multiplier on estimated printed-plastic volume — affects weight, filament
-   * length AND print time. Slicers deposit less than the naive shell+infill
-   * volume (line overlap, double-counted wall surfaces, sparse fill of thick
-   * walls). Lower this if the calculator over-estimates weight, raise it if it
-   * under-estimates. Calibrated from real prints — refine as more arrive:
-   *   2026-06 "Trychtýř" funnel, PETG: slicer 186.4 g vs raw estimate 255.5 g.
+   * Fraction of the geometric shell+infill volume that actually gets extruded.
+   * A part printed fully solid comes out at ~95 % of its mesh volume (rounded
+   * extrusion ends, unfilled slivers): benchmark B is 94.7 %.
+   * Raise if the calculator under-estimates weight, lower if it over-estimates.
    */
-  volumeCalibration: 0.73,
-  /**
-   * Final multiplier on estimated print time (residual after volumeCalibration).
-   *   2026-06 "Trychtýř" funnel: slicer 7 h 04 m.
-   */
-  timeCalibration: 1.06,
+  volumeCalibration: 0.95,
+  /** effective average head speed, mm/s. Volumetric flow is derived as
+   *  speed × line width × layer height. Lower = slower = longer = pricier. */
+  printSpeedMmS: 80,
+  /** extra seconds per layer PER PIECE (seams, retractions, travel between
+   *  parts, short accelerating moves). This is what makes small detailed parts
+   *  slower per gram than big ones. */
+  perLayerOverheadSec: 3.85,
+  /** fixed time per PLATE, not per piece (heat-up, bed levelling) — the
+   *  slicer's "Prepare time". 6 min 16 s on benchmark B. */
+  platePrepareMin: 6.3,
 };
+
+/** Customer price of one gram of printed plastic: purchase cost + markup. */
+export function pricePerGram(material: Material): number {
+  return (material.costPerKg / 1000) * (1 + PRICING.materialMarkup);
+}
 
 /** Print-quality presets. Layer height drives both detail and time. */
 export interface QualityPreset {
@@ -121,6 +130,27 @@ export const GEOMETRY = {
   defaultWallCount: 3,
   /** default infill density, fraction 0..1 */
   defaultInfill: 0.15,
+  /** solid layers under every upward-facing surface (slicer default: 5) */
+  topLayers: 5,
+  /** …but never thinner than this, mm (matters for fine layers) */
+  topMinThicknessMm: 1.0,
+  /** solid layers above every downward-facing surface (slicer default: 3) */
+  bottomLayers: 3,
+  /**
+   * Thin upright features print solid. Once the perimeters take up more than
+   * this fraction of the room between the top/bottom skins, the pockets left
+   * between them are too narrow for sparse infill and the slicer fills them
+   * solid; the infill setting fades out linearly from here up to 1.0.
+   */
+  thinWallSolidFrom: 0.6,
+};
+
+/** Input limits the calculator UI clamps to. */
+export const LIMITS = {
+  /** above this the estimate stops being meaningful — bigger series are quoted by hand */
+  maxQuantity: 500,
+  minWallCount: 1,
+  maxWallCount: 8,
 };
 
 /** Build volume of the printer, mm (per the site FAQ: 256×256×256). */
@@ -128,4 +158,8 @@ export const PRINTER = {
   bedX: 256,
   bedY: 256,
   bedZ: 256,
+  /** unusable strip along each bed edge, mm */
+  bedMarginMm: 3,
+  /** gap the slicer keeps between copies when arranging a plate, mm */
+  partSpacingMm: 6,
 };

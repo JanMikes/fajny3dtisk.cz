@@ -145,6 +145,15 @@ export class ModelViewer {
     this.controls.addEventListener('start', () => {
       this.controls.autoRotate = false;
     });
+    // The preview sits in the page's scroll path, so the mouse wheel must keep
+    // scrolling the page until the visitor has actually grabbed the model.
+    this.controls.enableZoom = false;
+    canvas.addEventListener('pointerdown', () => {
+      this.controls.enableZoom = true;
+    });
+    canvas.addEventListener('pointerleave', () => {
+      this.controls.enableZoom = false;
+    });
 
     // lighting — tuned for MeshStandardMaterial without an env map
     this.scene.add(new THREE.AmbientLight(0xffffff, 0.7));

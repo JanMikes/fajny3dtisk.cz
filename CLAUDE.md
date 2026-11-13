@@ -75,6 +75,16 @@ This is a modern static single-page application with a simplified architecture:
 - Gradient backgrounds and text effects
 - Mobile-responsive with hamburger menu
 
+## Price calculator (`/kalkulacka`)
+
+Runs entirely in the browser: `src/components/Calculator.astro` (UI), `src/lib/printCalc.ts` (geometry + estimate, no DOM), `src/lib/materials.ts` (every price and calibration constant), `src/lib/modelViewer.ts` (three.js viewer).
+
+- **The price is material + printer time only.** Manual work (print preparation, support removal, model fixes, modelling) is agreed individually and is deliberately not in the number; the UI says so in several places. Adding a labour fee means changing that wording in `cs.ts` and `pl.ts` too.
+- Material price = purchase cost per kg × (1 + `materialMarkup`). Printer time is charged per hour. Rounding and the 250 Kč minimum apply once, to the order total, never to the unit price.
+- Quantity: pieces share a plate. Time = pieces × per-piece time + plates × prepare time, so the fixed overhead is not multiplied by quantity.
+- It is an estimate, not a slice. The calibration constants and the slicer benchmarks they were fitted to are documented in `materials.ts`; re-fit them when a new benchmark arrives instead of adding ad-hoc multipliers.
+- The page CSP (`Layout.astro`) is `connect-src 'self'`, so the calculator cannot fetch from other origins.
+
 ## Development Commands
 
 ```bash

@@ -3,6 +3,7 @@ import {
   MATERIALS,
   QUALITY_PRESETS,
   GEOMETRY,
+  LIMITS,
   DEFAULT_MATERIAL_ID,
   DEFAULT_QUALITY_ID,
 } from '../lib/materials';
@@ -22,6 +23,9 @@ import {
   ArrowRight,
   Send,
   Phone,
+  Mail,
+  Minus,
+  Plus,
 } from 'lucide-astro';
 import HolidayBanner from './HolidayBanner.astro';
 import type { Translations } from '../i18n/types';
@@ -33,6 +37,15 @@ interface Props {
 const { t } = Astro.props;
 const c = t.calculator;
 const quality = c.controls.quality as Record<string, string>;
+
+// shared class strings — one place to keep the controls consistent
+const fieldClass =
+  'w-full min-h-11 px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:border-transparent';
+const labelClass = 'block text-sm font-semibold text-gray-700 mb-1.5';
+const hintClass = 'text-xs text-gray-600 mt-1.5 leading-relaxed';
+// darker end of the brand gradient: white text stays readable on both stops
+const ctaClass =
+  'inline-flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-500 text-white font-bold rounded-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300';
 ---
 
 <section id="kalkulacka" class="relative pt-28 md:pt-32 pb-16 md:pb-24 bg-gray-50 min-h-screen">
@@ -42,7 +55,7 @@ const quality = c.controls.quality as Record<string, string>;
 
     <!-- Header -->
     <div class="max-w-3xl mx-auto text-center mb-10 md:mb-12">
-      <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold mb-5">
+      <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-800 text-sm font-semibold mb-5">
         <Calculator class="w-4 h-4" /> {c.badgeEstimate}
       </span>
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-5">
@@ -51,8 +64,8 @@ const quality = c.controls.quality as Record<string, string>;
       <p class="text-lg text-gray-600 leading-relaxed">{c.pageSubtitle}</p>
     </div>
 
-    <!-- Shared (hidden) file input -->
-    <input id="calc-fileinput" type="file" accept=".stl,.obj,.3ds" class="sr-only" />
+    <!-- Shared file input: never focused itself, the visible buttons open it -->
+    <input id="calc-fileinput" type="file" accept=".stl,.obj,.3ds" class="hidden" tabindex="-1" aria-hidden="true" />
 
     <!-- Main grid -->
     <div class="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
@@ -63,25 +76,30 @@ const quality = c.controls.quality as Record<string, string>;
           class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-xl transition-all"
           style="aspect-ratio: 4 / 3; background: radial-gradient(circle at 50% 35%, #fff4e8 0%, #f5f5f5 72%);"
         >
-          <canvas id="calc-canvas" class="absolute inset-0 h-full w-full hidden" style="touch-action: none;"></canvas>
+          <!-- pan-y: a vertical swipe that starts on the model still scrolls the page -->
+          <canvas
+            id="calc-canvas"
+            role="img"
+            aria-label={c.dropzone.viewerLabel}
+            class="absolute inset-0 h-full w-full hidden"
+            style="touch-action: pan-y;"
+          ></canvas>
 
           <!-- Empty state / dropzone -->
-          <label
-            for="calc-fileinput"
+          <div
             id="calc-dropzone"
             class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 cursor-pointer"
           >
             <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center mb-4">
-              <Upload class="w-8 h-8 text-orange-500" />
+              <Upload class="w-8 h-8 text-orange-600" />
             </div>
             <p class="text-xl font-bold text-gray-900 mb-1">{c.dropzone.title}</p>
-            <p class="text-gray-500 mb-4">{c.dropzone.hint}</p>
-            <span class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-orange-500 text-white font-semibold rounded-full shadow">
+            <p class="text-gray-600 mb-4">{c.dropzone.hint}</p>
+            <button type="button" id="calc-pick" class={`${ctaClass} min-h-11 px-6 py-2.5 shadow`}>
               {c.dropzone.button}
-            </span>
-            <p class="text-xs text-gray-400 mt-4">{c.dropzone.formats}</p>
-            <p id="calc-error" class="hidden mt-4 text-sm font-medium text-red-600 max-w-xs"></p>
-          </label>
+            </button>
+            <p class="text-xs text-gray-600 mt-4">{c.dropzone.formats}</p>
+          </div>
 
           <!-- Loading -->
           <div id="calc-loading" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-white/70 backdrop-blur-sm">
@@ -89,30 +107,33 @@ const quality = c.controls.quality as Record<string, string>;
             <p class="text-gray-700 font-medium">{c.dropzone.loading}</p>
           </div>
 
-          <!-- Orbit hint -->
+          <!-- Orbit hint — disappears once the model has been touched -->
           <div
             id="calc-viewhint"
-            class="hidden absolute bottom-3 left-1/2 -translate-x-1/2 items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/45 text-white text-xs backdrop-blur-sm pointer-events-none"
+            class="hidden absolute bottom-3 left-1/2 -translate-x-1/2 items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 text-white text-xs font-medium backdrop-blur-sm pointer-events-none whitespace-nowrap"
           >
-            <Move3d class="w-3.5 h-3.5" />
+            <Move3d class="w-3.5 h-3.5" /> {c.dropzone.viewerHint}
           </div>
         </div>
 
+        <!-- Load error: outside the card so it is never clipped -->
+        <p id="calc-error" role="alert" class="hidden mt-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800"></p>
+
         <!-- File info + reload -->
-        <div class="flex items-center justify-between gap-3 mt-4">
-          <div id="calc-fileinfo" class="hidden min-w-0 flex items-center gap-2 text-sm text-gray-600">
-            <Box class="w-4 h-4 text-gray-400 flex-shrink-0" />
+        <div class="flex items-center justify-between gap-3 mt-3">
+          <div id="calc-fileinfo" class="hidden min-w-0 items-center gap-2 text-sm text-gray-700">
+            <Box class="w-4 h-4 text-gray-500 flex-shrink-0" />
             <span id="calc-filename" class="truncate"></span>
           </div>
-          <label
-            for="calc-fileinput"
+          <button
+            type="button"
             id="calc-loadanother"
-            class="hidden flex-shrink-0 inline-flex items-center gap-1.5 text-sm font-semibold text-red-600 hover:text-orange-500 cursor-pointer transition-colors"
+            class="hidden flex-shrink-0 min-h-11 items-center gap-1.5 text-sm font-semibold text-red-700 hover:text-red-500 cursor-pointer transition-colors rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600"
           >
             <RefreshCw class="w-4 h-4" /> {c.dropzone.loadAnother}
-          </label>
+          </button>
         </div>
-        <p class="flex items-center gap-2 mt-3 text-xs text-gray-400">
+        <p class="flex items-start gap-2 mt-2 text-xs text-gray-600">
           <ShieldCheck class="w-4 h-4 flex-shrink-0" /> {c.dropzone.privacy}
         </p>
       </div>
@@ -122,46 +143,79 @@ const quality = c.controls.quality as Record<string, string>;
         <!-- Controls -->
         <div class="glass-white rounded-2xl p-6">
           <h2 class="flex items-center gap-2 text-lg font-bold text-gray-900 mb-5">
-            <Layers class="w-5 h-5 text-orange-500" /> {c.controls.heading}
+            <Layers class="w-5 h-5 text-orange-600" /> {c.controls.heading}
           </h2>
 
           <div class="space-y-5">
             <div>
-              <label for="calc-material" class="block text-sm font-semibold text-gray-700 mb-1.5">{c.controls.materialLabel}</label>
-              <select id="calc-material" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                {MATERIALS.map((m) => <option value={m.id} selected={m.id === DEFAULT_MATERIAL_ID}>{m.name}</option>)}
+              <label for="calc-material" class={labelClass}>{c.controls.materialLabel}</label>
+              <select id="calc-material" class={fieldClass}>
+                {MATERIALS.map((m) => (
+                  <option value={m.id} selected={m.id === DEFAULT_MATERIAL_ID}>{c.controls.materials[m.id] ?? m.name}</option>
+                ))}
               </select>
+            </div>
+
+            <div>
+              <label for="calc-quantity" class={labelClass}>{c.controls.quantityLabel}</label>
+              <div class="flex items-stretch gap-2">
+                <button type="button" id="calc-qty-minus" aria-label={c.controls.quantityDecrease} class="calc-step">
+                  <Minus class="w-4 h-4" />
+                </button>
+                <input
+                  id="calc-quantity"
+                  type="number"
+                  inputmode="numeric"
+                  min="1"
+                  max={LIMITS.maxQuantity}
+                  step="1"
+                  value="1"
+                  class={`${fieldClass} calc-number text-center font-semibold`}
+                />
+                <button type="button" id="calc-qty-plus" aria-label={c.controls.quantityIncrease} class="calc-step">
+                  <Plus class="w-4 h-4" />
+                </button>
+              </div>
+              <p id="calc-qty-note" class="hidden text-xs mt-1.5 leading-relaxed font-medium text-amber-800">
+                {c.controls.quantityMaxNote.replace('{max}', String(LIMITS.maxQuantity))}
+              </p>
             </div>
 
             <div>
               <div class="flex items-center justify-between mb-1.5">
                 <label for="calc-infill" class="text-sm font-semibold text-gray-700">{c.controls.infillLabel}</label>
-                <span id="calc-infill-val" class="text-sm font-bold text-orange-600">15 %</span>
+                <span id="calc-infill-val" class="text-sm font-bold text-orange-700">{Math.round(GEOMETRY.defaultInfill * 100)} %</span>
               </div>
-              <input id="calc-infill" type="range" min="0" max="100" step="5" value={Math.round(GEOMETRY.defaultInfill * 100)} class="w-full accent-orange-500" />
-              <p class="text-xs text-gray-400 mt-1">{c.controls.infillHint}</p>
+              <input id="calc-infill" type="range" min="0" max="100" step="5" value={Math.round(GEOMETRY.defaultInfill * 100)} class="w-full h-8 accent-orange-600 cursor-pointer" />
+              <p class={hintClass}>{c.controls.infillHint}</p>
+              <p id="calc-infill-note" class="hidden text-xs mt-1.5 leading-relaxed font-medium text-amber-800">{c.controls.infillNoEffect}</p>
             </div>
 
-            <div>
-              <label for="calc-quantity" class="block text-sm font-semibold text-gray-700 mb-1.5">{c.controls.quantityLabel}</label>
-              <input id="calc-quantity" type="number" min="1" value="1" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
-            </div>
-
-            <details class="group border-t border-gray-100 pt-4">
-              <summary class="flex items-center justify-between cursor-pointer text-sm font-semibold text-gray-700 list-none">
+            <details class="group border-t border-gray-100 pt-2">
+              <summary class="flex items-center justify-between min-h-11 cursor-pointer text-sm font-semibold text-gray-700 list-none rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600">
                 {c.controls.advancedToggle}
                 <ChevronDown class="w-4 h-4 transition-transform group-open:rotate-180" />
               </summary>
-              <div class="space-y-5 mt-4">
+              <div class="space-y-5 mt-3">
                 <div>
-                  <label for="calc-quality" class="block text-sm font-semibold text-gray-700 mb-1.5">{c.controls.qualityLabel}</label>
-                  <select id="calc-quality" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                  <label for="calc-quality" class={labelClass}>{c.controls.qualityLabel}</label>
+                  <select id="calc-quality" class={fieldClass}>
                     {QUALITY_PRESETS.map((q) => <option value={q.id} selected={q.id === DEFAULT_QUALITY_ID}>{quality[q.id]}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label for="calc-walls" class="block text-sm font-semibold text-gray-700 mb-1.5">{c.controls.wallCountLabel}</label>
-                  <input id="calc-walls" type="number" min="1" max="8" value={GEOMETRY.defaultWallCount} class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+                  <label for="calc-walls" class={labelClass}>{c.controls.wallCountLabel}</label>
+                  <input
+                    id="calc-walls"
+                    type="number"
+                    inputmode="numeric"
+                    min={LIMITS.minWallCount}
+                    max={LIMITS.maxWallCount}
+                    step="1"
+                    value={GEOMETRY.defaultWallCount}
+                    class={fieldClass}
+                  />
+                  <p class={hintClass}>{c.controls.wallCountHint}</p>
                 </div>
               </div>
             </details>
@@ -170,110 +224,142 @@ const quality = c.controls.quality as Record<string, string>;
 
         <!-- Results -->
         <div class="glass-white rounded-2xl p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-bold text-gray-900">{c.results.heading}</h2>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold">
-              <Info class="w-3.5 h-3.5" /> {c.badgeEstimate}
-            </span>
-          </div>
+          <h2 class="text-lg font-bold text-gray-900 mb-4">{c.results.heading}</h2>
 
-          <p id="calc-empty" class="text-gray-500 text-sm py-8 text-center">{c.results.emptyHint}</p>
+          <!-- Before a model is loaded -->
+          <div id="calc-empty" class="text-center py-4">
+            <p class="text-gray-600 text-sm mb-5">{c.results.emptyHint}</p>
+            <button
+              type="button"
+              data-open-quote
+              class="inline-flex items-center justify-center gap-2 min-h-11 px-5 py-2.5 rounded-full border-2 border-red-600 text-red-700 font-semibold hover:bg-red-50 transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-300"
+            >
+              <Mail class="w-4 h-4" /> {c.quote.ctaNoModel}
+            </button>
+          </div>
 
           <div id="calc-output" class="hidden">
-            <div class="text-center py-4 mb-4 rounded-xl bg-gradient-to-br from-orange-50 to-red-50 border border-orange-100">
-              <div id="calc-price" class="text-4xl md:text-5xl font-black gradient-text leading-tight"></div>
-              <div id="calc-price-sub" class="hidden text-sm text-gray-500 mt-1"></div>
+            <!-- The number, and right next to it what it does and does not cover -->
+            <div id="calc-pricebox" class="text-center px-4 py-5 rounded-xl bg-gradient-to-br from-orange-50 to-red-50 border border-orange-100">
+              <div class="text-xs font-bold uppercase tracking-wide text-orange-800 mb-1">{c.results.scope}</div>
+              <div id="calc-price" class="text-4xl md:text-5xl font-black leading-tight bg-gradient-to-r from-red-700 via-red-500 to-red-700 bg-clip-text text-transparent"></div>
+              <div id="calc-price-sub" class="hidden text-sm font-medium text-gray-700 mt-1.5"></div>
+              <div class="text-sm text-gray-600 mt-1.5">{c.results.scopeNote}</div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 mb-4">
-              <div class="rounded-lg bg-gray-50 p-3">
-                <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-1"><Ruler class="w-3.5 h-3.5" /> {c.results.dimensions}</div>
-                <div id="calc-dim" class="text-sm font-semibold text-gray-900">—</div>
+            <!-- What the price is made of — and the row it deliberately leaves open -->
+            <dl class="mt-3 text-sm divide-y divide-gray-100">
+              <div class="flex items-baseline justify-between gap-3 py-2">
+                <dt class="text-gray-700">{c.results.breakdownMaterial} <span id="calc-bd-material-detail" class="text-gray-600"></span></dt>
+                <dd id="calc-bd-material" class="font-semibold text-gray-900 whitespace-nowrap"></dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-3 py-2">
+                <dt class="text-gray-700">{c.results.breakdownPrinting} <span id="calc-bd-time-detail" class="text-gray-600"></span></dt>
+                <dd id="calc-bd-time" class="font-semibold text-gray-900 whitespace-nowrap"></dd>
+              </div>
+              <div id="calc-bd-min-row" class="hidden items-baseline justify-between gap-3 py-2">
+                <dt class="text-gray-700">{c.results.minTopUp}</dt>
+                <dd id="calc-bd-min" class="font-semibold text-gray-900 whitespace-nowrap"></dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-3 py-2">
+                <dt class="text-gray-700">{c.results.breakdownManual}</dt>
+                <dd class="font-semibold text-amber-800 whitespace-nowrap">{c.results.byAgreement}</dd>
+              </div>
+            </dl>
+            <p id="calc-same-price" class="hidden mt-2 rounded-lg bg-green-50 border border-green-200 px-3 py-2 text-sm font-medium text-green-900"></p>
+
+            <!-- Next step, right under the number -->
+            <button type="button" data-open-quote class={`${ctaClass} w-full mt-4 min-h-12 px-6 py-3 text-lg`}>
+              {c.quote.cta} <ArrowRight class="w-5 h-5" />
+            </button>
+            <p class="text-center text-xs text-gray-600 mt-2">{c.quote.ctaNote}</p>
+
+            <!-- Facts about the print -->
+            <div class="grid grid-cols-2 gap-3 mt-5">
+              <div class="col-span-2 rounded-lg bg-gray-50 p-3">
+                <div class="flex items-center gap-1.5 text-xs text-gray-600 mb-1"><Ruler class="w-3.5 h-3.5" /> {c.results.model}</div>
+                <div id="calc-model" class="text-sm font-semibold text-gray-900">—</div>
               </div>
               <div class="rounded-lg bg-gray-50 p-3">
-                <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-1"><Box class="w-3.5 h-3.5" /> {c.results.volume}</div>
-                <div id="calc-vol" class="text-sm font-semibold text-gray-900">—</div>
-              </div>
-              <div class="rounded-lg bg-gray-50 p-3">
-                <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-1"><Weight class="w-3.5 h-3.5" /> {c.results.weight}</div>
+                <div class="flex items-center gap-1.5 text-xs text-gray-600 mb-1"><Weight class="w-3.5 h-3.5" /> {c.results.weight}</div>
                 <div id="calc-weight" class="text-sm font-semibold text-gray-900">—</div>
+                <div id="calc-weight-sub" class="hidden text-xs text-gray-600 mt-0.5"></div>
               </div>
               <div class="rounded-lg bg-gray-50 p-3">
-                <div class="flex items-center gap-1.5 text-xs text-gray-500 mb-1"><Clock class="w-3.5 h-3.5" /> {c.results.time}</div>
-                <div class="flex items-center gap-1.5 flex-wrap">
-                  <span id="calc-time" class="text-sm font-semibold text-gray-900">—</span>
-                  <span class="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">{c.results.timeNote}</span>
-                </div>
+                <div class="flex items-center gap-1.5 text-xs text-gray-600 mb-1"><Clock class="w-3.5 h-3.5" /> {c.results.time}</div>
+                <div id="calc-time" class="text-sm font-semibold text-gray-900">—</div>
+                <div id="calc-time-sub" class="hidden text-xs text-gray-600 mt-0.5"></div>
               </div>
             </div>
 
-            <div id="calc-warnings" class="space-y-2 mb-4"></div>
-          </div>
+            <p id="calc-plates" class="hidden text-sm text-gray-700 mt-3"></p>
+            <div id="calc-warnings" class="space-y-2 mt-3"></div>
 
-          <!-- Disclaimer — always visible -->
-          <div class="rounded-xl bg-amber-50 border-l-4 border-amber-500 p-4 space-y-2">
-            <div class="flex items-start gap-2">
-              <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
-                <path d="M12 9v4"></path>
-                <path d="M12 17h.01"></path>
-              </svg>
-              <p class="text-sm text-amber-900 font-medium leading-relaxed">{c.disclaimer.callout}</p>
+            <!-- The one thing that must not be missed: labour is extra -->
+            <div class="flex items-start gap-2.5 rounded-xl bg-amber-50 border-l-4 border-amber-500 p-4 mt-4">
+              <Info class="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+              <div>
+                <p class="text-sm font-bold text-amber-900 mb-1">{c.disclaimer.scopeTitle}</p>
+                <p class="text-sm text-amber-900 leading-relaxed">{c.disclaimer.callout}</p>
+              </div>
             </div>
-            <p class="text-sm text-amber-800 leading-relaxed pl-7">{c.disclaimer.priceNote}</p>
           </div>
 
           <details class="group mt-3">
-            <summary class="flex items-center gap-1.5 cursor-pointer text-sm font-semibold text-gray-600 hover:text-gray-900 list-none">
+            <summary class="flex items-center gap-1.5 min-h-11 cursor-pointer text-sm font-semibold text-gray-700 hover:text-gray-900 list-none rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600">
               <Info class="w-4 h-4" /> {c.disclaimer.howTitle}
               <ChevronDown class="w-4 h-4 transition-transform group-open:rotate-180 ml-auto" />
             </summary>
-            <p class="text-sm text-gray-500 leading-relaxed mt-2">{c.disclaimer.howText}</p>
+            <div class="text-sm text-gray-600 leading-relaxed space-y-2 pb-1">
+              <p>{c.disclaimer.howText}</p>
+              <p>{c.disclaimer.priceNote}</p>
+            </div>
           </details>
-
-          <button id="calc-quote-cta" type="button" class="w-full mt-5 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold rounded-full hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
-            {c.quote.cta} <ArrowRight class="w-5 h-5" />
-          </button>
         </div>
       </div>
     </div>
 
     <!-- Quote section -->
     <div id="calc-quote-section" class="hidden mt-12 max-w-3xl mx-auto scroll-mt-28">
-      <div class="glass-white rounded-2xl p-8">
+      <div class="glass-white rounded-2xl p-6 md:p-8">
         <h2 class="text-2xl md:text-3xl font-black text-gray-900 mb-2">{c.quote.heading}</h2>
-        <p class="text-gray-600 mb-3">{c.quote.intro}</p>
-        <p class="text-gray-600 mb-6 flex flex-wrap items-center gap-x-2 gap-y-1">
-          <Phone class="w-4 h-4 text-orange-500" />
+        <p class="text-gray-700 mb-3">{c.quote.intro}</p>
+        <p class="text-gray-700 mb-6 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <Phone class="w-4 h-4 text-orange-600" />
           {c.quote.callText}
-          <a href="tel:+420702887319" class="text-red-600 hover:text-orange-500 font-semibold transition-colors whitespace-nowrap">+420 702 887 319</a>
+          <a href="tel:+420702887319" class="text-red-700 hover:text-red-500 font-semibold transition-colors whitespace-nowrap">+420 702 887 319</a>
         </p>
 
-        <div class="mb-6 rounded-xl bg-gray-50 border border-gray-200 p-4">
-          <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">{c.quote.specsHeading}</p>
-          <div id="calc-quote-specs" class="text-sm text-gray-600">—</div>
+        <div id="calc-quote-specs-box" class="hidden mb-4 rounded-xl bg-gray-50 border border-gray-200 p-4">
+          <p class="text-xs font-semibold uppercase tracking-wide text-gray-600 mb-2">{c.quote.specsHeading}</p>
+          <div id="calc-quote-specs" class="text-sm text-gray-700"></div>
         </div>
+
+        <p class="flex items-start gap-2.5 mb-6 rounded-xl bg-orange-50 border border-orange-100 p-4 text-sm text-gray-800 leading-relaxed">
+          <Mail class="w-5 h-5 text-orange-700 flex-shrink-0 mt-0.5" />
+          <span>{c.quote.fileNote}</span>
+        </p>
 
         <form id="calc-quote-form">
           <div class="grid sm:grid-cols-2 gap-4 mb-4">
             <div>
               <label for="q-name" class="block text-gray-900 font-semibold mb-1.5 text-sm">{c.quote.nameLabel}</label>
-              <input id="q-name" name="name" type="text" required placeholder={c.quote.namePlaceholder} class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+              <input id="q-name" name="name" type="text" autocomplete="name" required placeholder={c.quote.namePlaceholder} class={fieldClass} />
             </div>
             <div>
               <label for="q-email" class="block text-gray-900 font-semibold mb-1.5 text-sm">{c.quote.emailLabel}</label>
-              <input id="q-email" name="email" type="email" required placeholder={c.quote.emailPlaceholder} class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+              <input id="q-email" name="email" type="email" autocomplete="email" required placeholder={c.quote.emailPlaceholder} class={fieldClass} />
             </div>
           </div>
           <div class="mb-4">
             <label for="q-phone" class="block text-gray-900 font-semibold mb-1.5 text-sm">{c.quote.phoneLabel}</label>
-            <input id="q-phone" name="phone" type="tel" placeholder={c.quote.phonePlaceholder} class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent" />
+            <input id="q-phone" name="phone" type="tel" autocomplete="tel" placeholder={c.quote.phonePlaceholder} class={fieldClass} />
           </div>
           <div class="mb-6">
             <label for="q-note" class="block text-gray-900 font-semibold mb-1.5 text-sm">{c.quote.noteLabel}</label>
-            <textarea id="q-note" name="note" rows="4" placeholder={c.quote.notePlaceholder} class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"></textarea>
+            <textarea id="q-note" name="note" rows="4" placeholder={c.quote.notePlaceholder} class={`${fieldClass} resize-none`}></textarea>
           </div>
-          <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold rounded-full hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+          <button type="submit" class={`${ctaClass} w-full min-h-12 px-8 py-3.5 text-lg`}>
             <Send class="w-5 h-5" /> {c.quote.submit}
           </button>
         </form>
@@ -281,11 +367,31 @@ const quality = c.controls.quality as Record<string, string>;
     </div>
   </div>
 
+  <!-- Phone: the price follows the visitor while the results card is off screen -->
+  <div
+    id="calc-mobilebar"
+    class="hidden lg:hidden fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur px-4 pt-2.5 shadow-[0_-8px_24px_rgb(0_0_0/0.08)]"
+    style="padding-bottom: max(0.625rem, env(safe-area-inset-bottom));"
+  >
+    <div class="flex items-center justify-between gap-3 max-w-xl mx-auto">
+      <button type="button" id="calc-mobilebar-price-btn" class="min-w-0 min-h-11 text-left rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-600">
+        <span class="block text-[11px] font-semibold uppercase tracking-wide text-gray-600 leading-tight">{c.results.scope}</span>
+        <span id="calc-mobilebar-price" class="block text-xl font-black text-gray-900 leading-tight"></span>
+      </button>
+      <button type="button" data-open-quote class={`${ctaClass} flex-shrink-0 min-h-11 px-4 py-2 text-sm`}>
+        {c.quote.cta} <ArrowRight class="w-4 h-4" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Screen readers: one debounced announcement instead of a live price that fires on every slider step -->
+  <p id="calc-status" role="status" class="sr-only"></p>
+
   <!-- i18n + config payload for the client script -->
   <script type="application/json" id="calc-data" set:html={JSON.stringify({ i18n: c, lang: t.lang })} />
 
   <script>
-    import { MATERIALS, GEOMETRY, PRICING } from '../lib/materials';
+    import { GEOMETRY, PRICING, LIMITS } from '../lib/materials';
     import { computeGeometryStats, estimator } from '../lib/printCalc';
 
     const dataEl = document.getElementById('calc-data');
@@ -300,15 +406,32 @@ const quality = c.controls.quality as Record<string, string>;
     const fmt0 = new Intl.NumberFormat(lang, { maximumFractionDigits: 0 });
     const fmt1 = new Intl.NumberFormat(lang, { maximumFractionDigits: 1 });
 
-    const money = (v: number) => `~ ${fmt0.format(Math.round(v))} ${PRICING.currency}`;
-    function fmtTime(hours: number) {
+    /** fixed amounts (the order minimum) — no "≈" */
+    const moneyExact = (v: number) => `${fmt0.format(Math.round(v))} ${PRICING.currency}`;
+    const money = (v: number) => `≈ ${moneyExact(v)}`;
+    /** unit prices are small numbers — keep one decimal so "quantity ×" adds up */
+    const moneyUnit = (v: number) => `≈ ${(v < 100 ? fmt1 : fmt0).format(v)} ${PRICING.currency}`;
+    const grams = (g: number) => `${(g < 100 ? fmt1 : fmt0).format(g)} g`;
+    const duration = (hours: number) => {
       const total = Math.max(1, Math.round(hours * 60));
-      if (total < 60) return `≈ ${total} min`;
+      if (total < 60) return `${total} min`;
       const h = Math.floor(total / 60);
       const m = total % 60;
-      return m ? `≈ ${h} h ${m} min` : `≈ ${h} h`;
-    }
+      return m ? `${fmt0.format(h)} h ${m} min` : `${fmt0.format(h)} h`;
+    };
+    const fmtTime = (hours: number) => `≈ ${duration(hours)}`;
+    const fill = (template: string, vars: Record<string, string | number>) =>
+      template.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''));
+    const show = (el: HTMLElement, visible: boolean, display = '') => {
+      el.classList.toggle('hidden', !visible);
+      if (display) el.classList.toggle(display, visible);
+    };
+    const clampInt = (raw: string, lo: number, hi: number, fallback: number) => {
+      const n = parseInt(raw, 10);
+      return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : fallback;
+    };
 
+    const section = $('kalkulacka');
     const card = $('calc-viewer-card');
     const canvas = $('calc-canvas');
     const dropzone = $('calc-dropzone');
@@ -323,23 +446,39 @@ const quality = c.controls.quality as Record<string, string>;
     const matSel = $('calc-material');
     const infillEl = $('calc-infill');
     const infillVal = $('calc-infill-val');
+    const infillNote = $('calc-infill-note');
     const qtyEl = $('calc-quantity');
+    const qtyNote = $('calc-qty-note');
     const qualityEl = $('calc-quality');
     const wallsEl = $('calc-walls');
 
     const emptyEl = $('calc-empty');
     const outputEl = $('calc-output');
+    const priceBox = $('calc-pricebox');
     const priceEl = $('calc-price');
     const priceSub = $('calc-price-sub');
-    const dimEl = $('calc-dim');
-    const volEl = $('calc-vol');
+    const modelEl = $('calc-model');
     const weightEl = $('calc-weight');
+    const weightSub = $('calc-weight-sub');
     const timeEl = $('calc-time');
+    const timeSub = $('calc-time-sub');
+    const platesEl = $('calc-plates');
     const warnEl = $('calc-warnings');
+    const bdMaterial = $('calc-bd-material');
+    const bdMaterialDetail = $('calc-bd-material-detail');
+    const bdTime = $('calc-bd-time');
+    const bdTimeDetail = $('calc-bd-time-detail');
+    const bdMinRow = $('calc-bd-min-row');
+    const bdMin = $('calc-bd-min');
+    const samePrice = $('calc-same-price');
+    const statusEl = $('calc-status');
 
-    const quoteCta = $('calc-quote-cta');
+    const mobileBar = $('calc-mobilebar');
+    const mobileBarPrice = $('calc-mobilebar-price');
+
     const quoteSection = $('calc-quote-section');
     const quoteForm = $('calc-quote-form');
+    const quoteSpecsBox = $('calc-quote-specs-box');
     const quoteSpecs = $('calc-quote-specs');
 
     let stats: any = null;
@@ -347,19 +486,24 @@ const quality = c.controls.quality as Record<string, string>;
     let fileName = '';
     let lastEstimate: any = null;
     let lastSettings: any = null;
+    let hintDismissed = false;
+    let loadToken = 0;
+    let qtyOverMax = false;
+
+    /* ---------------------------------------------------------------- state */
 
     function setState(state: 'empty' | 'loading' | 'loaded') {
-      dropzone.classList.toggle('hidden', state !== 'empty');
-      loading.classList.toggle('hidden', state !== 'loading');
-      canvas.classList.toggle('hidden', state !== 'loaded');
-      fileInfo.classList.toggle('hidden', state !== 'loaded');
-      loadAnother.classList.toggle('hidden', state !== 'loaded');
-      viewHint.classList.toggle('hidden', state !== 'loaded');
-      viewHint.classList.toggle('flex', state === 'loaded');
+      show(dropzone, state === 'empty');
+      show(loading, state === 'loading');
+      show(canvas, state === 'loaded');
+      show(fileInfo, state === 'loaded', 'flex');
+      show(loadAnother, state === 'loaded', 'inline-flex');
+      show(viewHint, state === 'loaded' && !hintDismissed, 'flex');
     }
 
+    /** A failed upload must not throw away the model that is already on screen. */
     function showError(msg: string) {
-      setState('empty');
+      setState(stats ? 'loaded' : 'empty');
       errorEl.textContent = msg;
       errorEl.classList.remove('hidden');
     }
@@ -371,32 +515,96 @@ const quality = c.controls.quality as Record<string, string>;
       errorEl.classList.add('hidden');
       if (!extOk(file.name)) return showError(i18n.errors.unsupported);
       if (file.size > MAX_BYTES) return showError(i18n.errors.tooBig);
+      // a newer upload wins: results of an older, slower one are dropped
+      const token = ++loadToken;
       setState('loading');
       try {
         const mod = await import('../lib/modelViewer');
         const { position, geometry } = await mod.parseModelFile(file);
-        setState('loaded');
-        if (!viewer) viewer = new mod.ModelViewer(canvas);
-        viewer.setGeometry(geometry);
+        if (token !== loadToken) return;
         stats = computeGeometryStats(position);
         fileName = file.name;
         fileNameEl.textContent = file.name;
+        setState('loaded');
+        if (!viewer) viewer = new mod.ModelViewer(canvas);
+        viewer.setGeometry(geometry);
         recompute();
       } catch (err: any) {
+        if (token !== loadToken) return;
         console.error('[calculator]', err);
         showError(err && err.name === 'UnsupportedFormatError' ? i18n.errors.unsupported : i18n.errors.parse);
       }
     }
 
+    /* ------------------------------------------------------------- settings */
+
     function readSettings() {
       return {
         materialId: matSel.value,
         infill: (parseFloat(infillEl.value) || 0) / 100,
-        quantity: parseInt(qtyEl.value, 10) || 1,
+        quantity: clampInt(qtyEl.value, 1, LIMITS.maxQuantity, 1),
         qualityId: qualityEl.value,
-        wallCount: parseInt(wallsEl.value, 10) || GEOMETRY.defaultWallCount,
+        wallCount: clampInt(wallsEl.value, LIMITS.minWallCount, LIMITS.maxWallCount, GEOMETRY.defaultWallCount),
       };
     }
+
+    /** Biggest quantity that still costs the order minimum (so: free extra pieces). */
+    function maxQuantityAtMinimum(s: any): number {
+      let best = s.quantity;
+      for (let q = s.quantity + 1; q <= LIMITS.maxQuantity; q++) {
+        if (!estimator.estimate(stats, { ...s, quantity: q }).minApplied) break;
+        best = q;
+      }
+      return best;
+    }
+
+    /* -------------------------------------------------------- quote summary */
+
+    const optionText = (sel: HTMLSelectElement) => sel.options[sel.selectedIndex]?.text ?? sel.value;
+
+    function specLines(est: any, s: any) {
+      const many = est.quantity > 1;
+      const perPiece = (v: string) => `${v} ${i18n.results.perPieceSuffix}`;
+      const lines = [
+        `${i18n.controls.materialLabel}: ${est.material.name}`,
+        `${i18n.controls.infillLabel}: ${Math.round(s.infill * 100)} %`,
+        `${i18n.controls.qualityLabel}: ${optionText(qualityEl)}`,
+        `${i18n.controls.wallCountLabel}: ${s.wallCount}`,
+        `${i18n.controls.quantityLabel}: ${est.quantity}`,
+        `${i18n.results.dimensions}: ${fmt1.format(est.size.x)} × ${fmt1.format(est.size.y)} × ${fmt1.format(est.size.z)} mm`,
+        `${i18n.results.volume}: ${fmt1.format(est.volumeCm3)} cm³`,
+        `${i18n.results.weight}: ${grams(est.totalWeightG)}` + (many ? ` (${perPiece(grams(est.weightG))})` : ''),
+        `${i18n.results.time}: ${fmtTime(est.totalTimeHours)}` + (many ? ` (${perPiece(fmtTime(est.timeHours))})` : ''),
+        `${i18n.results.materialPrice}: ${money(est.materialPrice)}`,
+        `${i18n.results.printingPrice}: ${money(est.machinePrice)}`,
+      ];
+      if (est.minApplied) {
+        lines.push(`${i18n.results.minTopUp}: ${money(est.totalPrice - est.materialPrice - est.machinePrice)}`);
+        lines.push(`${i18n.results.total}: ${moneyExact(est.totalPrice)}`);
+      } else {
+        if (many) lines.push(`${i18n.results.pricePerPiece}: ${moneyUnit(est.pricePerPiece)}`);
+        lines.push(`${i18n.results.total}: ${money(est.totalPrice)}`);
+      }
+      lines.push(`${i18n.results.breakdownManual}: ${i18n.results.byAgreement}`);
+      if (fileName) lines.push(`Model: ${fileName}`);
+      return lines;
+    }
+
+    function renderSpecs() {
+      const has = Boolean(lastEstimate && lastSettings);
+      show(quoteSpecsBox, has);
+      if (!has) return;
+      const ul = document.createElement('ul');
+      ul.className = 'space-y-1';
+      for (const line of specLines(lastEstimate, lastSettings)) {
+        const li = document.createElement('li');
+        li.textContent = line;
+        ul.appendChild(li);
+      }
+      quoteSpecs.replaceChildren(ul);
+    }
+
+    /* --------------------------------------------------------------- render */
 
     const warnText = (w: string) =>
       ({
@@ -405,67 +613,78 @@ const quality = c.controls.quality as Record<string, string>;
         tiny: i18n.warnings.tiny,
       } as Record<string, string>)[w] || w;
 
-    function specLines(est: any, s: any) {
-      const mat = MATERIALS.find((m) => m.id === s.materialId);
-      const dims = `${fmt1.format(est.size.x)} × ${fmt1.format(est.size.y)} × ${fmt1.format(est.size.z)} mm`;
-      const lines = [
-        `${i18n.controls.materialLabel}: ${mat ? mat.name : s.materialId}`,
-        `${i18n.controls.infillLabel}: ${Math.round(s.infill * 100)} %`,
-        `${i18n.controls.quantityLabel}: ${est.quantity}`,
-        `${i18n.results.dimensions}: ${dims}`,
-        `${i18n.results.volume}: ${fmt1.format(est.volumeCm3)} cm³`,
-        `${i18n.results.weight}: ${fmt1.format(est.weightG)} g`,
-        `${i18n.results.time}: ${fmtTime(est.timeHours)} (${i18n.results.timeNote})`,
-      ];
-      if (est.quantity > 1) lines.push(`${i18n.results.pricePerPiece}: ${money(est.pricePerPiece)}`);
-      lines.push(`${i18n.results.total}: ${money(est.totalPrice)}`);
-      if (fileName) lines.push(`Model: ${fileName}`);
-      return lines;
-    }
-
-    function renderSpecs(est: any, s: any) {
-      if (!quoteSpecs) return;
-      const ul = document.createElement('ul');
-      ul.className = 'space-y-1';
-      for (const line of specLines(est, s)) {
-        const li = document.createElement('li');
-        li.textContent = line;
-        ul.appendChild(li);
-      }
-      quoteSpecs.replaceChildren(ul);
+    let statusTimer = 0;
+    function announce(text: string) {
+      window.clearTimeout(statusTimer);
+      statusTimer = window.setTimeout(() => {
+        statusEl.textContent = text;
+      }, 700);
     }
 
     function recompute() {
       infillVal.textContent = `${Math.round(parseFloat(infillEl.value) || 0)} %`;
+      show(qtyNote, qtyOverMax);
       if (!stats) {
-        emptyEl.classList.remove('hidden');
-        outputEl.classList.add('hidden');
+        show(emptyEl, true);
+        show(outputEl, false);
+        updateMobileBar();
         return;
       }
       const s = readSettings();
       const est = estimator.estimate(stats, s);
       lastEstimate = est;
       lastSettings = s;
+      const many = est.quantity > 1;
+      const rawPrice = est.materialPrice + est.machinePrice;
 
-      priceEl.textContent = money(est.totalPrice);
+      // the number
+      const priceText = est.minApplied ? moneyExact(est.totalPrice) : money(est.totalPrice);
+      priceEl.textContent = priceText;
+      mobileBarPrice.textContent = priceText;
       if (est.minApplied) {
-        priceSub.textContent = i18n.results.minOrderNote;
-        priceSub.classList.remove('hidden');
-      } else if (est.quantity > 1) {
-        priceSub.textContent = `${money(est.pricePerPiece)} ${i18n.results.perPieceSuffix} × ${est.quantity}`;
-        priceSub.classList.remove('hidden');
-      } else {
-        priceSub.classList.add('hidden');
+        priceSub.textContent = fill(i18n.results.minOrderExplain, {
+          raw: money(rawPrice),
+          min: moneyExact(PRICING.minOrderPrice),
+        });
+      } else if (many) {
+        priceSub.textContent = `${est.quantity} ${i18n.units.pieces} × ${moneyUnit(est.pricePerPiece)}`;
       }
-      dimEl.textContent = `${fmt1.format(est.size.x)} × ${fmt1.format(est.size.y)} × ${fmt1.format(est.size.z)} mm`;
-      volEl.textContent = `${fmt1.format(est.volumeCm3)} cm³`;
-      weightEl.textContent = `${fmt1.format(est.weightG)} g`;
-      timeEl.textContent = fmtTime(est.timeHours);
+      show(priceSub, est.minApplied || many);
+
+      // what it is made of
+      bdMaterial.textContent = money(est.materialPrice);
+      bdMaterialDetail.textContent = `· ${est.material.name}, ${grams(est.totalWeightG)}`;
+      bdTime.textContent = money(est.machinePrice);
+      bdTimeDetail.textContent = `· ${duration(est.totalTimeHours)}`;
+      show(bdMinRow, est.minApplied, 'flex');
+      bdMin.textContent = money(Math.max(0, est.totalPrice - rawPrice));
+
+      // the minimum covers more pieces than asked for — say so
+      const freeUpTo = est.minApplied ? maxQuantityAtMinimum(s) : est.quantity;
+      samePrice.textContent = fill(i18n.results.samePriceHint, { n: freeUpTo });
+      show(samePrice, freeUpTo > est.quantity);
+
+      // facts: order totals, with the per-piece figure underneath
+      modelEl.textContent =
+        `${fmt1.format(est.size.x)} × ${fmt1.format(est.size.y)} × ${fmt1.format(est.size.z)} mm · ${fmt1.format(est.volumeCm3)} cm³`;
+      weightEl.textContent = grams(est.totalWeightG);
+      weightSub.textContent = `${grams(est.weightG)} ${i18n.results.perPieceSuffix}`;
+      show(weightSub, many);
+      timeEl.textContent = fmtTime(est.totalTimeHours);
+      timeSub.textContent = `${fmtTime(est.timeHours)} ${i18n.results.perPieceSuffix}`;
+      show(timeSub, many);
+      platesEl.textContent = fill(i18n.results.platesNote, { n: est.plates });
+      show(platesEl, est.plates > 1);
+
+      // a slider that changes nothing looks broken — explain it instead
+      const light = estimator.estimate(stats, { ...s, infill: 0 }).weightG;
+      const solid = estimator.estimate(stats, { ...s, infill: 1 }).weightG;
+      show(infillNote, solid > 0 && (solid - light) / solid < 0.02);
 
       const frag = document.createDocumentFragment();
       for (const w of est.warnings) {
         const div = document.createElement('div');
-        div.className = 'flex items-start gap-2 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2';
+        div.className = 'flex items-start gap-2 text-sm text-amber-900 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2';
         div.innerHTML =
           '<svg class="w-4 h-4 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg><span></span>';
         (div.querySelector('span') as HTMLElement).textContent = warnText(w);
@@ -473,14 +692,49 @@ const quality = c.controls.quality as Record<string, string>;
       }
       warnEl.replaceChildren(frag);
 
-      emptyEl.classList.add('hidden');
-      outputEl.classList.remove('hidden');
+      show(emptyEl, false);
+      show(outputEl, true);
+      updateMobileBar();
+      announce(fill(i18n.results.status, { price: priceText, qty: est.quantity }));
 
-      if (quoteSection && !quoteSection.classList.contains('hidden')) renderSpecs(est, s);
+      if (!quoteSection.classList.contains('hidden')) renderSpecs();
     }
 
-    // --- wiring ---
-    fileInput.addEventListener('change', () => handleFile(fileInput.files && fileInput.files[0]));
+    /* ------------------------------------------------- phone: sticky price */
+
+    // The bar only helps while the price itself is off screen and the visitor
+    // is still inside the calculator (not in the quote form or the footer).
+    const seen = { price: false, quote: false, end: false };
+    function updateMobileBar() {
+      show(mobileBar, Boolean(stats) && !seen.price && !seen.quote && !seen.end);
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.target === priceBox) seen.price = e.isIntersecting;
+          else if (e.target === quoteSection) seen.quote = e.isIntersecting;
+          // the calculator's bottom edge has come up into (or past) the viewport
+          else seen.end = e.boundingClientRect.bottom <= window.innerHeight;
+        }
+        updateMobileBar();
+      }, { threshold: [0, 1] });
+      io.observe(priceBox);
+      io.observe(quoteSection);
+      io.observe(section);
+    }
+    $('calc-mobilebar-price-btn').addEventListener('click', () =>
+      priceBox.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+    );
+
+    /* --------------------------------------------------------------- wiring */
+
+    // one real button opens the picker; clicking anywhere in the empty card does too
+    dropzone.addEventListener('click', () => fileInput.click());
+    loadAnother.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => {
+      handleFile(fileInput.files && fileInput.files[0]);
+      fileInput.value = ''; // so picking the same file again still fires `change`
+    });
 
     ['dragenter', 'dragover'].forEach((ev) =>
       card.addEventListener(ev, (e: Event) => {
@@ -499,16 +753,48 @@ const quality = c.controls.quality as Record<string, string>;
       handleFile(f);
     });
 
-    [matSel, infillEl, qtyEl, qualityEl, wallsEl].forEach((el) => {
+    canvas.addEventListener('pointerdown', () => {
+      hintDismissed = true;
+      show(viewHint, false, 'flex');
+    });
+
+    [matSel, infillEl, qualityEl].forEach((el) => {
       el.addEventListener('input', recompute);
       el.addEventListener('change', recompute);
     });
 
-    quoteCta.addEventListener('click', () => {
-      quoteSection.classList.remove('hidden');
-      if (lastEstimate && lastSettings) renderSpecs(lastEstimate, lastSettings);
+    // Number fields: estimate with the clamped value while typing, and write
+    // the clamped value back once the visitor leaves the field.
+    function wireNumber(el: HTMLInputElement, lo: number, hi: number, fallback: number, onOver?: (over: boolean) => void) {
+      el.addEventListener('input', () => {
+        onOver?.(parseInt(el.value, 10) > hi);
+        recompute();
+      });
+      el.addEventListener('change', () => {
+        el.value = String(clampInt(el.value, lo, hi, fallback));
+        recompute();
+      });
+    }
+    wireNumber(qtyEl, 1, LIMITS.maxQuantity, 1, (over) => (qtyOverMax = over));
+    wireNumber(wallsEl, LIMITS.minWallCount, LIMITS.maxWallCount, GEOMETRY.defaultWallCount);
+
+    function stepQuantity(delta: number) {
+      const next = clampInt(qtyEl.value, 1, LIMITS.maxQuantity, 1) + delta;
+      qtyOverMax = next > LIMITS.maxQuantity;
+      qtyEl.value = String(Math.min(LIMITS.maxQuantity, Math.max(1, next)));
+      recompute();
+    }
+    $('calc-qty-minus').addEventListener('click', () => stepQuantity(-1));
+    $('calc-qty-plus').addEventListener('click', () => stepQuantity(1));
+
+    function openQuote() {
+      show(quoteSection, true);
+      renderSpecs();
       quoteSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+      const first = quoteForm.querySelector('input') as HTMLInputElement | null;
+      if (first) first.focus({ preventScroll: true });
+    }
+    document.querySelectorAll('[data-open-quote]').forEach((btn) => btn.addEventListener('click', openQuote));
 
     quoteForm.addEventListener('submit', async (e: SubmitEvent) => {
       e.preventDefault();
@@ -544,13 +830,13 @@ const quality = c.controls.quality as Record<string, string>;
         });
         if (!res.ok) throw new Error('submit failed');
         quoteForm.innerHTML =
-          '<div class="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg text-center"><p class="font-bold text-lg mb-2"></p><p></p></div>';
+          '<div role="status" class="bg-green-100 border border-green-400 text-green-800 px-6 py-4 rounded-lg text-center"><p class="font-bold text-lg mb-2"></p><p></p></div>';
         const p = quoteForm.querySelectorAll('p');
         p[0].textContent = i18n.quote.successTitle;
         p[1].textContent = i18n.quote.successMessage;
       } catch (err) {
         quoteForm.innerHTML =
-          '<div class="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg text-center"><p class="font-bold text-lg mb-2"></p><p></p></div>';
+          '<div role="alert" class="bg-red-100 border border-red-400 text-red-800 px-6 py-4 rounded-lg text-center"><p class="font-bold text-lg mb-2"></p><p></p></div>';
         const p = quoteForm.querySelectorAll('p');
         p[0].textContent = i18n.quote.errorTitle;
         p[1].textContent = i18n.quote.errorMessage;
@@ -564,12 +850,44 @@ const quality = c.controls.quality as Record<string, string>;
 
   <style>
     #calc-viewer-card.calc-dragover {
-      outline: 3px dashed #f59222;
+      outline: 3px dashed #e6780c;
       outline-offset: -10px;
       background: radial-gradient(circle at 50% 35%, #ffe8cc 0%, #f5f5f5 72%) !important;
     }
     details summary::-webkit-details-marker {
       display: none;
+    }
+    /* quantity stepper: 44 px touch targets either side of the field */
+    .calc-step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 2.75rem;
+      min-height: 2.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      background: #fff;
+      color: #374151;
+      cursor: pointer;
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+    .calc-step:hover {
+      background: #fff4e8;
+      border-color: #e6780c;
+    }
+    .calc-step:focus-visible {
+      outline: 2px solid #e6780c;
+      outline-offset: 2px;
+    }
+    /* the − / + buttons replace the browser's tiny spinner arrows */
+    .calc-number {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+    .calc-number::-webkit-outer-spin-button,
+    .calc-number::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
   </style>
 </section>

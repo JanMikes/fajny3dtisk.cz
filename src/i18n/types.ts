@@ -240,6 +240,10 @@ export interface Translations {
       button: string;
       loadAnother: string;
       loading: string;
+      /** pill over the 3D preview, until the visitor first touches it */
+      viewerHint: string;
+      /** accessible name of the 3D preview canvas */
+      viewerLabel: string;
     };
     errors: {
       unsupported: string;
@@ -249,26 +253,56 @@ export interface Translations {
     controls: {
       heading: string;
       materialLabel: string;
+      /** option text per material id: name + what it is good for */
+      materials: Record<string, string>;
       infillLabel: string;
       infillHint: string;
+      /** shown when changing infill cannot move this model's price */
+      infillNoEffect: string;
       quantityLabel: string;
+      quantityDecrease: string;
+      quantityIncrease: string;
+      /** {max} = highest quantity the calculator accepts */
+      quantityMaxNote: string;
       advancedToggle: string;
       qualityLabel: string;
       quality: { draft: string; standard: string; fine: string };
       wallCountLabel: string;
+      wallCountHint: string;
     };
     results: {
       heading: string;
       dimensions: string;
       volume: string;
+      /** label of the combined size + volume tile */
+      model: string;
       weight: string;
       time: string;
-      timeNote: string;
       pricePerPiece: string;
       total: string;
-      minOrderNote: string;
       emptyHint: string;
       perPieceSuffix: string;
+      /** caption above the price: what the number covers */
+      scope: string;
+      /** line under the price: what it leaves out */
+      scopeNote: string;
+      breakdownMaterial: string;
+      breakdownPrinting: string;
+      /** the row that is deliberately NOT priced */
+      breakdownManual: string;
+      byAgreement: string;
+      /** labels for the price split in the quote summary */
+      materialPrice: string;
+      printingPrice: string;
+      /** order minimum applies; {raw} = material + printing, {min} = the minimum */
+      minOrderExplain: string;
+      minTopUp: string;
+      /** {n} = how many pieces the minimum order price would cover */
+      samePriceHint: string;
+      /** order does not fit one plate; {n} = number of plates */
+      platesNote: string;
+      /** screen-reader announcement; {price}, {qty} */
+      status: string;
     };
     warnings: {
       notWatertight: string;
@@ -276,6 +310,8 @@ export interface Translations {
       tiny: string;
     };
     disclaimer: {
+      /** heading of the "what is not included" box */
+      scopeTitle: string;
       callout: string;
       priceNote: string;
       howTitle: string;
@@ -285,6 +321,12 @@ export interface Translations {
       cta: string;
       heading: string;
       intro: string;
+      /** small reassurance line under the CTA */
+      ctaNote: string;
+      /** CTA label before any model is loaded */
+      ctaNoModel: string;
+      /** how to get the model file to Michal (it is never uploaded) */
+      fileNote: string;
       callText: string;
       specsHeading: string;
       nameLabel: string;
