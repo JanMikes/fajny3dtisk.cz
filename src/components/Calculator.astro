@@ -292,6 +292,12 @@ const ctaClass =
               </div>
             </div>
 
+            <!-- Always visible: the figures above are estimates, a real slice adjusts them -->
+            <p class="flex items-start gap-2 text-sm text-gray-700 leading-relaxed mt-3">
+              <Info class="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" />
+              <span>{c.results.slicerNote}</span>
+            </p>
+
             <p id="calc-plates" class="hidden text-sm text-gray-700 mt-3"></p>
             <div id="calc-warnings" class="space-y-2 mt-3"></div>
 

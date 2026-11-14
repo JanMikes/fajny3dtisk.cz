@@ -301,6 +301,8 @@ export interface Translations {
       samePriceHint: string;
       /** order does not fit one plate; {n} = number of plates */
       platesNote: string;
+      /** always-visible note under the weight/time tiles: these are estimates, a real slice will adjust them */
+      slicerNote: string;
       /** screen-reader announcement; {price}, {qty} */
       status: string;
     };

@@ -92,6 +92,7 @@ export const pl: Translations = {
       minOrderExplain: 'Materiał i druk kosztowałyby {raw}, ale minimalna cena zamówienia to {min}.',
       minTopUp: 'Dopłata do minimalnego zamówienia',
       samePriceHint: 'W tej samej cenie wydrukuję nawet {n} szt.',
+      slicerNote: 'Kalkulator nie jest slicerem, tylko szacuje. Zużycie materiału, czas druku, a wraz z nimi cena zostaną doprecyzowane, gdy model przejdzie przez prawdziwy slicer.',
       platesNote: 'Sztuki nie zmieszczą się na jednej płycie, wydrukuję je na {n}× — jest to już wliczone w cenę.',
       status: 'Wycena {price} za materiał i druk, liczba sztuk: {qty}.',
     },
@@ -103,7 +104,7 @@ export const pl: Translations = {
     disclaimer: {
       scopeTitle: 'Pracę ręczną i modelowanie ustalam osobno',
       callout: 'Przygotowanie wydruku, usuwanie podpór, obróbka, poprawki modelu ani modelowanie na zamówienie nie są wliczone w wycenę. Ich cenę zawsze podaję z góry.',
-      priceNote: 'To nie jest pełny slicer, więc jest to orientacyjny szacunek, który może się różnić w zależności od orientacji części i podpór. Ostateczną cenę otrzymasz od Michała po sprawdzeniu modelu — łącznie z ewentualną pracą ręczną, której kalkulator nie zna.',
+      priceNote: 'Kalkulator nie jest slicerem: nie tnie modelu na warstwy, tylko szacuje. Dlatego przed drukiem Michał wgrywa model do prawdziwego slicera, który wylicza dokładne zużycie materiału i czas druku — w zależności od orientacji części i podpór mogą się one różnić od szacunku, a cena zostanie do nich dostosowana. Ostateczną cenę otrzymasz od Michała po sprawdzeniu modelu, łącznie z ewentualną pracą ręczną, której kalkulator nie zna.',
       howTitle: 'Jak kalkulator liczy cenę?',
       howText: 'Kalkulator bierze pod uwagę tylko trzy rzeczy: kształt modelu, materiał i czas druku. Na podstawie kształtu modelu szacuje, ile plastiku zostanie zużyte (ścianki, pełne warstwy i wypełnienie) oraz jak długo będzie pracować drukarka; podana kwota to suma ceny materiału i druku. Przy większej liczbie sztuk zakłada, że drukują się razem.',
     },
