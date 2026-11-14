@@ -149,7 +149,7 @@ const ctaClass =
           <div class="space-y-5">
             <div>
               <label for="calc-material" class={labelClass}>{c.controls.materialLabel}</label>
-              <select id="calc-material" class={fieldClass}>
+              <select id="calc-material" class={`${fieldClass} calc-select`}>
                 {MATERIALS.map((m) => (
                   <option value={m.id} selected={m.id === DEFAULT_MATERIAL_ID}>{c.controls.materials[m.id] ?? m.name}</option>
                 ))}
@@ -199,7 +199,7 @@ const ctaClass =
               <div class="space-y-5 mt-3">
                 <div>
                   <label for="calc-quality" class={labelClass}>{c.controls.qualityLabel}</label>
-                  <select id="calc-quality" class={fieldClass}>
+                  <select id="calc-quality" class={`${fieldClass} calc-select`}>
                     {QUALITY_PRESETS.map((q) => <option value={q.id} selected={q.id === DEFAULT_QUALITY_ID}>{quality[q.id]}</option>)}
                   </select>
                 </div>
@@ -884,6 +884,20 @@ const ctaClass =
     .calc-step:focus-visible {
       outline: 2px solid #e6780c;
       outline-offset: 2px;
+    }
+    /* Selects: drop the native look (Safari ignores height, padding and radius
+       on a native select) so they match the other fields, and draw our own arrow */
+    .calc-select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding-right: 2.5rem;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234b5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1.125rem;
     }
     /* the − / + buttons replace the browser's tiny spinner arrows */
     .calc-number {
