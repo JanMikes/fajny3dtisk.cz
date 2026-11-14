@@ -10,7 +10,7 @@
  * │  • `machineRatePerHour` is your charge for printer time, CZK/h.           │
  * │                                                                           │
  * │  Confirmed by Michal (2026-11): PLA 300, PETG 300, ASA 350 CZK/kg ·        │
- * │  markup 40–45 % · 50 CZK/h · 50 CZK per order · minimum order 250 CZK.    │
+ * │  markup 40–45 % · 52.50 CZK/h · 50 CZK per order · minimum 250 CZK.      │
  * │  TPU / ABS / PC costs below are PLACEHOLDERS.                             │
  * └─────────────────────────────────────────────────────────────────────────┘
  *
@@ -61,8 +61,9 @@ export const PRICING = {
   /** markup on the filament purchase cost, as a fraction (0.40 = cost × 1.40) */
   materialMarkup: 0.4,
   /** printer-time charge, CZK per hour. 25 covers running the printer; the
-   *  other 25 is margin (set 2026-11-14). */
-  machineRatePerHour: 50,
+   *  rest is margin (set 2026-11-14, tuned so the 40-piece benchmark order
+   *  comes to about 950 CZK). */
+  machineRatePerHour: 52.5,
   /** flat fee per ORDER, CZK: cleaning the printer and the routine work around
    *  a print. Charged once, whatever the quantity; shown to the customer only
    *  as part of the printing price. */
