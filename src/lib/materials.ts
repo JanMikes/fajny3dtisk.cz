@@ -10,14 +10,18 @@
  * │  • `machineRatePerHour` is your charge for printer time, CZK/h.           │
  * │                                                                           │
  * │  Confirmed by Michal (2026-11): PLA 300, PETG 300, ASA 350 CZK/kg ·        │
- * │  markup 40–45 % · 25 CZK/h · minimum order 250 CZK.                       │
+ * │  markup 40–45 % · 50 CZK/h · 50 CZK per order · minimum order 250 CZK.    │
  * │  TPU / ABS / PC costs below are PLACEHOLDERS.                             │
  * └─────────────────────────────────────────────────────────────────────────┘
  *
- * WHAT THE PRICE COVERS: material + printer time, nothing else. Manual work
- * (model preparation, post-processing, design/modelling) is agreed
- * individually and is deliberately NOT part of this calculation — the UI says
- * so. Do not add labour fees here without changing that wording too.
+ * WHAT THE PRICE COVERS: material + printing. "Printing" is printer time at
+ * `machineRatePerHour` plus one flat `orderFee` (cleaning the printer and the
+ * routine work around a print). The fee is deliberately NOT itemised for the
+ * customer: it is folded into the single "printing" figure.
+ * Job-specific manual work (support removal, post-processing, model fixes,
+ * design/modelling) is agreed individually and is NOT part of this
+ * calculation — the UI says so. Do not add such fees here without changing
+ * that wording too.
  *
  * The calculator only ever produces an estimate (it does not slice the model).
  * Calibrate by slicing known parts and comparing — see `PRICING` below.
@@ -56,8 +60,13 @@ export const PRICING = {
   currency: 'Kč',
   /** markup on the filament purchase cost, as a fraction (0.40 = cost × 1.40) */
   materialMarkup: 0.4,
-  /** printer-time charge, CZK per hour (confirmed: 25) */
-  machineRatePerHour: 25,
+  /** printer-time charge, CZK per hour. 25 covers running the printer; the
+   *  other 25 is margin (set 2026-11-14). */
+  machineRatePerHour: 50,
+  /** flat fee per ORDER, CZK: cleaning the printer and the routine work around
+   *  a print. Charged once, whatever the quantity; shown to the customer only
+   *  as part of the printing price. */
+  orderFee: 50,
   /** minimum charge per ORDER, CZK (confirmed: 250) */
   minOrderPrice: 250,
   /** the order total is rounded to the nearest multiple of this (keeps it

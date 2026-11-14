@@ -84,7 +84,7 @@ export const cs: Translations = {
       scope: 'Cena za materiál a tisk',
       scopeNote: 'bez ruční práce a modelování — ty domlouvám zvlášť',
       breakdownMaterial: 'Materiál',
-      breakdownPrinting: 'Čas tiskárny',
+      breakdownPrinting: 'Tisk',
       breakdownManual: 'Ruční práce a modelování',
       byAgreement: 'dohodou',
       materialPrice: 'Cena materiálu',
@@ -105,7 +105,7 @@ export const cs: Translations = {
       callout: 'Příprava tisku, odstranění podpěr, začištění, úpravy modelu ani modelování na zakázku v odhadu nejsou. Jejich cenu vám vždy řeknu předem.',
       priceNote: 'Není to plnohodnotný slicer, takže jde o orientační odhad, který se může lišit podle orientace dílu a podpěr. Konečnou cenu dostanete od Michala po kontrole modelu — včetně případné ruční práce, kterou kalkulačka nezná.',
       howTitle: 'Jak kalkulačka počítá cenu?',
-      howText: 'Kalkulačka počítá jen se třemi věcmi: s tvarem modelu, materiálem a časem tisku. Z tvaru modelu odhadne, kolik plastu se spotřebuje (stěny, plné vrstvy a výplň) a jak dlouho bude tiskárna tisknout; výsledná částka je součet ceny materiálu a času tiskárny. U více kusů předpokládá, že se tisknou společně.',
+      howText: 'Kalkulačka počítá jen se třemi věcmi: s tvarem modelu, materiálem a časem tisku. Z tvaru modelu odhadne, kolik plastu se spotřebuje (stěny, plné vrstvy a výplň) a jak dlouho bude tiskárna tisknout; výsledná částka je součet ceny materiálu a tisku. U více kusů předpokládá, že se tisknou společně.',
     },
     quote: {
       cta: 'Chci přesnou cenu',

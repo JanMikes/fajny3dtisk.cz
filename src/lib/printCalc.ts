@@ -85,7 +85,7 @@ export interface Estimate {
   totalTimeHours: number;
   /** material part of the price, before rounding / minimum */
   materialPrice: number;
-  /** printer-time part of the price, before rounding / minimum */
+  /** printing part of the price (printer time + the flat order fee), before rounding / minimum */
   machinePrice: number;
   /** what the customer is shown: rounded, and never below the order minimum */
   totalPrice: number;
@@ -319,11 +319,12 @@ export class HeuristicEstimator implements Estimator {
     const totalTimeHours = totalSec / 3600;
     const totalWeightG = weightG * quantity;
 
-    // ---- price: material + printer time, for the whole order ---------------
+    // ---- price: material + printing, for the whole order -------------------
     // Rounding happens ONCE, on the order total. (Rounding the unit price and
     // then multiplying turned 11 Kč into 10 Kč × 40 and lost 10 % of the order.)
     const materialPrice = totalWeightG * pricePerGram(material);
-    const machinePrice = totalTimeHours * PRICING.machineRatePerHour;
+    // printing = printer time + the flat order fee (never shown as its own line)
+    const machinePrice = totalTimeHours * PRICING.machineRatePerHour + PRICING.orderFee;
     const rounded = roundMoney(materialPrice + machinePrice);
     const minApplied = rounded < PRICING.minOrderPrice;
     const totalPrice = minApplied ? PRICING.minOrderPrice : rounded;
