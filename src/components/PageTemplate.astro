@@ -6,6 +6,7 @@ import Footer from './Footer.astro';
 import { Image, Picture } from 'astro:assets';
 import { Box, Clock, HandHeart, Lightbulb, FileUp, Calculator, Printer, Truck, CircleHelp, MapPin, ChevronDown, Instagram, Phone, User, Quote, Tag, ArrowRight } from 'lucide-astro';
 import type { Translations } from '../i18n/types';
+import WhatsAppIcon from './WhatsAppIcon.astro';
 
 // Import images for optimization
 import heroImg from '../../public/img/hero.jpg';
@@ -22,6 +23,7 @@ interface Props {
 const { t, url, path = '' } = Astro.props;
 const base = path ? `/${path}/` : '/';
 const calculatorHref = `${base}kalkulacka`;
+const whatsappUrl = `https://wa.me/420702887319?text=${encodeURIComponent(t.contact.whatsappPrefill)}`;
 ---
 
 <Layout
@@ -826,6 +828,15 @@ const calculatorHref = `${base}kalkulacka`;
         <div class="flex flex-col" data-aos="fade-right">
           <h3 class="text-2xl font-bold text-gray-900 mb-6">{t.contact.infoHeading}</h3>
 
+          <!-- WhatsApp: fastest way to reach us -->
+          <div class="mb-6 rounded-xl border border-green-200 bg-green-50 p-5">
+            <p class="text-gray-800 mb-4 leading-relaxed">{t.contact.whatsappHint}</p>
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 rounded-lg bg-[#25D366] hover:bg-[#1ebe5b] px-6 py-3 font-bold text-white shadow-md hover:shadow-lg transition-all">
+              <WhatsAppIcon class="w-6 h-6" />
+              {t.contact.whatsappButton}
+            </a>
+          </div>
+
           <div class="space-y-4">
             <div class="flex items-start gap-4">
               <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
@@ -836,16 +847,6 @@ const calculatorHref = `${base}kalkulacka`;
               <div>
                 <p class="font-semibold text-gray-900">{t.contact.ownerName}</p>
                 <p class="text-gray-600">{t.contact.ownerInfo}</p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-              <div class="p-3 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
-                <MapPin class="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p class="text-gray-900">{t.contact.address1}</p>
-                <p class="text-gray-900">{t.contact.address2}</p>
               </div>
             </div>
 

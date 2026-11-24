@@ -1,6 +1,7 @@
 ---
 import { Mail, Phone, Instagram, Check } from 'lucide-astro';
 import type { Translations } from '../i18n/types';
+import WhatsAppIcon from './WhatsAppIcon.astro';
 
 interface Props {
   t: Translations;
@@ -8,6 +9,7 @@ interface Props {
 
 const { t } = Astro.props;
 const currentYear = new Date().getFullYear();
+const whatsappUrl = `https://wa.me/420702887319?text=${encodeURIComponent(t.contact.whatsappPrefill)}`;
 ---
 
 <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
@@ -21,8 +23,6 @@ const currentYear = new Date().getFullYear();
         </p>
         <div class="pt-2 text-sm text-gray-400">
           <p class="font-semibold text-white">{t.contact.ownerName}</p>
-          <p>{t.contact.address1}</p>
-          <p>{t.contact.address2}</p>
         </div>
       </div>
 
@@ -64,6 +64,10 @@ const currentYear = new Date().getFullYear();
           {t.footer.whyUsText}
         </p>
         <div class="space-y-3">
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-300 hover:text-orange-500 transition-all duration-300 ease-in-out group">
+            <WhatsAppIcon class="w-5 h-5 text-orange-500 group-hover:scale-110 transition-transform" />
+            <span>WhatsApp</span>
+          </a>
           <a href="tel:+420702887319" class="flex items-center gap-3 text-gray-300 hover:text-orange-500 transition-all duration-300 ease-in-out group">
             <Phone class="w-5 h-5 text-orange-500 group-hover:scale-110 transition-transform" />
             <span class="whitespace-nowrap">+420 702 887 319</span>

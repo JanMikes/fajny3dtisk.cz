@@ -205,8 +205,9 @@ export interface Translations {
     infoHeading: string;
     ownerName: string;
     ownerInfo: string;
-    address1: string;
-    address2: string;
+    whatsappHint: string;
+    whatsappButton: string;
+    whatsappPrefill: string;
     quickResponseLabel: string;
     quickResponseText: string;
     form: {
@@ -330,6 +331,7 @@ export interface Translations {
       /** how to get the model file to Michal (it is never uploaded) */
       fileNote: string;
       callText: string;
+      whatsappText: string;
       specsHeading: string;
       nameLabel: string;
       namePlaceholder: string;
